@@ -1,6 +1,6 @@
 class Area:
     """The representation of a room in a maze, its property is_portal indicates
-    that this area has an with_entrance or exist point.
+    that this area is an entrance or exist point of the maze.
     """
     __id = 0
 
@@ -11,15 +11,19 @@ class Area:
         self.links = []
 
     def __str__(self):
-        return f"{'portal' if self.is_portal else 'area'} '{self.id}'"
+        if self.is_portal:
+            return f"area marked as '{self.id}' has a portal"
+        if len(self.links) < 2:
+            return f"area marked as '{self.id}' is a dead end"
+        return f"area marked as '{self.id}'"
 
     def __repr__(self):
-        return self.__str__()
+        return f"{'portal' if self.is_portal else 'area'} '{self.id}'"
 
 
 class Hall:
     """A collection of areas linked to each other, if any of them
-    are portals then the hall is a path, else its a hall.
+    are portals then it is considered a path, otherwise its a branch.
     """
     __id = 0
 
@@ -30,9 +34,9 @@ class Hall:
 
     def __str__(self):
         string = f"{'path' if self.is_path else 'branch'} '{self.id}'"
-        if self.joints:
+        if self.passages:
             string += " joint on"
-        for joint in self.joints:
+        for joint in self.passages:
             string += f" ({joint[0]} with {joint[1]})"
         return string
 
@@ -49,20 +53,20 @@ class Hall:
         return True if self.portals else False
 
     @property
-    def joints(self):
-        """List of area tuples where halls are joint, where the first element
-        is in the current hall while the second belongs to the connected hall.
+    def passages(self):
+        """List of area tuples where other halls branch from. The first element
+        is part of the current hall while the other belongs to the connected hall.
         """
-        connecting_areas = []
+        all_links = []
         for area in self.areas:
-            connecting_areas.extend(area.links)
-        just_joints = [area for area in connecting_areas if area not in self.areas]
-        joints = []
-        for joint in just_joints:
+            all_links.extend(area.links)
+        connections = [area for area in all_links if area not in self.areas]
+        passages = []
+        for connection in connections:
             for area in self.areas:
-                if joint in area.links:
-                    joints.append((area, joint))
-        return joints
+                if connection in area.links:
+                    passages.append((area, connection))
+        return passages
 
 
 class Maze:

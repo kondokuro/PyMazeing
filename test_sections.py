@@ -1,4 +1,4 @@
-from parts import Maze, Hall, Area
+from sections import Maze, Hall, Area
 import pytest
 
 
@@ -30,13 +30,13 @@ def test_hall_is_path_returns_hall_path_state(has_portal):
     assert Hall([Area(has_portal)]).is_path == has_portal
 
 
-def test_hall_joints_returns_external_areas():
+def test_hall_passages_returns_external_areas():
     joint_area = Area()
     external = Area()
     joint_area.links.append(external)
     branch = Hall([joint_area, Area()])
-    assert len(branch.joints) == 1
-    assert (joint_area, external) in branch.joints
+    assert len(branch.passages) == 1
+    assert (joint_area, external) in branch.passages
     assert external not in branch.areas
 
 
