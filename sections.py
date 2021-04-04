@@ -9,17 +9,15 @@ class Area:
         self._id = Area.__id + 1
         Area.__id += 1
         self.is_portal = is_portal
-        self._links = []
+        self.links = []
 
     def __str__(self):
         links = len(self.links)
         if self.is_portal:
-            return f"room '{self.id}' has a portal"
+            return f"portal room '{self.id}'"
         if links < 2:
-            return f"room '{self.id}' is a dead end"
-        string = f"room '{self.id}' leads to another room"
-        if links > 2:
-            string += f" links to {links - 2} external areas"
+            return f"dead end room '{self.id}'"
+        string = f"room '{self.id}'"
         return string
 
     def __repr__(self):
@@ -30,8 +28,22 @@ class Area:
         return self._id
 
     @property
-    def links(self) -> list:
-        return self._links
+    def hall_links(self):
+        """These areas are part of this hall."""
+        hl = []
+        if self.links[0]:
+            hl.append(self.links[0])
+        if self.links[1]:
+            hl.append(self.links[1])
+        return hl
+
+    @property
+    def passage_links(self):
+        """These areas are entrances to other halls."""
+        p = []
+        for i in range(len(self.links) - len(self.hall_links)):
+            pass
+        return p
 
 
 class Hall:
@@ -43,16 +55,14 @@ class Hall:
     def __init__(self, areas: list[Area] = None):
         self._id = Hall.__id + 1
         Hall.__id += 1
-        self._areas = areas if areas else []
+        self.areas = areas if areas else []
 
     def __str__(self):
         string = f"{'path' if self.is_path else 'branch'} '{self.id}'"
         if self.passages:
-            string += " other halls can be reached from"
-        passages = len(self.passages)
+            string += ", with access to other halls"
         for passage in self.passages:
-            string += f" {passage[0]} to {passage[1]}"
-            if
+            string += f", from {passage[0]} to {passage[1]}"
         return string
 
     def __repr__(self):
@@ -68,15 +78,11 @@ class Hall:
         return self._id
 
     @property
-    def areas(self) -> list:
-        return self._areas
-
-    @property
-    def portals(self) -> list:
+    def portals(self):
         return [area for area in self.areas if area.is_portal]
 
     @property
-    def is_path(self) -> bool:
+    def is_path(self):
         """The hall is a path if any of its areas are portals, otherwise
         its a branch.
         """
@@ -116,7 +122,8 @@ class Maze:
         portal_cnt = len(portals)
         exit_string = "no exits"
         if portal_cnt > 1:
-            exit_string = "an exit" if portal_cnt < 3 else f"{portal_cnt - 1} exits"
+            exit_string = "an exit" if portal_cnt < 3 \
+                else f"{portal_cnt - 1} exits"
         string = f"Maze '{self.id}', containing an entrance"\
                  f" and {exit_string}, composed of {len(self.halls)} halls"
         return string

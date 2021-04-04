@@ -70,7 +70,7 @@ def test_summon_hall_branching_from_area_links_area_to_branch(
         as_portal, with_start, with_end):
     connected_area = wizard._summon_area(as_portal)
     branch = wizard._summon_hall(3, connected_area, with_start, with_end)
-    assert connected_area in branch.passages
+    assert connected_area in branch.passages[0]
     assert connected_area not in branch.areas
     assert connected_area.links[0] in branch.areas
 
