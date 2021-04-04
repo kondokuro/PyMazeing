@@ -27,24 +27,6 @@ class Area:
     def id(self) -> int:
         return self._id
 
-    @property
-    def hall_links(self):
-        """These areas are part of this hall."""
-        hl = []
-        if self.links[0]:
-            hl.append(self.links[0])
-        if self.links[1]:
-            hl.append(self.links[1])
-        return hl
-
-    @property
-    def passage_links(self):
-        """These areas are entrances to other halls."""
-        p = []
-        for i in range(len(self.links) - len(self.hall_links)):
-            pass
-        return p
-
 
 class Hall:
     """A collection of areas linked to each other, if any of them
@@ -60,17 +42,18 @@ class Hall:
     def __str__(self):
         string = f"{'path' if self.is_path else 'branch'} '{self.id}'"
         if self.passages:
-            string += ", with access to other halls"
-        for passage in self.passages:
-            string += f", from {passage[0]} to {passage[1]}"
+            string += " has access to other halls"
+            for passage in self.passages:
+                string += f" from {passage[0]} to {passage[1]},"
+            string = string[0:-1]
         return string
 
     def __repr__(self):
         string = f"{'path' if self.is_path else 'branch'} '{self.id}'"
         if self.passages:
-            string += " passages on"
-        for passage in self.passages:
-            string += f" ({passage[0]} to {passage[1]})"
+            string += " with passages on:"
+            for passage in self.passages:
+                string += f" ({passage[0]} to {passage[1]})"
         return string
 
     @property
@@ -116,6 +99,10 @@ class Maze:
         self._halls = branches if branches else []
 
     def __str__(self):
+        hall_count = len(self.halls)
+        string = f"Maze '{self.id}' has {hall_count} hall"
+        if hall_count > 1:
+            string += "s"
         portals = []
         for hall in self.paths:
             portals.extend(hall.portals)
@@ -124,8 +111,7 @@ class Maze:
         if portal_cnt > 1:
             exit_string = "an exit" if portal_cnt < 3 \
                 else f"{portal_cnt - 1} exits"
-        string = f"Maze '{self.id}', containing an entrance"\
-                 f" and {exit_string}, composed of {len(self.halls)} halls"
+        string += f" an entrance and {exit_string}"
         return string
 
     def __repr__(self):

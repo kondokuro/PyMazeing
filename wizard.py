@@ -24,7 +24,7 @@ def _summon_hall(length: int = 1,
                  has_end: bool = False) -> sections.Hall:
     """Magic spell to a get new maze hall.
     All areas in th hall are sequentially connected.
-    Defaults to a single portal area.
+    Defaults to a single room hall.
 
     Keyword arguments:
 
@@ -33,9 +33,6 @@ def _summon_hall(length: int = 1,
     - has_start --  first area is a portal (default False)
     - has_end --  last area is a portal (default False)
     """
-    if length == 1 and not branching_from:
-        return sections.Hall([sections.Area(True)])
-
     new_hall = sections.Hall()
     start = _summon_area(has_start, branching_from)
     new_hall.areas.append(start)
