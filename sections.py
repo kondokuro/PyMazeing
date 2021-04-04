@@ -98,24 +98,33 @@ class Maze:
         Maze.__id += 1
         self._halls = branches if branches else []
 
-    def __str__(self):
-        hall_count = len(self.halls)
-        string = f"Maze '{self.id}' has {hall_count} hall"
-        if hall_count > 1:
-            string += "s"
+    def __get_portals(self):
         portals = []
         for hall in self.paths:
             portals.extend(hall.portals)
-        portal_cnt = len(portals)
+        return portals
+
+    def __get_exit_string(self):
+        portal_cnt = len(self.__get_portals())
         exit_string = "no exits"
         if portal_cnt > 1:
             exit_string = "an exit" if portal_cnt < 3 \
                 else f"{portal_cnt - 1} exits"
-        string += f" an entrance and {exit_string}"
+        return exit_string
+
+    def __str__(self):
+        hall_count = len(self.halls)
+        string = f"Maze '{self.id}' was created with"
+        string += " a hall" if hall_count < 2 else f" {hall_count} halls"
+        string += f" an entrance and {self.__get_exit_string()}"
         return string
 
     def __repr__(self):
-        return self.__str__()
+        hall_count = len(self.halls)
+        string = f"Maze '{self.id}'"
+        string += f" halls: {len(self.halls)}"
+        string += f" portals: {len(self.__get_portals())}"
+        return string
 
     @property
     def id(self):
@@ -126,9 +135,9 @@ class Maze:
         return self._halls
 
     @property
-    def branches(self):
-        return [branch for branch in self.halls if not branch.is_path]
-
-    @property
     def paths(self):
         return [branch for branch in self.halls if branch.is_path]
+
+    @property
+    def branches(self):
+        return [branch for branch in self.halls if not branch.is_path]
