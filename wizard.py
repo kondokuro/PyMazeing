@@ -69,7 +69,7 @@ def cast_maze(portals: int = 1,
     - halls -- the number halls in the maze (default 1)
     - branching_limit -- max number of links in any area (default 4)
 
-      - if the value is 1 the maze will be a portal room.
+      - if the value is 1 the maze will be a single portal room.
       - if value is 2 the maze will be a two room path.
 
     - hall_length_range -- min-max number of areas a hall can have

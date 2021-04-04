@@ -120,7 +120,6 @@ class Maze:
         return string
 
     def __repr__(self):
-        hall_count = len(self.halls)
         string = f"Maze '{self.id}'"
         string += f" halls: {len(self.halls)}"
         string += f" portals: {len(self.__get_portals())}"
