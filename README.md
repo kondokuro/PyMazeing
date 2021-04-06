@@ -3,7 +3,7 @@ There is a wizard here able to cast the maze spell.
 The spell will generate the data of a maze for something else to build it.
 
 Example:
-```
+```python
 import wizard
 
 
