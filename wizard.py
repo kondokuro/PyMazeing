@@ -1,5 +1,6 @@
 import sections
 import random
+import sys
 
 
 def _summon_area(with_portal: bool = False,
@@ -111,3 +112,29 @@ def cast_maze(portals: int = 1,
         new_maze.halls.append(new_branch)
 
     return new_maze
+
+
+def main(*args):
+    spell = "The Wizard was"
+    arg_count = len(args)
+    if arg_count < 2:
+        spell += f" summoned by name and casted a random"
+    else:
+        spell += f" properly summoned and casted a special"
+    spell += " Maze spell on you!"
+    print(spell)
+
+    portals = args[1] if arg_count > 1 else random.randint(2, 8)
+    halls = args[2] if arg_count > 2 else random.randint(22, 44)
+    branching = args[3] if arg_count > 3 else random.randint(4, 8)
+    length = args[4] if arg_count > 4 \
+        else (random.randint(1, 15), random.randint(16, 30))
+
+    labyrinth = cast_maze(portals, halls, branching, length)
+    print(labyrinth)
+    for hall in labyrinth.halls:
+        print(hall)
+
+
+if __name__ == "__main__":
+    main(sys.argv)

@@ -40,9 +40,11 @@ class Hall:
         self.areas = areas if areas else []
 
     def __str__(self):
-        string = f"{'path' if self.is_path else 'branch'} '{self.id}'"
+        string = f"The {'path' if self.is_path else 'branch'} '{self.id}'"
+        areas = len(self.areas)
+        string += f" is {areas} room{'s' if areas > 1 else ''} long"
         if self.passages:
-            string += " has access to other halls"
+            string += ", and has access to other halls"
             for passage in self.passages:
                 string += f" from {passage[0]} to {passage[1]},"
             string = string[0:-1]
@@ -114,7 +116,7 @@ class Maze:
 
     def __str__(self):
         hall_count = len(self.halls)
-        string = f"Maze '{self.id}' was created with"
+        string = f"You have landed at PyMaze '{self.id}', created with"
         string += " a hall" if hall_count < 2 else f" {hall_count} halls"
         string += f" an entrance and {self.__get_exit_string()}"
         return string
