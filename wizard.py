@@ -114,12 +114,45 @@ def cast_maze(portals: int = 1,
     return new_maze
 
 
+BASE_HELP = ("h", "he", "hel", "help", )
+DASH_HELP = (f"-{h}" for h in BASE_HELP)
+UPPER_BASE_HELP = (h.upper() for h in BASE_HELP)
+UPPER_DASH_HELP = (h.upper() for h in DASH_HELP)
+__HELP = (BASE_HELP, DASH_HELP, UPPER_BASE_HELP, UPPER_DASH_HELP)
+HELP = []
+for item in __HELP:
+    HELP.extend(item)
+
+
 def main(*args):
     spell = "The Wizard was"
     arg_count = len(args)
     if arg_count < 2:
         spell += f" summoned by name and casted a random"
     else:
+        if args[2] in HELP:
+            print(
+                """
+                The Wizard can cast a magic spell to creates a maze. 
+                A Maze is composed of halls, and the halls are divided
+                into rooms.
+                There are two kinds of halls, paths and branches, where
+                paths contain rooms referred as portals, that are entrance
+                or exit points from the maze.
+    
+                Arguments:
+                - portals -- the number of portals in the maze
+                - halls -- the number halls in the maze 
+                - branching_limit -- max number of links in any area, a
+                common limit is 4, as in 4 walls 4 doors to another room.
+                Note that:
+                   - if the value is 1 the maze will be a single portal 
+                   room.
+                   - if value is 2 the maze will be a two room path.
+                - hall_length_range -- min-max number of areas a hall 
+                can have
+                """
+            )
         spell += f" properly summoned and casted a special"
     spell += " Maze spell on you!"
     print(spell)
