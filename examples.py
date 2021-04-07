@@ -36,6 +36,11 @@ class ScreenDivisor:
         return int(pos_x), int(pos_y)
 
 
+class Orientation:
+    HORZ = "horizontal"
+    VERT = "vertical"
+
+
 class Room(pygame.sprite.Sprite):
     area_x = WIDTH/SCREEN_DIVISION
     area_y = HEIGHT/SCREEN_DIVISION
@@ -53,25 +58,37 @@ class Room(pygame.sprite.Sprite):
 
 
 def create_hall_sprites(
-        hall: sections.Hall, sprite_group: pygame.sprite.Group,
-        start_pos: tuple[int, int]):
-    for area in hall.areas:
-        room = Room(start_pos)
+        hall: sections.Hall,
+        sprite_group: pygame.sprite.Group,
+        start_pos: tuple[int, int],
+        orientation: Orientation = Orientation.HORZ):
+    xy = matrix.get_pos(start_pos[0], start_pos[1])
+    print(f"creating room sprites from {xy}")
+    for i in range(len(hall.areas)):
+        print(f"making room sprite {i}")
+        pos = None
+        if orientation == Orientation.HORZ:
+            pos = matrix.get_pos(start_pos[0] + i, start_pos[1])
+        else:
+            pos = matrix.get_pos(start_pos[0], start_pos[1] + i)
+        room = Room(pos)
         sprite_group.add(room)
+        print(f"added sprite at {pos}")
 
 
-def create_maze(
+def create_maze_sprites(
         maze: sections.Maze,
         sprite_group: pygame.sprite.Group,
         start_pos: tuple[int, int]):
-    for hall in maze.halls:
-        create_hall_sprites(hall, sprite_group, start_pos)
+    create_hall_sprites(maze.halls[0], sprite_group, start_pos)
+    # for hall in maze.halls:
+    #     create_hall_sprites(hall, sprite_group, start_pos)
 
 
 matrix = ScreenDivisor(WIDTH, HEIGHT, SCREEN_DIVISION)
-all_sprites = pygame.sprite.RenderUpdates()
+maze_sprites = pygame.sprite.RenderUpdates()
 the_maze = wizard.cast_maze(2, 5, hall_length_range=(8, 12))
-create_maze(the_maze, all_sprites, matrix.get_pos(5, 1))
+create_maze_sprites(the_maze, maze_sprites, (1, 5))
 
 running = True
 while running:
@@ -82,7 +99,7 @@ while running:
             running = False
 
     # Draw all sprites
-    all_sprites.draw(screen)
+    maze_sprites.draw(screen)
 
     # Update the display
     pygame.display.flip()
