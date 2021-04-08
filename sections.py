@@ -40,11 +40,11 @@ class Hall:
         self.areas = areas if areas else []
 
     def __str__(self):
-        string = f"The {'path' if self.is_path else 'branch'} '{self.id}'"
+        string = f"{'Path' if self.is_path else 'Branch'} '{self.id}'"
         areas = len(self.areas)
-        string += f" is {areas} room{'s' if areas > 1 else ''} long"
+        string += f", which is {areas} room{'s' if areas > 1 else ''} long"
         if self.passages:
-            string += ", and has access to other halls"
+            string += ", with access to other halls"
             for passage in self.passages:
                 string += f" from {passage[0]} to {passage[1]},"
             string = string[0:-1]
