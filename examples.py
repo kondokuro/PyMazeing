@@ -54,71 +54,65 @@ class Room(pygame.sprite.Sprite):
     size = (area_x - side_border, area_y - side_border)
 
     def __init__(self,
-                 pos: tuple[int, int] = None,
+                 area: sections.Area,
+                 pos_x: int = 0,
+                 pos_y: int = 0,
                  color: tuple[int, int, int] = BLACK):
         super(Room, self).__init__()
+        self.area = area
         self.image = pygame.Surface(Room.size)
         self.image.fill(color)
         self.rect = self.image.get_rect()
-        if pos is not None:
-            self.matrix_pos = self.matrix.get_pos(pos[0], pos[1])
-            self.rect.x = self.matrix_pos[0]
-            self.rect.y = self.matrix_pos[1]
+        self.matrix_pos = self.matrix.get_pos(pos_x, pos_y)
+        self.rect.x = self.matrix_pos[0]
+        self.rect.y = self.matrix_pos[1]
 
 
 def create_hall_sprites(
         hall: sections.Hall,
-        start_pos: tuple[int, int],
+        start_x: int,
+        start_y: int,
         horizontal: bool = True,
         ascending: bool = True) -> pygame.sprite.Group:
     sprite_group = pygame.sprite.RenderUpdates()
-    matrix = ScreenMatrix(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_DIVISION)
-    origin = matrix.get_pos(start_pos[0], start_pos[1])
-    print(f" Creating sprites at {origin} for {hall}.")
-    for i in range(len(hall.areas)):
+    print(f" Creating sprites for {hall}.")
+    x = start_x
+    y = start_y
+    areas = len(hall.areas)
+    for i in range(areas):
         if horizontal:
-            if ascending:
-                pos = (start_pos[0] + i, start_pos[1])
-            else:
-                pos = (start_pos[0] - i, start_pos[1])
+            x = start_x + i if ascending else start_x - i
         else:
-            if ascending:
-                pos = (start_pos[0], start_pos[1] + i)
-            else:
-                pos = (start_pos[0], start_pos[1] - i)
-
-        room = Room(pos)
+            y = start_y + i if ascending else start_y - i
+        room = Room(hall.areas[i], x, y)
         sprite_group.add(room)
-        print(f"  added sprite for {hall.areas[i]} "
-              f"at matrix {pos} - {room.matrix_pos}")
+        print(f"  added sprite for {room.area} "
+              f"at matrix {x, y} - {room.matrix_pos}")
     return sprite_group
 
 
 def create_maze_sprites(
         maze: sections.Maze,
-        start_pos: tuple[int, int],
+        start_x: int,
+        start_y: int,
         horizontal: bool = True,
         ascending: bool = True) -> pygame.sprite.Group:
-    print(f"{maze}, this is how it was created:")
+    print(f"{maze} was created as follows:")
     maze_sprites = create_hall_sprites(
-        maze.halls[0], start_pos, horizontal, ascending)
+        maze.halls[0], start_x, start_y, horizontal, ascending)
     return maze_sprites
 
 
 the_maze = wizard.cast_maze(2, 5, hall_length_range=(8, 12))
-sprites = create_maze_sprites(the_maze, (1, int(SCREEN_DIVISION/2)))
+sprites = create_maze_sprites(the_maze, 1, int(SCREEN_DIVISION/2))
 
 running = True
 while running:
 
-    # Did the user click the window close button?
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+    if pygame.QUIT in [event.type for event in pygame.event.get()]:
+        running = False
 
-    # Draw all sprites
     sprites.draw(screen)
-
     # Update the display
     pygame.display.flip()
 
