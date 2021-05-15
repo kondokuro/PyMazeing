@@ -1,7 +1,7 @@
 class Area:
-    """The representation of a room in a maze.
-    There are two types of areas portals and rooms, portals represent an
-    entrance or exist point of the maze.
+    """The representation of a room or part of a hall in a maze.
+    There are two types of areas portals and rooms, where portals
+    represent a room with an entrance or exit point of the maze.
     """
     __id = 0
 
@@ -10,6 +10,7 @@ class Area:
         Area.__id += 1
         self.is_portal = is_portal
         self.links = []
+        self.hall = None
 
     def __str__(self):
         links = len(self.links)
@@ -37,7 +38,7 @@ class Hall:
     def __init__(self, areas: list[Area] = None):
         self._id = Hall.__id + 1
         Hall.__id += 1
-        self.areas = areas if areas else []
+        self._areas = areas if areas else []
 
     def __str__(self):
         string = f"{'Path' if self.is_path else 'Branch'} '{self.id}'"
@@ -63,6 +64,10 @@ class Hall:
         return self._id
 
     @property
+    def areas(self):
+        return self._areas
+
+    @property
     def portals(self):
         return [area for area in self.areas if area.is_portal]
 
@@ -74,7 +79,7 @@ class Hall:
         return True if self.portals else False
 
     @property
-    def passages(self) -> list[tuple[Area, Area]]:
+    def passages(self) -> list:
         """Entrances to other halls.
         The first element belongs to this hall, the second one is part
         of the branching hall.
@@ -89,6 +94,33 @@ class Hall:
                 if connection in area.links:
                     passages.append((area, connection))
         return passages
+
+    @property
+    def branches(self):
+        return [passage[1].hall for passage in self.passages]
+
+    def add_area(self, area: Area):
+        """Link an area with this hall."""
+        self._areas.append(area)
+        area.hall = self
+
+
+class Passage:
+    """Access to other halls."""
+
+    def __init__(self, entrance: Area, hall: Hall):
+        self._entrance = entrance
+        self._hall = hall
+
+    @property
+    def entrance(self) -> Area:
+        """Area from the origin hall that leads to this passage."""
+        return self._entrance
+
+    @property
+    def hall(self) -> Hall:
+        """The destination hall."""
+        return self._hall
 
 
 class Maze:

@@ -36,14 +36,14 @@ def _summon_hall(length: int = 1,
     """
     new_hall = sections.Hall()
     start = _summon_area(has_start, branching_from)
-    new_hall.areas.append(start)
+    new_hall.add_area(start)
 
     for i in range(length - 2):
         new_area = _summon_area(linked_to=new_hall.areas[i])
-        new_hall.areas.append(new_area)
+        new_hall.add_area(new_area)
 
     end = _summon_area(has_end, new_hall.areas[-1])
-    new_hall.areas.append(end)
+    new_hall.add_area(end)
 
     return new_hall
 

@@ -58,7 +58,7 @@ class ScreenMatrix:
         pass
 
 
-class Room(pygame.sprite.Sprite):
+class AreaSprite(pygame.sprite.Sprite):
     matrix = ScreenMatrix(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_DIVISION)
     area_x = matrix.width / matrix.divisions
     area_y = matrix.height / matrix.divisions
@@ -70,8 +70,8 @@ class Room(pygame.sprite.Sprite):
                  pos_x: int = 0,
                  pos_y: int = 0,
                  color: tuple[int, int, int] = BLACK):
-        super(Room, self).__init__()
-        self.image = pygame.Surface(Room.size)
+        super(AreaSprite, self).__init__()
+        self.image = pygame.Surface(AreaSprite.size)
         self.rect = self.image.get_rect()
         self.area = area
         self.color = color
@@ -110,7 +110,7 @@ def create_hall_sprites(
             x = start_x + i if ascending else start_x - i
         else:
             y = start_y + i if ascending else start_y - i
-        room = Room(hall.areas[i], x, y, color)
+        room = AreaSprite(hall.areas[i], x, y, color)
         if hall.areas[i].is_portal:
             room.color = BLUE
 
@@ -138,6 +138,17 @@ def create_maze_sprites(
         maze_sprites.add(hall_sprites)
         previous_hall = next_hall
 
+    for hall in previous_hall.branches:
+        hall_passage = None
+        for passage in previous_hall.passages:
+            if passage.hall.hall == hall:
+                hall_passage = passage
+        passage_x = hall_passage[1].area
+        # maze_sprites.add(create_hall_sprites(
+        #     hall, passage_x, passage_y, not vertical, not descending
+        # ))
+        pass
+
     next_hall = halls_to_draw.pop(0)
     hall_entrance = next_hall.areas[0]
     passage = None
@@ -151,6 +162,7 @@ def create_maze_sprites(
     x = passage_sprite.matrix_x
     y = passage_sprite.matrix_y + 1
     hall_sprites = create_hall_sprites(next_hall, x, y, False)
+
     maze_sprites.add(hall_sprites)
 
     return maze_sprites
