@@ -1,19 +1,15 @@
 import wizard
+import sections
 import pytest
 
 
-def test_summon_area_linked_to_area_both_areas_are_linked():
-    area = wizard._summon_area()
-    room = wizard._summon_area(linked_to=area)
-    assert room in area.links
-    assert area in room.links
-
-
 def test_find_connectable_areas_returns_all_areas_within_link_limit():
-    external = wizard._summon_area()
+    external = sections.Area()
     test_branches = [
-        wizard._summon_hall(2, external),  # 2 links, 1 link
-        wizard._summon_hall(3)             # 1 link,2 links, 1 link
+        # 1 connection withing limit
+        wizard._summon_hall(2, external),
+        # 2 connections withing limit
+        wizard._summon_hall(3)
     ]
     assert len(wizard._find_connectable_areas(test_branches, 2)) == 3
 
@@ -68,8 +64,9 @@ def test_summon_hall_of_size_and_any_endpoint_returns_path_of_set_size(
     ])
 def test_summon_hall_branching_from_area_links_area_to_branch(
         as_portal, with_start, with_end):
-    connected_area = wizard._summon_area(as_portal)
-    branch = wizard._summon_hall(3, connected_area, with_start, with_end)
+    connected_area = sections.Area(as_portal)
+    branch = wizard._summon_hall(
+        3, connected_area, with_start, with_end)
     assert connected_area in branch.passages[0]
     assert connected_area not in branch.areas
     assert connected_area.links[0] in branch.areas

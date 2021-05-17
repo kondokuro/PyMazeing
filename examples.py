@@ -89,6 +89,10 @@ class AreaSprite(pygame.sprite.Sprite):
 
     @color.setter
     def color(self, value: tuple[int, int, int]):
+        if self.area.is_portal:
+            self.image.fill(BLUE)
+            self._color = BLUE
+            return
         self.image.fill(value)
         self._color = value
 
@@ -98,7 +102,19 @@ def create_hall_sprites(
         start_x: int,
         start_y: int,
         horizontal: bool = True,
-        ascending: bool = True) -> pygame.sprite.Group:
+        ascending: bool = True) -> pygame.sprite.RenderUpdates:
+    """Function that creates a sprite group for all areas in a hall.
+
+    params:
+
+    hall: a hall instance
+    start_x: screen position on the x axis to set the initial area
+    start_y: screen position on the y axis to set the initial area
+    start_horizontal: indicates the hall orientation
+    start_ascending: indicates the direction the hall will grow towards, true
+    indicates that the direction will follow positive values of the axis
+    while negative will follow negative values
+    """
     sprite_group = pygame.sprite.RenderUpdates()
     print(f" Creating sprites for {hall}.")
     x = start_x
@@ -111,8 +127,6 @@ def create_hall_sprites(
         else:
             y = start_y + i if ascending else start_y - i
         room = AreaSprite(hall.areas[i], x, y, color)
-        if hall.areas[i].is_portal:
-            room.color = BLUE
 
         sprite_group.add(room)
         print(f"  added sprite for {room.area} "
@@ -124,8 +138,10 @@ def create_maze_sprites(
         maze: sections.Maze,
         start_x: int,
         start_y: int,
-        horizontal: bool = True,
-        ascending: bool = True) -> pygame.sprite.Group:
+        start_horizontal: bool = True,
+        start_ascending: bool = True) -> pygame.sprite.RenderUpdates:
+    """Function that creates a sprite group for the maze.
+    """
     print(f"{maze}:")
     maze_sprites = pygame.sprite.RenderUpdates()
     halls_to_draw = [hall for hall in maze.halls]
@@ -134,20 +150,9 @@ def create_maze_sprites(
     next_hall = halls_to_draw.pop(0)
     if previous_hall is None:
         hall_sprites = create_hall_sprites(
-            next_hall, start_x, start_y, horizontal, ascending)
+            next_hall, start_x, start_y, start_horizontal, start_ascending)
         maze_sprites.add(hall_sprites)
         previous_hall = next_hall
-
-    for hall in previous_hall.branches:
-        hall_passage = None
-        for passage in previous_hall.passages:
-            if passage.hall.hall == hall:
-                hall_passage = passage
-        passage_x = hall_passage[1].area
-        # maze_sprites.add(create_hall_sprites(
-        #     hall, passage_x, passage_y, not vertical, not descending
-        # ))
-        pass
 
     next_hall = halls_to_draw.pop(0)
     hall_entrance = next_hall.areas[0]

@@ -1,3 +1,6 @@
+from collections import namedtuple
+
+
 class Area:
     """The representation of a room or part of a hall in a maze.
     There are two types of areas portals and rooms, where portals
@@ -8,25 +11,33 @@ class Area:
     def __init__(self, is_portal: bool = False):
         self._id = Area.__id + 1
         Area.__id += 1
-        self.is_portal = is_portal
+        self._is_portal = is_portal
         self.links = []
         self.hall = None
 
     def __str__(self):
         links = len(self.links)
         if self.is_portal:
-            return f"portal room '{self.id}'"
+            return f"with_portal room '{self.id}'"
         if links < 2:
             return f"dead end room '{self.id}'"
         string = f"room '{self.id}'"
         return string
 
     def __repr__(self):
-        return f"{'portal' if self.is_portal else 'room'} '{self.id}'"
+        return f"{'with_portal' if self.is_portal else 'room'} '{self.id}'"
 
     @property
     def id(self) -> int:
         return self._id
+
+    @property
+    def is_portal(self) -> bool:
+        return self._is_portal
+
+
+"""Represents a connection between an area an its linked hall."""
+Passage = namedtuple("Passage", "entrance hall")
 
 
 class Hall:
@@ -35,10 +46,10 @@ class Hall:
     """
     __id = 0
 
-    def __init__(self, areas: list[Area] = None):
+    def __init__(self):
         self._id = Hall.__id + 1
         Hall.__id += 1
-        self._areas = areas if areas else []
+        self._areas = []
 
     def __str__(self):
         string = f"{'Path' if self.is_path else 'Branch'} '{self.id}'"
@@ -64,70 +75,62 @@ class Hall:
         return self._id
 
     @property
-    def areas(self):
+    def areas(self) -> list[Area]:
         return self._areas
 
     @property
-    def portals(self):
+    def portals(self) -> list[Area]:
         return [area for area in self.areas if area.is_portal]
 
     @property
-    def is_path(self):
+    def is_path(self) -> bool:
         """The hall is a path if any of its areas are portals, otherwise
         its a branch.
         """
         return True if self.portals else False
 
     @property
-    def passages(self) -> list:
-        """Entrances to other halls.
-        The first element belongs to this hall, the second one is part
-        of the branching hall.
+    def passages(self) -> list[Passage]:
+        """Represents access to other halls. Each passage has the entrance
+        area and the hall it gives access to.
         """
-        all_links = []
+        all_links = set()
         for area in self.areas:
-            all_links.extend(area.links)
-        connections = [area for area in all_links if area not in self.areas]
-        passages = []
+            all_links.update(area.links)
+        connections = {area for area in all_links if area not in self.areas}
+        passages = set()
         for connection in connections:
             for area in self.areas:
                 if connection in area.links:
-                    passages.append((area, connection))
-        return passages
+                    passages.add(Passage(area, connection))
+        return list(passages)
 
-    @property
-    def branches(self):
-        return [passage[1].hall for passage in self.passages]
+    def add_area(self, with_portal: bool = False, entrance: Area = None):
+        """Gives this hall a new area. The new area will be linked with
+        the last hall area and be part of this hall.
 
-    def add_area(self, area: Area):
-        """Link an area with this hall."""
-        self._areas.append(area)
-        area.hall = self
+        Keyword arguments:
 
-
-class Passage:
-    """Access to other halls."""
-
-    def __init__(self, entrance: Area, hall: Hall):
-        self._entrance = entrance
-        self._hall = hall
-
-    @property
-    def entrance(self) -> Area:
-        """Area from the origin hall that leads to this passage."""
-        return self._entrance
-
-    @property
-    def hall(self) -> Hall:
-        """The destination hall."""
-        return self._hall
+        - with_portal -- the area will be with_portal (default False)
+        - entrance -- is the area with access to this hall (default None)
+        """
+        new_area = Area(with_portal)
+        new_area.hall = self
+        if len(self.areas) > 0:
+            last_area = self.areas[-1]
+            new_area.links.append(last_area)
+            last_area.links.append(new_area)
+        if entrance:
+            new_area.links.append(entrance)
+            entrance.links.append(new_area)
+        self._areas.append(new_area)
 
 
 class Maze:
     """The data representation of a labyrinth."""
     __id = 0
 
-    def __init__(self, branches: list = None):
+    def __init__(self, branches: list[Hall] = None):
         self._id = Maze.__id + 1
         Maze.__id += 1
         self._halls = branches if branches else []

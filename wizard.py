@@ -3,22 +3,6 @@ import random
 import sys
 
 
-def _summon_area(with_portal: bool = False,
-                 linked_to: sections.Area = None) -> sections.Area:
-    """Magic spell to get a new maze area. Defaults to a single room.
-
-    Keyword arguments:
-
-    - with_portal -- the area will hold a portal (default False)
-    - linked_to -- connects the area with the given one (default None)
-    """
-    new_area = sections.Area(with_portal)
-    if linked_to:
-        new_area.links.append(linked_to)
-        linked_to.links.append(new_area)
-    return new_area
-
-
 def _summon_hall(length: int = 1,
                  branching_from: sections.Area = None,
                  has_start: bool = False,
@@ -31,24 +15,20 @@ def _summon_hall(length: int = 1,
 
     - length --  number of areas in the hall (default 1)
     - branching_from --  an area from another hall (default None)
-    - has_start --  first area is a portal (default False)
-    - has_end --  last area is a portal (default False)
+    - has_start --  first area is a with_portal (default False)
+    - has_end --  last area is a with_portal (default False)
     """
     new_hall = sections.Hall()
-    start = _summon_area(has_start, branching_from)
-    new_hall.add_area(start)
-
+    new_hall.add_area(has_start, branching_from)
+    # fill the hall without counting the start an end areas
     for i in range(length - 2):
-        new_area = _summon_area(linked_to=new_hall.areas[i])
-        new_hall.add_area(new_area)
-
-    end = _summon_area(has_end, new_hall.areas[-1])
-    new_hall.add_area(end)
-
+        new_hall.add_area()
+    new_hall.add_area(has_end)
     return new_hall
 
 
-def _find_connectable_areas(halls: list, link_limit: int) -> list:
+def _find_connectable_areas(halls: list, link_limit: int) \
+        -> list[sections.Area]:
     """Returns a list of areas with less links than link_limit."""
     areas = []
     for hall in halls:
@@ -62,7 +42,7 @@ def cast_maze(portals: int = 1,
               halls: int = 1,
               branching_limit: int = 4,
               hall_length_range: tuple = (1, 1)) -> sections.Maze:
-    """Magic spell to creates a maze. Defaults to a single portal room.
+    """Magic spell to creates a maze. Defaults to a single with_portal room.
 
     Keyword arguments:
 
@@ -70,7 +50,7 @@ def cast_maze(portals: int = 1,
     - halls -- the number halls in the maze (default 1)
     - branching_limit -- max number of links in any area (default 4)
 
-      - if the value is 1 the maze will be a single portal room.
+      - if the value is 1 the maze will be a single with_portal room.
       - if value is 2 the maze will be a two room path.
 
     - hall_length_range -- min-max number of areas a hall can have
@@ -146,7 +126,7 @@ def main(*args):
                 - branching_limit -- max number of links in any area, a
                 common limit is 4, as in 4 walls 4 doors to another room.
                 Note that:
-                   - if the value is 1 the maze will be a single portal 
+                   - if the value is 1 the maze will be a single with_portal 
                    room.
                    - if value is 2 the maze will be a two room path.
                 - hall_length_range -- min-max number of areas a hall 
