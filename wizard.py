@@ -94,7 +94,7 @@ def cast_maze(portals: int = 1,
     return new_maze
 
 
-BASE_HELP = ("h", "he", "hel", "help", )
+BASE_HELP = ("screen_height", "he", "hel", "help", )
 DASH_HELP = (f"-{h}" for h in BASE_HELP)
 UPPER_BASE_HELP = (h.upper() for h in BASE_HELP)
 UPPER_DASH_HELP = (h.upper() for h in DASH_HELP)
