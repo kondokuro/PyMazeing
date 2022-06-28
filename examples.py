@@ -61,11 +61,11 @@ class ScreenMatrix:
         self.h_divisions = vertical_divisions
 
     @property
-    def horizontal_half(self) -> int:
+    def horizontal_center(self) -> int:
         return int(self.h_divisions / 2)
 
     @property
-    def vertical_half(self) -> int:
+    def vertical_center(self) -> int:
         return int(self.w_divisions / 2)
 
     @property
@@ -83,21 +83,23 @@ class ScreenMatrix:
 
 
 class MatrixSprite(pygame.sprite.Sprite):
-    """A sprite that support screen matrix positioning."""
+    """A sprite that support screen matrix positioning, with an area that
+    is bound to the matrix division size.
+    """
+    __matrix = ScreenMatrix(500, 25, 500, 25)
 
     def __init__(self,
-                 screen_matrix: ScreenMatrix,
                  matrix_coord: MatrixCoord = MatrixCoord(0, 0),
-                 color: Colors = Colors.BLACK):
+                 color: tuple[int, int, int] = Colors.BLACK):
         super(MatrixSprite, self).__init__()
-        self.width = screen_matrix.width / screen_matrix.w_divisions
-        self.height = screen_matrix.height / screen_matrix.h_divisions
+        self.width = self.__matrix.width / self.__matrix.w_divisions
+        self.height = self.__matrix.height / self.__matrix.h_divisions
         self.side_border = 4
         self.size = (self.width - self.side_border,
                      self.height - self.side_border)
         self.image = pygame.Surface(self.size)
         self.color = color
-        self.screen_pos = screen_matrix.get_screen_pos(matrix_coord)
+        self.screen_pos = self.__matrix.get_screen_pos(matrix_coord)
         self.matrix_pos = matrix_coord
         self.rect = self.image.get_rect()
         self.rect.x = self.screen_pos.x
@@ -114,17 +116,55 @@ class MatrixSprite(pygame.sprite.Sprite):
         self._color = value
 
 
-# A combination of a matrix sprite and an area.
-class AreaSprite(NamedTuple):
-    area: sections.Area
-    sprite: MatrixSprite
+class SpriteArea(sections.Area):
+    """Subclass of Area that holds a reference to its sprite."""
+
+    def __init__(self,
+                 original_area: sections.Area,
+                 matrix_coord: MatrixCoord = MatrixCoord(0, 0),
+                 color: tuple[int, int, int] = Colors.BLACK):
+        """Takes its data from an existing area."""
+        self._id = original_area.id
+        self._is_portal = original_area.is_portal
+        self.links = original_area.links
+        self.hall = original_area.hall
+        self.matrix_sprite = MatrixSprite(matrix_coord, color)
 
 
-class MazePainter:
+class HallSprites(NamedTuple):
+    """A combination of a hall and its area sprites."""
+    hall: sections.Hall = None
+    sprites: list = []
+
+
+class MazePainter2D:
+    """In charge of drawing the sprites of a maze."""
 
     def __init__(self):
         self.maze_sprites = pygame.sprite.RenderUpdates()
-        self.area_sprites = []
+        self.drawn_hall = HallSprites()
+
+    def __get_color(self, hall: sections.Hall, index: int) -> tuple[int, int, int]:
+        """Returns a color tuple based on the hall type or area type."""
+        if hall.areas[index].is_portal:
+            return Colors.BLUE
+        return Colors.GOLD if hall.is_path else Colors.BROWN
+
+    def __get_matrix_location(self,
+            matrix: MatrixCoord,
+            index,
+            horizontal: bool,
+            ascending: bool) -> MatrixCoord:
+        """Calculate matrix coordinates from a starting point and modified
+        by the index.
+        """
+        x = matrix.x
+        y = matrix.y
+        if horizontal:
+            x = matrix.x + index if ascending else matrix.x - index
+        else:
+            y = matrix.y + index if ascending else matrix.y - index
+        return MatrixCoord(x, y)
 
     def _draw_hall(
             self,
@@ -145,47 +185,45 @@ class MazePainter:
           the x axis and down on the y axis.
         """
         print(f" Drawing {hall}.")
-        x = matrix_coord.x
-        y = matrix_coord.y
         areas = len(hall.areas)
         for i in range(areas):
-            if horizontal:
-                x = matrix_coord.x + i if ascending else matrix_coord.x - i
-            else:
-                y = matrix_coord.y + i if ascending else matrix_coord.y - i
+            room_coord = self.__get_matrix_location(
+                matrix_coord, i, horizontal, ascending)
+            color = self.__get_color(hall, i)
+            # this replaces the area in the hall with a
+            hall.areas[i] = MatrixSprite(room_coord, color)
+            room = self.__get_sprite(room, horizontal, ascending, i)
 
-            area_to_paint = hall.areas[i]
-
-            color = Colors.GOLD if hall.is_path else Colors.BROWN
-            if area_to_paint.is_portal:
-                color = Colors.BLUE
-            room_coord = MatrixCoord(x, y)
-            room = MatrixSprite(labyrinth_screen, room_coord, color)
             self.maze_sprites.add(room)
-            self.area_sprites.append(AreaSprite(area_to_paint, room))
-            print(f"  drew {area_to_paint} "
+            print(f"  drew {hall.areas[i]} "
                   f"at {room.matrix_pos} - {room.screen_pos}")
+        self.drawn_hall = HallSprites(hall, drawn_areas)
 
     def draw_maze(
             self,
             maze: sections.Maze,
             start_coord: MatrixCoord,
             start_horizontal: bool = True,
-            start_ascending: bool = True) -> pygame.sprite.RenderUpdates:
+            start_ascending: bool = True):
         """Function that creates a sprite group for the maze.
         """
         print(f"{maze}:")
         halls_to_draw = [hall for hall in maze.halls]
         previous_hall = None
         # for hall in halls_to_draw:
-        """process here is to dwaw the first maze hall and then 
-        draw each passage of each hall
+        """
+        the process here is to draw the first maze hall and then 
+        on each hall passage draw its hall
         """
         next_hall = halls_to_draw.pop(0)
         if previous_hall is None:
             self._draw_hall(
                 next_hall, start_coord, start_horizontal, start_ascending)
-            previous_hall = next_hall
+
+            for passage in self.drawn_hall.hall.passages:
+                print(passage.hall)
+                # self._draw_hall(passage.hall, )
+        #    previous_hall = next_hall
 
         # next_hall = halls_to_draw.pop(0)
         # hall_entrance = next_hall.passages
@@ -204,8 +242,8 @@ class MazePainter:
 
 the_maze = wizard.cast_maze(2, 5, hall_length_range=(8, 12))
 labyrinth_screen = ScreenMatrix(500, 25, 500, 25)
-painter = MazePainter()
-maze_start = MatrixCoord(1, labyrinth_screen.vertical_half)
+painter = MazePainter2D()
+maze_start = MatrixCoord(1, labyrinth_screen.vertical_center)
 painter.draw_maze(the_maze, maze_start)
 
 pygame.init()
