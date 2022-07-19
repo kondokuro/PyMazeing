@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Area:
     """The representation of a room in a maze.
     There are two types of areas portals and rooms, portals represent an
