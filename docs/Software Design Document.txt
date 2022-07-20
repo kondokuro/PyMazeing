@@ -1,7 +1,7 @@
 1. About 
-With a little flair of D&D, this is a maze spell, that additionally provides maze section definitions as the parts of a maze and a group of functions to generate complex mazes or its parts.
-It is intended for maze designers and enthusiast, for any media, this means that the generated structure can be then used to paint or generate playable mazes.
-It quickly provides a base structure of maze or dungeon to play in, by creating the base structure of halls and dead ends, the designer only needs to focus on where to place interesting objectives.
+PyMazing is a maze structure generator, with a little flair of D&D became a maze spell. The project  additionally provides classes for maze section definitions as the parts of a maze and a group of functions to generate complex mazes or its parts.
+It is intended for maze designers and enthusiast, this means that the generated structure can be then used to paint or generate playable mazes.
+It quickly provides a base structure for a maze or a dungeon to play in, by creating the base structure of halls and dead ends, the play area designer only needs to focus on where to place interesting objectives.
 A simple method call can create the full maze or it can be constructed by using more specific functions.
 The maze structure is thought to be formed from a collection of halls, where the halls are themselves a collection of spaces or areas that can be connected to other adjacent areas by a door or any kind of passage.
 Specific areas would be marked as entrance or exit of the maze in order to define the main path that a traveller must cross to complete it.
@@ -44,3 +44,5 @@ Current mazes don't provide hall direction, it was a hindsight assumption that t
 We will start with the idea that areas only have 4 directions to move to, its simple but it will allow the thought process to be encumbered by the infinite number of directions a door can be located on, for example multiple doors on an area that are on the floor, leading to many different halls, like an ant burrow.
 • What are possible extensions to think about for the future? 
 Infinite doorways per area without hall collition.
+Definition of open and closed halls with keys to find.
+Definition of additional collectables to find, rather than just finding the exit.
