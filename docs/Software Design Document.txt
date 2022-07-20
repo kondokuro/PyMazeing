@@ -1,14 +1,16 @@
-﻿1. About 
-• What is the software application or feature?
- • Who’s it intended for? 
-• What problem does the software solve? 
-• How is it going to work? 
-• What are the main concepts that are involved and how are they related? 
-Notes 
-When you define what a software application or feature does, what concepts are involved and how everything is related, I often follow a “zoom out and zoom in” approach. As a first step, I try to think as broadly as possible about the software and what it would entail (“zoom out”). The funny thing that I’ve noticed over the years is that as I’ve become a more experienced software designer and developer, I’m spending more and more time in this conceptual stage, and less time implementing it. The implementation almost becomes an afterthought: it’s simply the final step of translating the concepts and relationships that I wrote down into code that a computer can understand and run. After zooming out, you need to zoom in again. What should we do first? Are there parts we can delay building? What’s the low hanging fruit? How does the order of building things impact the complexity of the work? Are there parts we should build first so we can test everything quicker, leading to more efficient development later?
+1. About 
+With a little flair of D&D, this is a maze spell, that additionally provides maze section definitions as the parts of a maze and a group of functions to generate complex mazes or its parts.
+It is intended for maze designers and enthusiast, for any media, this means that the generated structure can be then used to paint or generate playable mazes.
+It quickly provides a base structure of maze or dungeon to play in, by creating the base structure of halls and dead ends, the designer only needs to focus on where to place interesting objectives.
+A simple method call can create the full maze or it can be constructed by using more specific functions.
+The maze structure is thought to be formed from a collection of halls, where the halls are themselves a collection of spaces or areas that can be connected to other adjacent areas by a door or any kind of passage.
+Specific areas would be marked as entrance or exit of the maze in order to define the main path that a traveller must cross to complete it.
+The complexity of the maze would be defined by the number of halls and how many branches each hall can have, as well as how long (the number of areas) the halls are. 
+
 2. User Interface 
-• What are the main user stories (happy flows + alternative flows)? 
-• If you’re adding a new feature to an existing software application, what impact does the feature have on the overall structure of the interface? (e.g. are there big changes in the organization of menus, navigation, and so on?) 
+The current interface includes access to the main maze generator function, with an alternative wizard class to cast the spells as well. In addition there are minor generator functions to manually attempt to generate mazes, which the wizard class can also do.
+It should be as simple as importing the module, calling the maze function with the needed parameters, or use the wizard class instance to do the same.
+
 Notes 
 You can also provide UI mockups or wireframes here as a part of the user stories to clarify what the flows are going to look like. When I design software, I always must remind myself that I’m doing this for someone else, not for me to pat myself on the back for finding such a nice design. What you design must make sense to the user. Sometimes, that means you need to introduce an extra concept to clarify how your system works. And sometimes the most generic solution is not the best solution for the user.
 3. Technical Specification 
