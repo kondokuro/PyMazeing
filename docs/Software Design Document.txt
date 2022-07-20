@@ -1,8 +1,8 @@
 1. About 
-PyMazing is a maze structure generator, with a little flair of D&D became a maze spell. The project  additionally provides classes for maze section definitions as the parts of a maze and a group of functions to generate complex mazes or its parts.
-It is intended for maze designers and enthusiast, this means that the generated structure can be then used to paint or generate playable mazes.
-It quickly provides a base structure for a maze or a dungeon to play in, by creating the base structure of halls and dead ends, the play area designer only needs to focus on where to place interesting objectives.
-A simple method call can create the full maze or it can be constructed by using more specific functions.
+PyMazing is a maze structure generator, with a little flair of D&D. The project  additionally provides classes for maze section definitions as the parts of a maze and a group of functions to generate complex mazes or its parts.
+It is intended for maze designers and enthusiast, this means that the result can be used to render or construct playable mazes.
+The maze spell provides a base structure for a maze or a dungeon to play in, by creating the base structure of halls and dead ends, the play area designer only needs to focus on where to place interesting objectives.
+A simple function call can create the full maze or it can be constructed by using more specific functions.
 The maze structure is thought to be formed from a collection of halls, where the halls are themselves a collection of spaces or areas that can be connected to other adjacent areas by a door or any kind of passage.
 Specific areas would be marked as entrance or exit of the maze in order to define the main path that a traveller must cross to complete it.
 The complexity of the maze would be defined by the number of halls and how many branches each hall can have, as well as how long (the number of areas) the halls are. 
@@ -13,12 +13,12 @@ It should be as simple as importing the module, calling the maze function with t
 The python script wizard is self executable, but its not that useful, it is meant as an example of use but it will be removed later on.
 
 3. Technical Specification 
-• How will the software technically work? Are there particular algorithms or libraries that are important?
+It's a composition of pieces, the instantiation of a main container class that holds list of the other pieces which in place also hold the smaller pieces. Because the constraint is that there are only 4 directions, the smaller pieces should indicate their maze location coordinates.
 navigating the maze to validate the structure
 • What will be the overall design? Which classes are needed? What design patterns are used to model the concepts and relationships? 
 1.- A maze has one or many halls
 2.- A hall has one or many areas
-3.- halls can be paths or dead ends if they have an area that can be defined as an entrance or exit
+3.- halls are considered as dead ends or as paths if they have an area that can be defined as an entrance or exit
 4.- areas can be be entrance or exits if they hold a portal
 Note: It is advised to use portals a a mean to connect multiple mazes
 
