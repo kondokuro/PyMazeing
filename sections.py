@@ -1,17 +1,19 @@
-from dataclasses import dataclass
+"""
+Module containing all the pieces needed to represent a maze.
+"""
 
-
-@dataclass
 class Area:
-    """The representation of a room in a maze.
+    """The representation of a single space in a maze.
     There are two types of areas portals and rooms, portals represent an
     entrance or exist point of the maze.
+    Areas ID is automatically numbered incrementally.
     """
     __id = 0
 
-    def __init__(self, is_portal: bool = False):
+    def __init__(self, coordinates: tuple, is_portal: bool = False):
         self._id = Area.__id + 1
         Area.__id += 1
+        self._coords = coordenates
         self.is_portal = is_portal
         self.links = []
 
@@ -30,6 +32,10 @@ class Area:
     @property
     def id(self) -> int:
         return self._id
+
+    @property
+    def coordinates(self) -> tuple:
+        return self._coords
 
 
 class Hall:
