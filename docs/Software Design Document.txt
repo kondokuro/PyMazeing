@@ -10,15 +10,38 @@ The complexity of the maze would be defined by the number of halls and how many 
 2. User Interface 
 The current interface includes access to the main maze generator function in the wizard module, with an alternative caster class as well. In addition there are minor generator functions to manually to generate other maze sections, if the user wants to have more control on how the shape of the maze should be.
 It should be as simple as importing the module, calling the maze function with the needed parameters, or use the wizard class instance to do the same.
-The python script wizard is self executable, but its not that useful, it is meant as an example of use but it will be removed later on.
+
+import wizard
+
+labyrinth = wizard.cast_maze(
+	number_of_portals=, 
+	number_of_halls=, 
+	branching_limit=, 
+	hall_length_range=(min_length, max_length))
 
 3. Technical Specification 
-Mazes are composed of pieces, they are the main containers of the other pieces, which also hold smaller pieces. Because of the 4 direction constraint, the smaller pieces should indicate their maze location coordinates.
-navigating the maze to validate the structure
-• What will be the overall design? Which classes are needed? What design patterns are used to model the concepts and relationships? 
+Mazes are composed of pieces, they are the main containers of the other pieces, which also hold smaller pieces. The smaller pieces indicate their maze location via coordinates.
+• What will be the overall design? 
+• Which classes are needed? 
+the maze, as the labyrinth representation
+	ID
+	name
+	halls
+	paths
+	branches
+the hall, a representation of a path or a branch in the maze, divided into areas
+	ID
+	areas
+the area, the different spaces a hall is composed of
+	ID
+	coordinates
+	portal
+
+• What design patterns are used to model the concepts and relationships? 
+Containers and factories are the main patterns needed to generate the maze based on the following rules:
 1.- A maze has one or many halls
 2.- A hall has one or many areas
-3.- halls are considered dead ends or paths if they have an area that can be defined as an entrance or exit
+3.- halls are considered as simple branches or as paths if they have an area that can be defined as an entrance or exit
 4.- areas can be be entrance or exits if they hold a portal
 5.- areas have a coordinate to define its position in the maze
 6.- areas coordinates all have the same length, generally those would be 2D or 3D coordinates
