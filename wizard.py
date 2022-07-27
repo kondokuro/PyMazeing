@@ -4,8 +4,9 @@ import sys
 
 
 def _summon_area(with_portal: bool = False,
-                 linked_to: sections.Area = None) -> sections.Area:
-    """Magic spell to get a new maze area. Defaults to a single room.
+                 linked_to: sections.Area = None,
+                 connection_direction: ) -> sections.Area:
+    """Magic spell to get a new maze area. Defaults to an empty room.
 
     Keyword arguments:
 
@@ -107,8 +108,7 @@ def cast_maze(portals: int = 1,
             if add_entrance or add_exit:
                 portals_to_build -= 1
 
-        new_branch = _summon_hall(
-            hall_length, branch_from, add_entrance, add_exit)
+        new_branch = _summon_hall(hall_length, branch_from, add_entrance, add_exit)
         new_maze.halls.append(new_branch)
 
     return new_maze

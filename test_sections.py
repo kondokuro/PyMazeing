@@ -1,5 +1,5 @@
-from sections import Maze, Hall, Area
 import pytest
+from sections import Maze, Hall, Area
 
 
 def test_area_each_instance_has_increased_id():
