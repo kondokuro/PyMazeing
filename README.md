@@ -52,8 +52,6 @@ This example figure is a representation of a 2D Maze with 9 halls, one path and 
 The labyrinth representation
 - Name, optional short and fun description of the maze
 - Halls, list of all the halls of the maze
-- Paths, list of paths that can complete the maze
-- Branches, list of dead ends
 
 #### HALL
 Representation of a path or a branch in the maze
@@ -67,7 +65,7 @@ The different spaces a hall is divided into
 
 #### PORTAL
 Defines entrance or exit from a maze, or the access to another maze
-- Type, is the portal an entrance, an exit or a maze connection
+- Kind, is the portal an entrance, an exit or a maze connection
 - Maze, maze name this portal conects to
 
 #### Maze rules:

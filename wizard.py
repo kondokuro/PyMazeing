@@ -3,23 +3,6 @@ import random
 import sys
 
 
-def _summon_area(with_portal: bool = False,
-                 linked_to: sections.Area = None,
-                 connection_direction: ) -> sections.Area:
-    """Magic spell to get a new maze area. Defaults to an empty room.
-
-    Keyword arguments:
-
-    - with_portal -- the area will hold a portal (default False)
-    - linked_to -- connects the area with the given one (default None)
-    """
-    new_area = sections.Area(with_portal)
-    if linked_to:
-        new_area.links.append(linked_to)
-        linked_to.links.append(new_area)
-    return new_area
-
-
 def _summon_hall(length: int = 1,
                  branching_from: sections.Area = None,
                  has_start: bool = False,
