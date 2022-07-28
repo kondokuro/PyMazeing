@@ -1,9 +1,15 @@
 # PyMazeing
+
 ## About 
-PyMazing is a D&D themed maze generator, with class definitions for the different maze sections, and generator functions.
-It is intended for level designer enthusiast, this means that the result can be used to render or build playable mazes anywhere.
-The maze spell provides a base structure for a maze to play in, as a space with a collection interconnected halls with many dead ends and a main path. The designer can then focus on placing interesting objectives.
-Specific areas would be marked as entrance or exit of the maze in order to define the main path that a traveller must cross to complete it.
+
+PyMazing is a D&D themed maze generator, it includes class definitions for the different maze sections and a few generator functions to create the parts.
+
+It is intended for dungeon, level, or labyrinth design enthusiast, this means that the result can be used to render or build playable mazes anywhere.
+
+The maze spell provides a complete structure to play in, this is, a collection of interconnected dead end hallways and a main path; then the designer can then focus on just placing interesting objectives.
+
+Specific areas would contain entrance or exit from the maze, used for defining the main path that a traveller must cross to complete it.
+
 The complexity of the maze is based on the number of halls and how many branches each hall can have, as well as how long the halls are. 
 
 ## User Interface 
@@ -20,7 +26,7 @@ labyrinth = wizard.cast_maze(
 	max_hall_length:int=1)
 ```
 
-A simple function call returns the full maze structure, or it can be constructed by using more specific generator functions to manually generate the different maze sections, if the desire is to have more control over the shape of the maze.
+A simple function call returns the full maze structure. Alternatively, a maze can be constructed by using the more specific generator functions for the different maze sections, if the desire is to have more control over the shape of the maze.
 
 ## Technical Specification 
 
@@ -47,7 +53,7 @@ The labyrinth representation
 - Name, optional short and fun description of the maze
 - Halls, list of all the halls of the maze
 - Paths, list of paths that can complete the maze
-- Branches, list of dead end branches
+- Branches, list of dead ends
 
 #### HALL
 Representation of a path or a branch in the maze
@@ -57,12 +63,12 @@ Representation of a path or a branch in the maze
 #### AREA
 The different spaces a hall is divided into
 - Coordinates, represent the area’s location in the maze space
-- Portal, is this area marked as an entrance or exit from the maze
+- Portall, list of entrances or exits from the maze
 
 #### PORTAL
-Defines entrance or exit from a maze
-- Type, enum of portal type
-- Mazes, list of maze names this portal conects
+Defines entrance or exit from a maze, or the access to another maze
+- Type, is the portal an entrance, an exit or a maze connection
+- Maze, maze name this portal conects to
 
 #### Maze rules:
 1.- A Maze is composed of one to many Halls
@@ -79,21 +85,15 @@ Defines entrance or exit from a maze
 
 
 ## Testing
-Each function use case is based on its unit tests.
-
+Test for the generator functions are based on the use cases and the defined rules.
 
 ## Deployment 
 This work is meant to be used as a library, to be used alongside another project.
 
-## Planning 
-- Define the base structures to represent the maze.
-- Test cases show use cases for the generator functions and prove that they produce valid maze sections.
-- Maze generation provides a direction to the maze halls.
-- Creating the caster class.
-
 ## Broader Context 
+
 ### Limitations of the current design
-The maximum mumber of “doors” an are can have is based on square spacial limitations, this means that in a 2D maze the max number of “doors” are 4 (North, East, South and West) and on 3D having 6 (up and down).
+The maximum mumber of “doors” an are can have is based on square coordinate system, this means that in a 2D maze the max number of “doors” are 4 (North, East, South and West) and on 3D having 6 (up and down), no diagonals are considered.
 
 ### Possible extensions 
 - Additional portal like element to teleport the player to another area (non connected link).
