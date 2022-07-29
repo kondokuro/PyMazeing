@@ -10,32 +10,27 @@ PortalKind = Enum('PortalKind', 'ENTRANCE CONNECTION EXIT')
 
 @dataclass
 class Portal:
-    """Definition of a maze entrance, exit or a connection between mazes."""
+    """Defines a maze entrance, exit or a connection between mazes."""
     kind: PortalKind
     maze: str
 
 
 @dataclass
 class Area:
-    """The representation of a single space in a maze.
-    There are two types of areas portals and rooms, portals represent an
-    entrance or exist point of the maze.
-    """
+    """A single space in a hall."""
     coordinates: tuple
     portal: Portal
 
 
 @dataclass
 class Hall:
-    """Representation of a passage in the maze, divided into areas. 
-    Considered as a path If any of its areas have a portal, otherwise as a branch.
-    """
+    """A passage in the maze, divided into areas."""
     areas: list(Area)
     is_path: bool
 
 
 @dataclass
 class Maze:
-    """The data representation of a labyrinth."""
+    """The labyrinth."""
     name: str
     halls: list(Hall)
