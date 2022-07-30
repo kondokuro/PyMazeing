@@ -1,30 +1,26 @@
-import wizard
+"""
+Tests to define and verify the wizard spells behaviour
+"""
 import pytest
+import wizard
 
 
-def test_summon_area_linked_to_area_both_areas_are_linked():
-    area = wizard._summon_area()
-    room = wizard._summon_area(linked_to=area)
-    assert room in area.links
-    assert area in room.links
+def test_sumon_hall_defaul_casting_returns_single_portal_room(self):
+    pass
 
+def test_sumon_hall_lenght_is_too_small_returns_spell_error(self):
+    pass
 
-def test_find_connectable_areas_returns_all_areas_within_link_limit():
-    external = wizard._summon_area()
-    test_branches = [
-        wizard._summon_hall(2, external),  # 2 links, 1 link
-        wizard._summon_hall(3)             # 1 link,2 links, 1 link
-    ]
-    assert len(wizard._find_connectable_areas(test_branches, 2)) == 3
+def test_sumon_hall_branching_area_is_fully_branched_returns_spell_error(self):
+    pass
 
+def test_sumon_hall_new_hall_has_no_space_returns_spell_error(self):
+    pass
 
-def test_summon_hall_returned_areas_are_connected():
-    hall = wizard._summon_hall(4)
-    for area in hall.areas:
-        assert area.links
-        for link in area.links:
-            assert link in hall.areas
+def test_sumon_hall_new_hall_has_required_number_of_portals(self):
+    pass
 
+def test_sumon_hall_
 
 @pytest.mark.parametrize(
     "length, with_entrance, with_exit",

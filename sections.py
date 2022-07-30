@@ -4,14 +4,21 @@ Module containing all the pieces needed to represent a maze.
 from dataclasses import dataclass
 from enum import Enum
 
+"""Simple tag to identify the portal purpose."""
+PortalType = Enum('PortalType', 'ENTRANCE CONNECTION EXIT')
 
-PortalKind = Enum('PortalKind', 'ENTRANCE CONNECTION EXIT')
+"""The different hall structures:
+Path has entrance and exit areas
+Exit only has an exit area
+Branch has no portal areas
+"""
+HallType = Enum('HallType', 'PATH EXIT BRANCH')
 
 
 @dataclass
 class Portal:
     """Defines a maze entrance, exit or a connection between mazes."""
-    kind: PortalKind
+    kind: PortalType
     maze: str
 
 
@@ -25,8 +32,7 @@ class Area:
 @dataclass
 class Hall:
     """A passage in the maze, divided into areas."""
-    areas: list(Area)
-    is_path: bool
+    areas: list[Area]
 
 
 @dataclass

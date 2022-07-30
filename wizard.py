@@ -8,24 +8,26 @@ import sys
 
 
 def summon_hall(length: int=1,
-                existing_halls: list[sections.Hall]=[],
+                number_of_portals: int=0,
                 branching_from: sections.Area=None,
-                number_of_portals: int=0) -> sections.Hall:
+                existing_halls: list[sections.Hall]=[]) -> sections.Hall:
     """Cast this spell to a invoque an enchanted hall, to complement
-    an existing magical maze. 
-    Its weakest execution provides a single room, it will appear on the
-    starting point.
+    an existing magical maze, or to start creating one. 
 
     Keyword arguments:
 
-    - length --  number of areas this hall is dived itnto. (defaults to 1)
-    - existing_halls -- list of halls in the orign maze, to check for 
-    ocupied coordinates.
-    - branching_from --  an area from another hall that will be the origin of the
-    new hall. (defaults to None)
+    - length --  number of areas this hall is dived itnto, minimum values is 
+    one, which creates a single room hall.
     - number_of_portals -- amount of portals the hall will have, it will be
     validated against the length of the hall.
+    - branching_from --  an area from another hall that will be the starting 
+    point of the new hall, if none is given the hall assumes strating from the 
+    origin.
+    - existing_halls -- list of halls in the orignal maze, to avoid collissions
+    with existing areas.
     """
+    # parameter validation lenght is >1, 
+    # number of portals is > 0 and <= than the hall length
     # gather non available coordinates
     # create resulting hall
     new_hall = sections.Hall()

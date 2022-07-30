@@ -1,5 +1,5 @@
 """
-Module with the skills for maze navigation.
+Contains the definitions of the rouge skills used for navigating a maze.
 """
 import errors
 import sections
