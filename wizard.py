@@ -1,29 +1,40 @@
-import sections
+"""
+Module with the spells for creating mazes.
+"""
+import errors
 import random
+import sections
 import sys
 
 
-def _summon_hall(length: int = 1,
-                 branching_from: sections.Area = None,
-                 has_start: bool = False,
-                 has_end: bool = False) -> sections.Hall:
-    """Magic spell to a get new maze hall.
-    All areas in th hall are sequentially connected.
-    Defaults to a single room hall.
+def summon_hall(length: int=1,
+                existing_halls: list[sections.Hall]=[],
+                branching_from: sections.Area=None,
+                number_of_portals: int=0) -> sections.Hall:
+    """Cast this spell to a invoque an enchanted hall, to complement
+    an existing magical maze. 
+    Its weakest execution provides a single room, it will appear on the
+    starting point.
 
     Keyword arguments:
 
-    - length --  number of areas in the hall (default 1)
-    - branching_from --  an area from another hall (default None)
-    - has_start --  first area is a portal (default False)
-    - has_end --  last area is a portal (default False)
+    - length --  number of areas this hall is dived itnto. (defaults to 1)
+    - existing_halls -- list of halls in the orign maze, to check for 
+    ocupied coordinates.
+    - branching_from --  an area from another hall that will be the origin of the
+    new hall. (defaults to None)
+    - number_of_portals -- amount of portals the hall will have, it will be
+    validated against the length of the hall.
     """
+    # gather non available coordinates
+    # create resulting hall
     new_hall = sections.Hall()
-    start = _summon_area(has_start, branching_from)
-    new_hall.areas.append(start)
+    # replace the coordinate for an available one
+    # update the non available coordinates
 
-    for i in range(length - 2):
-        new_area = _summon_area(linked_to=new_hall.areas[i])
+    # length considerations starting from inxex zero
+    for i in range(length - 1):
+        new_area = sections.Area(new_hall.areas[i].coordinates)
         new_hall.areas.append(new_area)
 
     end = _summon_area(has_end, new_hall.areas[-1])
