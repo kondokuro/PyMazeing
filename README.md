@@ -22,7 +22,7 @@ import wizard
 labyrinth = wizard.cast_maze(
 	total_portals:int=0,
 	total_halls:int=1,
-    min_hall_length:int=1,
+	min_hall_length:int=1,
 	max_hall_length:int=1)
 ```
 
@@ -103,7 +103,7 @@ Existing halls, used to reference occupied coordinates so that the new hall does
 5.- Hall Areas do not cross over their Hall
 6.- Branches are Halls without Portals
 7.- Areas only belong to a single Hall
-8.- Areas can have zero to many Portals
+8.- Areas can have a maximum of one Portal
 9.- Areas never have the same coordinates
 10.- Portals belong to an Area
 11.- Portals define entrance or exit from a maze
@@ -120,7 +120,6 @@ This work is meant to be used as a library, to be used alongside another project
 The maximum number of “doors” an area can have is based on the square coordinate system; this means that in a 2D maze the max number of “doors” are 4 (North, East, South and West) and in 3D having 6 (up and down), no diagonals are considered because 3D maze construction would be a bit too complicated for now.
 
 Another limitation is setting areas with only one portal, it will make things simpler to construct if we can assume that there is one portal per area.
-
 
 ### Possible extensions 
 - Have portals connect different mazes
