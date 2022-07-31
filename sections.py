@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 """Simple tag to identify the portal purpose."""
-PortalType = Enum('PortalType', 'ENTRANCE CONNECTION EXIT')
+PortalType = Enum('PortalType', 'ENTRANCE EXIT CONNECTION')
 
 """The different hall structures:
 Path has entrance and exit areas
@@ -25,18 +25,18 @@ class Portal:
 @dataclass
 class Area:
     """A single space in a hall."""
-    coordinates: tuple
+    coordinates: tuple[int]
     portal: Portal
 
 
 @dataclass
 class Hall:
     """A passage in the maze, divided into areas."""
-    areas: list[Area]
+    areas: tuple[Area]
 
 
 @dataclass
 class Maze:
     """The labyrinth."""
     name: str
-    halls: list(Hall)
+    halls: list[Hall]
