@@ -23,10 +23,13 @@ class SumonHallTests:
             hall = wizard.summon_hall(length)
 
     def test_new_hall_has_no_space_raisess_spell_error(self):
-        pass
+        # make a hall where all the areas will occupy the new hall available space
+        with pytest.raises(errors.SpellError):
+            hall = wizard.summon_hall(length)
 
     def test_starting_poin_is_occupied_raisess_spell_error(self):
-        pass
+        with pytest.raises(errors.SpellError):
+            hall = wizard.summon_hall(length)
 
     @pytest.mark.parametrize("", [()])
     def test_new_hall_has_required_number_of_portals(self):
@@ -34,7 +37,8 @@ class SumonHallTests:
 
     @pytest.mark.parametrize("", [()])
     def test_too_many_portals_raises_spell_error(self):
-        pass
+        with pytest.raises(errors.SpellError):
+            hall = wizard.summon_hall(length)
 
     @pytest.mark.parametrize("", [()])
     def test_new_hall_has_required_length(self):
