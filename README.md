@@ -32,6 +32,7 @@ A simple function call returns the full maze structure. Alternatively, a maze ca
 
 Mazes are composed of halls, which are logically divided into areas, as the representation of the hall’s lenght, areas hold the information to indicate their location in the maze via coordinates.
 
+```
   ...... _____  _____  _____  ______  _____  _____  _____  _____  _____ 
 ||  P  ::  2  ::  2  ||  >  ::  >   ::  v  ||  >  ::  >  ::  >  ::  v  ||
 || _ _ ::_____:: _ _ || _ _ ::_____ :: _ _ || _ _ ::_____::_____:: _ _ ||
@@ -43,6 +44,7 @@ Mazes are composed of halls, which are logically divided into areas, as the repr
 || _ _ ::_____::_____|| _ _ :: _ _  ||_____::_____|| _ _ ::_____::_____||
 ||  >  ::  >  ::  >  ::  ^  ||  4   ::  4  ||  8  ::  >  ::  >  ::  p  ||
 ||_____::_____::_____::_____||_____ ::_____||_____::_____::_____::.....||
+```
 
 This example figure is a representation of a 2D Maze with 9 halls, one path and 2 portals, the halls are numbered, the path is marked and the portals are located at the edges.
 
