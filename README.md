@@ -22,7 +22,7 @@ import wizard
 labyrinth = wizard.cast_maze(
 	total_portals:int=0,
 	total_halls:int=1,
-      min_hall_length:int=1,
+    min_hall_length:int=1,
 	max_hall_length:int=1)
 ```
 
@@ -70,19 +70,43 @@ Defines entrance or exit from a maze, or the access to another maze
 - Kind, is the portal an entrance, an exit or a maze connection
 - Maze, maze name this portal conects to
 
-#### Maze rules:
-1.- A Maze is composed of one to many Halls
-2.- A Hall is divided into one or many Areas
-3.- Paths are Halls with at least an Area with a Portal
-4.- Hall Areas do not cross over their Hall
-5.- Branches are Halls without Portals
-6.- Areas only belong to a single Hall
-7.- Areas can have zero to many Portals
-8.- Areas never have the same coordinates
-9.- Portals belong to an Area
-10.- Portals define entrance or exit from a maze
-11.- Portals can connect different mazes
+### Module definitions
 
+#### ROGUE SKILLS
+The functions in this module are named skills, used for gathering information from the maze structure.
+- Find Paths, lists the halls in a maze that can be considered as paths
+- Detect Branches, lists the halls in the maze that are considered as dead ends
+- Track Portals, list of all the areas containing portals in the maze
+
+#### WIZARD SPELLS
+The functions in this module are named spells, used to create mazes and other structures.
+
+##### Maze, 
+generates a single complete maze based on the following parameters
+- Number of halls, total amount of halls the maze will have
+- Number of portals, total entrances and exits the maze will have
+Max portals per hall, how many portals a hall in the maze can have
+Min hall length, used to define the smallest size of the many halls
+Max hall length, used to define the longest size of the many halls
+Summon Hall, brings forth the desired hall based on the following parameters
+Length, how many areas the hall will be divided into
+Number of portals, how many portals should the hall have
+Branching from, an area that will serve as the hall’s start point
+Existing halls, used to reference occupied coordinates so that the new hall does not collide with another
+
+
+### Maze rules:
+1.- A Maze is composed of one to many Halls
+2.- A Maze must have at least one Portal
+3.- A Hall is divided into one or many Areas
+4.- Paths are Halls with at least an Area with a Portal
+5.- Hall Areas do not cross over their Hall
+6.- Branches are Halls without Portals
+7.- Areas only belong to a single Hall
+8.- Areas can have zero to many Portals
+9.- Areas never have the same coordinates
+10.- Portals belong to an Area
+11.- Portals define entrance or exit from a maze
 
 ## Testing
 Test for the generator functions are based on the use cases and the defined rules.
@@ -93,12 +117,19 @@ This work is meant to be used as a library, to be used alongside another project
 ## Broader Context 
 
 ### Limitations of the current design
-The maximum mumber of “doors” an are can have is based on square coordinate system, this means that in a 2D maze the max number of “doors” are 4 (North, East, South and West) and on 3D having 6 (up and down), no diagonals are considered.
+The maximum number of “doors” an area can have is based on the square coordinate system; this means that in a 2D maze the max number of “doors” are 4 (North, East, South and West) and in 3D having 6 (up and down), no diagonals are considered because 3D maze construction would be a bit too complicated for now.
+
+Another limitation is setting areas with only one portal, it will make things simpler to construct if we can assume that there is one portal per area.
+
 
 ### Possible extensions 
-- Additional portal like element to teleport the player to another area (non connected link).
-- Adding diagonal “doorways”.
-- Support for alternate coordinate systems, for example hex spaces instad of squares.
+- Have portals connect different mazes
+- Allow multiple portals per area, this will require another parameter to define the max number of portals per area when casting the maze spell and generating a randomized labyrinth
+- Provide a spell to create multiple connected mazes
+- Additional portal like element to teleport the player to another area (non connected link)
+- Consider diagonal direction for “doorways” 
+- Support for alternate coordinate systems, for example hex spaces instead of squares
 - Definition of open and closed halls with keys to find.
 - Definition of additional collectables to find, rather than just finding the exit.
-- Adding traps into an area.
+- Adding traps into an area
+- Additional portal like element to teleport the player to another area (non connected link).
