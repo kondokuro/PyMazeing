@@ -72,13 +72,14 @@ Defines entrance or exit from a maze, or the access to another maze
 
 ### Module definitions
 
-#### ROGUE SKILLS
+#### rogue
 The functions in this module are named skills, used for gathering information from the maze structure.
 - Find Paths, lists the halls in a maze that can be considered as paths
 - Detect Branches, lists the halls in the maze that are considered as dead ends
 - Track Portals, list of all the areas containing portals in the maze
+- Gather Coordinates, lists the hall's map coodinates
 
-#### WIZARD SPELLS
+#### wizard
 The functions in this module are named spells, used to create mazes and other structures.
 
 ##### Maze, 
