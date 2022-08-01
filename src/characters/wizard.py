@@ -14,7 +14,7 @@ class SpellError(Exception):
 def summon_hall(length: int = 1,
                 number_of_portals: int = 0,
                 branching_from: sections.Area = None,
-                existing_halls: list[sections.Hall] = []) -> sections.Hall:
+                occupied_spaces: list[sections.Coordinates] = [(0, 0), ]) -> sections.Hall:
     """Cast this spell to a invoque an enchanted hall, to complement
     an existing magical maze, or to start creating one. 
 
@@ -27,14 +27,11 @@ def summon_hall(length: int = 1,
     - branching_from --  an area from another hall that will be the starting 
     point of the new hall, if none is given the hall assumes strating from the 
     origin.
-    - existing_halls -- list of halls in the orignal maze, to avoid collissions
-    with existing areas.
+    - occupied_spaces -- list of spaces in the maze occupied by an area.
     """
     # parameter validation lenght is >1,
     # number of portals is > 0 and <= than the hall length
     # gather non available coordinates
-    # create resulting hall
-    new_hall = sections.Hall()
     # replace the coordinate for an available one
     # update the non available coordinates
 
@@ -43,6 +40,8 @@ def summon_hall(length: int = 1,
         new_area = sections.Area(new_hall.areas[i].coordinates)
         new_hall.areas.append(new_area)
 
+    # create resulting hall
+    # new_hall = sections.Hall()
     #end = _summon_area(has_end, new_hall.areas[-1])
     # new_hall.areas.append()
 
