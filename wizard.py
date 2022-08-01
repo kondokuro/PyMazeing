@@ -1,16 +1,20 @@
 """
 Module with the spells for creating mazes.
 """
-import errors
 import random
 import sections
 import sys
 
 
-def summon_hall(length: int=1,
-                number_of_portals: int=0,
-                branching_from: sections.Area=None,
-                existing_halls: list[sections.Hall]=[]) -> sections.Hall:
+class SpellError(Exception):
+    """Receive a message why the spell failed."""
+    pass
+
+
+def summon_hall(length: int = 1,
+                number_of_portals: int = 0,
+                branching_from: sections.Area = None,
+                existing_halls: list[sections.Hall] = []) -> sections.Hall:
     """Cast this spell to a invoque an enchanted hall, to complement
     an existing magical maze, or to start creating one. 
 
@@ -26,7 +30,7 @@ def summon_hall(length: int=1,
     - existing_halls -- list of halls in the orignal maze, to avoid collissions
     with existing areas.
     """
-    # parameter validation lenght is >1, 
+    # parameter validation lenght is >1,
     # number of portals is > 0 and <= than the hall length
     # gather non available coordinates
     # create resulting hall
@@ -39,8 +43,8 @@ def summon_hall(length: int=1,
         new_area = sections.Area(new_hall.areas[i].coordinates)
         new_hall.areas.append(new_area)
 
-    end = _summon_area(has_end, new_hall.areas[-1])
-    new_hall.areas.append(end)
+    #end = _summon_area(has_end, new_hall.areas[-1])
+    # new_hall.areas.append()
 
     return new_hall
 
@@ -55,10 +59,10 @@ def _find_connectable_areas(halls: list, link_limit: int) -> list:
     return areas
 
 
-def cast_maze(portals: int = 1,
-              halls: int = 1,
-              branching_limit: int = 4,
-              hall_length_range: tuple = (1, 1)) -> sections.Maze:
+def conjure_maze(portals: int = 1,
+                 halls: int = 1,
+                 branching_limit: int = 4,
+                 hall_length_range: tuple = (1, 1)) -> sections.Maze:
     """Magic spell to creates a maze. Defaults to a single portal room.
 
     Keyword arguments:
@@ -79,7 +83,7 @@ def cast_maze(portals: int = 1,
 
     hall_length = random.randint(length_min, length_max)
     add_exit = True if portals > 1 and length_max > 1 else False
-    main_path = _summon_hall(hall_length, None, True, add_exit)
+    main_path = sections.Hall(hall_length, None, True, add_exit)
     new_maze.halls.append(main_path)
     if halls == 1:
         return new_maze
@@ -104,7 +108,8 @@ def cast_maze(portals: int = 1,
             if add_entrance or add_exit:
                 portals_to_build -= 1
 
-        new_branch = _summon_hall(hall_length, branch_from, add_entrance, add_exit)
+        new_branch = sections.Hall(
+            hall_length, branch_from, add_entrance, add_exit)
         new_maze.halls.append(new_branch)
 
     return new_maze
@@ -159,7 +164,7 @@ def main(*args):
     length = args[4] if arg_count > 4 \
         else (random.randint(1, 15), random.randint(16, 30))
 
-    labyrinth = cast_maze(portals, halls, branching, length)
+    labyrinth = conjure_maze(portals, halls, branching, length)
     print(labyrinth)
     for hall in labyrinth.halls:
         print(hall)

@@ -1,12 +1,18 @@
 """
 Contains the definitions of the rogue skills used for navigating a maze.
 """
-import errors
 import sections
 
 
+class SkillError(Exception):
+    """Notice the mistake on the skill check."""
+    pass
+
+
 def find_paths(maze: sections.Maze) -> list[sections.Hall]:
-    """"""
+    """Never get lost using this skill, get all the paths that lead from the 
+    entrances to exits.
+    """
     pass
 
 

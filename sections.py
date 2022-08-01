@@ -15,6 +15,7 @@ Branch has no portal areas
 """
 HallType = Enum('HallType', 'PATH EXIT BRANCH')
 
+"""Simple definition of plane coordinates for maps."""
 Coordinates = namedtuple('Coordinates', ['X', 'Y', 'Z'], defaults=[0, 0, 0])
 
 
@@ -35,7 +36,7 @@ class Area:
 @dataclass
 class Hall:
     """A passage in the maze, divided into areas."""
-    areas: tuple[Area]
+    areas: list[Area]
 
 
 @dataclass
