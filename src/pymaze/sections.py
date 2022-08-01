@@ -22,25 +22,25 @@ Coordinates = namedtuple('Coordinates', ['X', 'Y', 'Z'], defaults=[0, 0, 0])
 @dataclass
 class Portal:
     """Defines a maze entrance, exit or a connection between mazes."""
-    kind: PortalType
-    maze: str
+    #kind: PortalType
+    maze: str = ''
 
 
 @dataclass
 class Area:
     """A single space in a hall."""
-    coordinates: Coordinates
-    portal: Portal
+    coordinates: Coordinates = Coordinates()
+    portal: Portal = None
 
 
 @dataclass
 class Hall:
     """A passage in the maze, divided into areas."""
-    areas: list[Area]
+    areas: tuple[Area] = None
 
 
 @dataclass
 class Maze:
     """The labyrinth."""
-    name: str
-    halls: list[Hall]
+    name: str = ''
+    halls: tuple[Hall] = None
