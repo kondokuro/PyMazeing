@@ -4,11 +4,17 @@ Test to define and verify the rouge skills behaviour
 import pytest
 from src.characters import rogue
 from src.characters import wizard
+from src.pymaze import sections
 
 
-@pytest.mark.parametrize("maze_params, expected", [(1, 1), ])
-def test_find_paths_returns_all_existing_paths(maze_params, expected):
-    labyrinth = wizard.conjure_maze()
+def _create_areas(count=1) -> list[sections.Area]:
+    return [sections.Area((0, i)) for i in count]
+
+
+@pytest.mark.parametrize("expected, maze_params",
+                         [(1, [1, ]), (1, [1, 2, ])])
+def test_find_paths_returns_all_existing_paths(expected, maze_params):
+    labyrinth = wizard.conjure_maze(*maze_params)
     maze_paths = rogue.find_paths(labyrinth)
     assert len(maze_paths) is expected, "too many or few paths found"
 
