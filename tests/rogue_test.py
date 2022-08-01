@@ -2,8 +2,8 @@
 Test to define and verify the rouge skills behaviour
 """
 import pytest
-import rogue
-import wizard
+from src.characters import rogue
+from src.characters import wizard
 
 
 @pytest.mark.parametrize("maze_params, expexted"[()])

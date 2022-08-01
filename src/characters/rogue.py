@@ -1,7 +1,7 @@
 """
 Contains the definitions of the rogue skills used for navigating a maze.
 """
-import sections
+from src.pymaze import sections
 
 
 class SkillError(Exception):

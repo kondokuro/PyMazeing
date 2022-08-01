@@ -2,8 +2,8 @@
 Module with the spells for creating mazes.
 """
 import random
-import sections
 import sys
+from src.pymaze import sections
 
 
 class SpellError(Exception):
