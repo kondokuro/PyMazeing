@@ -1,6 +1,7 @@
 """
 Module containing all the pieces needed to represent a maze.
 """
+from collections import namedtuple
 from dataclasses import dataclass
 from enum import Enum
 
@@ -14,6 +15,8 @@ Branch has no portal areas
 """
 HallType = Enum('HallType', 'PATH EXIT BRANCH')
 
+Coordinates = namedtuple('Coordinates', ['X', 'Y', 'Z'], defaults=[0, 0, 0])
+
 
 @dataclass
 class Portal:
@@ -25,7 +28,7 @@ class Portal:
 @dataclass
 class Area:
     """A single space in a hall."""
-    coordinates: tuple[int]
+    coordinates: Coordinates
     portal: Portal
 
 
