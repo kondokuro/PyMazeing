@@ -2,8 +2,8 @@
 Tests to define and verify the wizard spells behaviour
 """
 import pytest
-from src.pymaze import sections
 from src.characters import wizard
+from src.pymaze import sections
 
 
 class SumonHallTests:
