@@ -4,7 +4,7 @@ Test to define and verify the rouge skills behaviour
 import pytest
 from src.characters import rogue
 from src.characters import wizard
-from src.pymaze import sections
+from src.maze import sections
 
 
 def _create_areas(count=1) -> list[sections.Area]:
