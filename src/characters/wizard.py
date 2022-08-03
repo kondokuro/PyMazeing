@@ -2,7 +2,6 @@
 Module with the spells for creating mazes.
 """
 import random
-import sys
 from src.maze import sections
 
 
