@@ -32,7 +32,7 @@ Mazes are composed of halls, which are logically divided into areas, as the repr
 +  P  +-----+-----+-----+-----+-----+-----+-----+-----+-----+ 
 |  1  .  2  .  2  |  >  .  >  .  v  |  >  .  >  .  >  .  v  |
 |  .  +-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  |
-|  1  |  2  .  2  |  ^  .  <  |  >  .  ^  |  6  |  v  .  <  |
+|  v  |  2  .  2  |  ^  .  <  |  >  .  ^  |  6  |  v  .  <  |
 +  .  +-----+-----+-----+  .  +-----+  .  +  .  +  .  +-----|
 |  >  .  v  |  3  .  3  |  ^  .  5  .  6  .  6  |  v  |  7  |
 +-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  +  .  |
@@ -48,10 +48,27 @@ This example figure is a representation of a 2D Maze with 9 halls, one path and 
 
 #### rogue
 The functions in this module are named skills, used for gathering information from the maze structure.
-- Find Paths, lists the halls in a maze that can be considered as paths
-- Detect Branches, lists the halls in the maze that are considered as dead ends
-- Track Portals, list of all the areas containing portals in the maze
-- Gather Coordinates, lists the hall's map coodinates
+
+##### Find Paths
+Lists the halls in a maze that can be considered as paths
+
+##### Is Path
+Defines if the current hall is a path
+
+##### Detect Branches
+Lists the halls in the maze that are considered as dead ends
+
+##### Track Portals
+List of all the areas containing portals in the maze
+
+##### Track Hall Portals
+List of all the areas containing portals in the hall
+
+##### Map Maze
+List of all the coordinates of the areas in the maze
+
+##### Map Hall Location
+List of all the coordinates of the areas in the hall
 
 #### wizard
 The functions in this module are named spells, used to create mazes and other structures.
@@ -71,6 +88,12 @@ brings forth the desired hall based on the following parameters
 - Branching from, an area or cordinate that will serve as the hall’s start point
 - Existing halls, used to reference occupied coordinates so that the new hall does not collide with another
 
+##### Invoke Area
+Adds some space for a hall based on the following parameters
+- Coordinates, target location of the space
+- Occupied spaces, the coordinates not available for the invocation
+- Portals, names of the mazes the portals of this area will have
+
 #### sections
 
 #### MAZE
@@ -80,7 +103,7 @@ The labyrinth representation
 
 ##### Categories
 
-###### Entrance is Exit
+###### Dead End
 - All portals are in the same area
 - Has one path
 - All other halls are branches
@@ -102,18 +125,22 @@ Representation of a stretch of space in the maze, divided into paths or branches
 - Passages, list of connections with other halls
 
 ##### Categories
-- Branch, a hall with no areas holding a portal.
-- Path, a hall with at least an area holding a portal, with in turn can be sub-categorized in:
-	- Complete, a hall that has more than one portal area.
-	- Incomplete, a hall with just one portal area.
-	- Connected, a path that branches from another path
-	- Disconnected, a path that branches from a branch
-	- Composed, parts of different branches that lead to a path (only on mazes with more than one portal)
+
+###### Branch
+Hall with no areas holding a portal.
+
+###### Path
+Hall with at least an area holding a portal, with in turn can be sub-categorized in:
+- Complete, a hall that has more than one portal with at least one on a different area.
+- Incomplete, a hall with just one portal area.
+- Connected, a path that branches from another path
+- Disconnected, a path that branches from a branch
+- Composed, parts of different branches that lead to a path (only on mazes with more than one portal)
 
 #### AREA
 The different spaces a hall is divided into
 - Coordinates, represent the area’s location in the maze space
-- Portall, list of entrances or exits from the maze
+- Portals, list of entrances or exits from the maze
 
 ### systems
 The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
@@ -148,12 +175,11 @@ Defines the location of an area in the maze coordinate system, loosely based on 
 12.- Portals can connect different mazes
 13.- Portals can exist in multiple areas from different mazes
 
-
 ## Testing
 Test for the generator functions are based on the use cases and the defined rules.
 
 ## Deployment 
-This work is meant to be used as a library, to be used alongside another project.
+This work is meant to be used as a library, to be used alongside another project. I will be published on Pipy for users to install.
 
 ## Broader Context 
 
