@@ -58,6 +58,7 @@ The labyrinth representation
 #### HALL
 Representation of a path or a branch in the maze.
 - Areas, list of spaces the hall is composed of
+- Passages, list of connections with other halls
 
 ##### Categories
 - Branch, a hall with no areas holding a portal.
@@ -71,6 +72,10 @@ Representation of a path or a branch in the maze.
 The different spaces a hall is divided into
 - Coordinates, represent the area’s location in the maze space
 - Portall, list of entrances or exits from the maze
+
+#### PASSAGE
+Connection between halls
+- Connecting areas, a pair of areas belonging to different halls
 
 #### PORTAL
 Defines entrance or exit from a maze, or the access to another maze
@@ -90,7 +95,7 @@ The functions in this module are named skills, used for gathering information fr
 The functions in this module are named spells, used to create mazes and other structures.
 
 ##### Conjure Maze, 
-generates a single complete maze based on the following parameters
+Creates a single complete maze based on the following parameters
 - Number of halls, total amount of halls the maze will have
 - Number of portals, total entrances and exits the maze will have
 - Max portals per hall, how many portals a hall in the maze can have
