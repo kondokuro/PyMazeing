@@ -19,11 +19,7 @@ From the wizard module use the cast_maze function to obtain a maze instance.
 ```python
 import wizard
 
-labyrinth = wizard.cast_maze(
-	total_portals:int=0,
-	total_halls:int=1,
-	min_hall_length:int=1,
-	max_hall_length:int=1)
+labyrinth = wizard.cast_maze(total_portals, total_halls, min_hall_length, max_hall_length)
 ```
 
 A simple function call returns the full maze structure. Alternatively, a maze can be constructed by using the more specific generator functions for the different maze sections, if the desire is to have more control over the shape of the maze.
@@ -33,17 +29,17 @@ A simple function call returns the full maze structure. Alternatively, a maze ca
 Mazes are composed of halls, which are logically divided into areas, as the representation of the hall’s lenght, areas hold the information to indicate their location in the maze via coordinates.
 
 ```
-  ...... _____  _____  _____  ______  _____  _____  _____  _____  _____ 
-||  P  ::  2  ::  2  ||  >  ::  >   ::  v  ||  >  ::  >  ::  >  ::  v  ||
-|| _ _ ::_____:: _ _ || _ _ ::_____ :: _ _ || _ _ ::_____::_____:: _ _ ||
-||  1  ||  2  ::  2  ||  ^  ::  <   ||  >  ::  ^  ||  6  ||  v  ::  <  ||
-|| _ _ ||_____::_____||_____:: _ _  ||_____:: _ _ || _ _ || _ _ ::_____||
-||  >  ::  v  ||  3  ||  3  ||  ^   ::  5  ::  6  ::  6  ||  v  ||  7  ||
-||_____:: _ _ || _ _ ||_____|| _ _  :: _ _ ::_____::_____|| _ _ || _ _ ||
-||  v  ::  <  ::  3  ||  >  ::  ^   ||  5  ::  5  ||  v  ::  <  ::  7  ||
-|| _ _ ::_____::_____|| _ _ :: _ _  ||_____::_____|| _ _ ::_____::_____||
-||  >  ::  >  ::  >  ::  ^  ||  4   ::  4  ||  8  ::  >  ::  >  ::  p  ||
-||_____::_____::_____::_____||_____ ::_____||_____::_____::_____::.....||
++  .  +-----+-----+-----+-----+-----+-----+-----+-----+-----+ 
+|  P  .  2  .  2  |  >  .  >  .  v  |  >  .  >  .  >  .  v  |
+|  .  +-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  |
+|  1  |  2  .  2  |  ^  .  <  |  >  .  ^  |  6  |  v  .  <  |
++  .  +-----+-----+-----+  .  +-----+  .  +  .  +  .  +-----|
+|  >  .  v  |  3  .  3  |  ^  .  5  .  6  .  6  |  v  |  7  |
++-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  +  .  |
+|  v  .  <  .  3  |  >  .  ^  |  5  .  5  |  v  .  <  .  7  |
++  .  +-----+-----+  .  +  .  +-----+-----+  .  +-----+-----|
+|  >  .  >  .  >  .  ^  |  4  .  4  |  8  .  >  .  >  .  p  |
++-----+-----+-----+-----+-----+-----+-----+-----+-----+  .  +
 ```
 
 This example figure is a representation of a 2D Maze with 9 halls, one path and 2 portals, the halls are numbered, the path is marked and the portals are located at the edges.
@@ -112,7 +108,7 @@ The functions in this module are named skills, used for gathering information fr
 #### wizard
 The functions in this module are named spells, used to create mazes and other structures.
 
-##### Conjure Maze, 
+##### Conjure Maze
 Creates a single complete maze based on the following parameters
 - Number of halls, total amount of halls the maze will have
 - Number of portals, total entrances and exits the maze will have
@@ -120,7 +116,7 @@ Creates a single complete maze based on the following parameters
 - Min hall length, used to define the smallest size of the many halls
 - Max hall length, used to define the longest size of the many halls
 
-##### Summon Hall, 
+##### Summon Hall
 brings forth the desired hall based on the following parameters
 - Length, how many areas the hall will be divided into
 - Number of portals, how many portals should the hall have
@@ -128,7 +124,7 @@ brings forth the desired hall based on the following parameters
 - Existing halls, used to reference occupied coordinates so that the new hall does not collide with another
 
 
-### Maze rules:
+### Maze rules
 1.- A Maze is composed of one to many Halls
 2.- A Maze must have at least one Portal
 3.- A Hall is divided into one or many Areas
