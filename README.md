@@ -56,16 +56,21 @@ The labyrinth representation
 - Halls, list of all the halls of the maze
 
 ##### Categories
+
 ###### Entrance is Exit
 - All portals are in the same area
 - Has one path
 - All other halls are branches
+
 ###### One Path
 - All portals are in the same hall
 - Some portals are in different areas
 - All other halls are branches
-###### Multiple portals, in different halls
-- Has all the kinds of halls
+
+###### Dungeon
+- May have all the kinds of halls
+- Has multiple portals
+- Some portals are in different areas
 
 #### HALL
 Representation of a path or a branch in the maze.
