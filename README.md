@@ -56,9 +56,16 @@ The labyrinth representation
 - Halls, list of all the halls of the maze
 
 #### HALL
-Representation of a path or a branch in the maze
+Representation of a path or a branch in the maze.
 - Areas, list of spaces the hall is composed of
-- Is Path, do any of the areas have portals
+
+##### Categories
+- Branch, a hall with no areas holding a portal.
+- Path, a hall with at least an area holding a portal, with in turn can be sub-categorized in:
+	- Complete, a hall that has more than one portal area.
+	- Incomplete, a hall with just one portal area.
+	- Connected, a path that branches from another path
+	- Disconnected, a path that branches from a branch
 
 #### AREA
 The different spaces a hall is divided into
@@ -82,18 +89,20 @@ The functions in this module are named skills, used for gathering information fr
 #### wizard
 The functions in this module are named spells, used to create mazes and other structures.
 
-##### Maze, 
+##### Conjure Maze, 
 generates a single complete maze based on the following parameters
 - Number of halls, total amount of halls the maze will have
 - Number of portals, total entrances and exits the maze will have
-Max portals per hall, how many portals a hall in the maze can have
-Min hall length, used to define the smallest size of the many halls
-Max hall length, used to define the longest size of the many halls
-Summon Hall, brings forth the desired hall based on the following parameters
-Length, how many areas the hall will be divided into
-Number of portals, how many portals should the hall have
-Branching from, an area that will serve as the hall’s start point
-Existing halls, used to reference occupied coordinates so that the new hall does not collide with another
+- Max portals per hall, how many portals a hall in the maze can have
+- Min hall length, used to define the smallest size of the many halls
+- Max hall length, used to define the longest size of the many halls
+
+##### Summon Hall, 
+brings forth the desired hall based on the following parameters
+- Length, how many areas the hall will be divided into
+- Number of portals, how many portals should the hall have
+- Branching from, an area or cordinate that will serve as the hall’s start point
+- Existing halls, used to reference occupied coordinates so that the new hall does not collide with another
 
 
 ### Maze rules:
