@@ -29,8 +29,8 @@ A simple function call returns the full maze structure. Alternatively, a maze ca
 Mazes are composed of halls, which are logically divided into areas, as the representation of the hall’s lenght, areas hold the information to indicate their location in the maze via coordinates.
 
 ```
-+  .  +-----+-----+-----+-----+-----+-----+-----+-----+-----+ 
-|  P  .  2  .  2  |  >  .  >  .  v  |  >  .  >  .  >  .  v  |
++  P  +-----+-----+-----+-----+-----+-----+-----+-----+-----+ 
+|  1  .  2  .  2  |  >  .  >  .  v  |  >  .  >  .  >  .  v  |
 |  .  +-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  |
 |  1  |  2  .  2  |  ^  .  <  |  >  .  ^  |  6  |  v  .  <  |
 +  .  +-----+-----+-----+  .  +-----+  .  +  .  +  .  +-----|
@@ -38,63 +38,11 @@ Mazes are composed of halls, which are logically divided into areas, as the repr
 +-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  +  .  |
 |  v  .  <  .  3  |  >  .  ^  |  5  .  5  |  v  .  <  .  7  |
 +  .  +-----+-----+  .  +  .  +-----+-----+  .  +-----+-----|
-|  >  .  >  .  >  .  ^  |  4  .  4  |  8  .  >  .  >  .  p  |
-+-----+-----+-----+-----+-----+-----+-----+-----+-----+  .  +
+|  >  .  >  .  >  .  ^  |  4  .  4  |  8  .  >  .  >  .  1  |
++-----+-----+-----+-----+-----+-----+-----+-----+-----+  P  +
 ```
 
 This example figure is a representation of a 2D Maze with 9 halls, one path and 2 portals, the halls are numbered, the path is marked and the portals are located at the edges.
-
-### Class definitions 
-
-#### MAZE
-The labyrinth representation
-- Name, optional short and fun description of the maze
-- Halls, list of all the halls of the maze
-
-##### Categories
-
-###### Entrance is Exit
-- All portals are in the same area
-- Has one path
-- All other halls are branches
-
-###### One Path
-- All portals are in the same hall
-- Some portals are in different areas
-- All other halls are branches
-
-###### Dungeon
-- May have all the kinds of halls
-- Has multiple portals
-- Some portals are in different areas
-
-#### HALL
-Representation of a path or a branch in the maze.
-- Areas, list of spaces the hall is composed of
-- Passages, list of connections with other halls
-
-##### Categories
-- Branch, a hall with no areas holding a portal.
-- Path, a hall with at least an area holding a portal, with in turn can be sub-categorized in:
-	- Complete, a hall that has more than one portal area.
-	- Incomplete, a hall with just one portal area.
-	- Connected, a path that branches from another path
-	- Disconnected, a path that branches from a branch
-	- Composed, parts of different branches that lead to a path (only on mazes with more than one portal)
-
-#### AREA
-The different spaces a hall is divided into
-- Coordinates, represent the area’s location in the maze space
-- Portall, list of entrances or exits from the maze
-
-#### PASSAGE
-Connection between halls
-- Connecting areas, a pair of areas belonging to different halls
-
-#### PORTAL
-Defines entrance or exit from a maze, or the access to another maze
-- Kind, is the portal an entrance, an exit or a maze connection
-- Maze, maze name this portal conects to
 
 ### Module definitions
 
@@ -123,6 +71,67 @@ brings forth the desired hall based on the following parameters
 - Branching from, an area or cordinate that will serve as the hall’s start point
 - Existing halls, used to reference occupied coordinates so that the new hall does not collide with another
 
+#### sections
+
+#### MAZE
+The labyrinth representation
+- Name, optional short and fun description of the maze
+- Halls, list of all the halls of the maze
+
+##### Categories
+
+###### Entrance is Exit
+- All portals are in the same area
+- Has one path
+- All other halls are branches
+
+###### One Path
+- All portals are in the same hall
+- Some portals are in different areas
+- All other halls are branches
+
+###### Dungeon
+- May have all the kinds of halls
+- Has multiple portals
+- Has multipl paths
+- Some portals are in different areas
+
+#### HALL
+Representation of a stretch of space in the maze, divided into paths or branches.
+- Areas, list of spaces the hall is composed of
+- Passages, list of connections with other halls
+
+##### Categories
+- Branch, a hall with no areas holding a portal.
+- Path, a hall with at least an area holding a portal, with in turn can be sub-categorized in:
+	- Complete, a hall that has more than one portal area.
+	- Incomplete, a hall with just one portal area.
+	- Connected, a path that branches from another path
+	- Disconnected, a path that branches from a branch
+	- Composed, parts of different branches that lead to a path (only on mazes with more than one portal)
+
+#### AREA
+The different spaces a hall is divided into
+- Coordinates, represent the area’s location in the maze space
+- Portall, list of entrances or exits from the maze
+
+### systems
+The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
+
+#### PASSAGE
+Connection between halls
+- Connecting areas, a pair of areas belonging to different halls
+
+#### PORTAL
+Defines entrance or exit from a maze, or the access to another maze
+- Kind, is the portal an entrance, an exit or a maze connection
+- Maze, maze name this portal conects to
+
+#### COORDINATES
+Defines the location of an area in the maze coordinate system, loosely based on the cartesian system
+- X, horizontal axis, west will be negative values while east will be positive
+- Y, vertical axis, where north is the positive value and south is the negative
+- Z, height axis, where up is represented as positive values while down by negative
 
 ### Maze rules
 1.- A Maze is composed of one to many Halls
