@@ -55,6 +55,18 @@ The labyrinth representation
 - Name, optional short and fun description of the maze
 - Halls, list of all the halls of the maze
 
+##### Categories
+###### Entrance is Exit
+- All portals are in the same area
+- Has one path
+- All other halls are branches
+###### One Path
+- All portals are in the same hall
+- Some portals are in different areas
+- All other halls are branches
+###### Multiple portals, in different halls
+- Has all the kinds of halls
+
 #### HALL
 Representation of a path or a branch in the maze.
 - Areas, list of spaces the hall is composed of
@@ -67,6 +79,7 @@ Representation of a path or a branch in the maze.
 	- Incomplete, a hall with just one portal area.
 	- Connected, a path that branches from another path
 	- Disconnected, a path that branches from a branch
+	- Composed, parts of different branches that lead to a path (only on mazes with more than one portal)
 
 #### AREA
 The different spaces a hall is divided into
@@ -122,6 +135,9 @@ brings forth the desired hall based on the following parameters
 9.- Areas never have the same coordinates
 10.- Portals belong to an Area
 11.- Portals define entrance or exit from a maze
+12.- Portals can connect different mazes
+13.- Portals can exist in multiple areas from different mazes
+
 
 ## Testing
 Test for the generator functions are based on the use cases and the defined rules.
@@ -134,11 +150,7 @@ This work is meant to be used as a library, to be used alongside another project
 ### Limitations of the current design
 The maximum number of “doors” an area can have is based on the square coordinate system; this means that in a 2D maze the max number of “doors” are 4 (North, East, South and West) and in 3D having 6 (up and down), no diagonals are considered because 3D maze construction would be a bit too complicated for now.
 
-Another limitation is setting areas with only one portal, it will make things simpler to construct if we can assume that there is one portal per area.
-
 ### Possible extensions 
-- Have portals connect different mazes
-- Allow multiple portals per area, this will require another parameter to define the max number of portals per area when casting the maze spell and generating a randomized labyrinth
 - Provide a spell to create multiple connected mazes
 - Additional portal like element to teleport the player to another area (non connected link)
 - Consider diagonal direction for “doorways” 
