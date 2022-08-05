@@ -146,13 +146,12 @@ The different spaces a hall is divided into
 The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
 
 #### PASSAGE
-Connection between halls
+Connection between two halls
 - Connecting areas, a pair of areas belonging to different halls
 
 #### PORTAL
 Defines entrance or exit from a maze, or the access to another maze
-- Kind, is the portal an entrance, an exit or a maze connection
-- Maze, maze name this portal conects to
+- Destination, the name of the maze this portal connects to, empty values can be used to determine entrance or exit from the maze
 
 #### COORDINATES
 Defines the location of an area in the maze coordinate system, loosely based on the cartesian system
