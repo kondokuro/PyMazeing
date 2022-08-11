@@ -116,13 +116,12 @@ The labyrinth representation
 ###### Dungeon
 - May have all the kinds of halls
 - Has multiple portals
-- Has multipl paths
+- Has multiple paths
 - Some portals are in different areas
 
 #### HALL
 Representation of a stretch of space in the maze, divided into paths or branches.
 - Areas, list of spaces the hall is composed of
-- Passages, list of connections with other halls
 
 ##### Categories
 
@@ -141,13 +140,16 @@ Hall with at least an area holding a portal, with in turn can be sub-categorized
 The different spaces a hall is divided into
 - Coordinates, represent the area’s location in the maze space
 - Portals, list of entrances or exits from the maze
+- Passages, list of connections to areas in other halls
 
 ### systems
 The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
 
 #### PASSAGE
 Connection between two halls
-- Connecting areas, a pair of areas belonging to different halls
+- Origin, the connected area
+- Connection, the external hall
+
 
 #### PORTAL
 Defines entrance or exit from a maze, or the access to another maze
