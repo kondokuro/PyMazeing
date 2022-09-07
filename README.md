@@ -150,7 +150,6 @@ Connection between two halls
 - Origin, the connected area
 - Connection, the external hall
 
-
 #### PORTAL
 Defines entrance or exit from a maze, or the access to another maze
 - Destination, the name of the maze this portal connects to, empty values can be used to determine entrance or exit from the maze
