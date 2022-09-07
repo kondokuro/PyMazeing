@@ -56,7 +56,7 @@ class SumonHallTests:
 
 
 class ConjureMazeTests:
-    def test_default_casting_returns_one_room_maze():
+    def test_default_casting_returns_single_room_maze():
         one_room = wizard.conjure_maze()
         assert len(one_room.halls) == 1, "maze has too many halls"
         #assert len(one_room.paths) == 1, "maze has too many paths"
