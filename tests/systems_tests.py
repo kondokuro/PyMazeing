@@ -2,7 +2,7 @@ import pytest
 from src.systems import TypedList
 
 
-class TestTypedList:
+class TypedListTests:
     @pytest.mark.parametrize(
         "type, method, value, expected_result",
         [
