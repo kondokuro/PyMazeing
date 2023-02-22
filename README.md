@@ -2,31 +2,27 @@
 
 ## About 
 
-PyMazing is a D&D themed maze generator, it includes class definitions for the different maze sections and a few generator functions to create the parts.
+As a game developer, one of the tasks is to create the playable space, also known as the game world, level, dungeon or even a room. The idea behind the PyMazing project is to provide a way to represent those spaces, using maze definitions, allowing for simple workflows to generate them, automatically or manually.
 
-It is intended for dungeon, level, or labyrinth design enthusiast, this means that the result can be used to render or build playable mazes anywhere.
+It is intended for dungeon, level or labyrinth design enthusiasts, this means that the result can be used to render or build playable Mazes anywhere.
 
-The maze spell provides a complete structure to play in, this is, a collection of interconnected dead end hallways and a main path; then the designer can then focus on just placing interesting objectives.
-
-Specific areas would contain entrance or exit from the maze, used for defining the main path that a traveller must cross to complete it.
-
-The complexity of the maze is based on the number of halls and how many branches each hall can have, as well as how long the halls are. 
 
 ## User Interface 
 
 From the wizard module use the cast_maze function to obtain a maze instance. 
 
 ```python
-import wizard
-
-labyrinth = wizard.cast_maze(total_portals, total_halls, min_hall_length, max_hall_length)
+TBD
 ```
 
 A simple function call returns the full maze structure. Alternatively, a maze can be constructed by using the more specific generator functions for the different maze sections, if the desire is to have more control over the shape of the maze.
 
 ## Technical Specification 
 
-Mazes are composed of halls, which are logically divided into areas, as the representation of the hall’s lenght, areas hold the information to indicate their location in the maze via coordinates.
+Since the world is divided into continents, on PyMazing we took the world as a container of multiple areas, where the world would be a maze, which is composed of one or multiple branches, which then can be divided or contain inner areas, and those areas can be the place for other objects.
+
+As mentioned above in the world of Mazes, they are composed of Halls or branching paths, which can be divided into Zones, which combined represent the Hall’s length. Each of these parts have information to indicate their location in the world via coordinates.
+
 
 ```
 +  P  +-----+-----+-----+-----+-----+-----+-----+-----+-----+ 
