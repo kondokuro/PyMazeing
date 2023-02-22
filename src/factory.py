@@ -1,5 +1,5 @@
 """
-Definitions that will provide complete mazes.
+Create or modify mazes or its parts.
 
 A Maze is composed of one or many Halls
 A Maze must have at least one Portal
@@ -17,3 +17,18 @@ Portals define entrance or exit from a Maze
 Portals can connect different Mazes
 
 """
+from src import components
+
+def create_maze(*args, **kwargs) -> components.SpatialContainer:
+    """
+    Generata a random maze based on the provided details.
+    """
+    pass
+
+
+def add_branch(hall: components.SpatialContainer, *args, **kwargs) -> components.SpatialContainer:
+    """
+    Adds a new branch to an existing hall, based on the provided details.
+    """
+    pass
+
