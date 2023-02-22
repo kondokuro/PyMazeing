@@ -87,6 +87,19 @@ class Size:
         :param width: An integer representing the width of the area.
         :param height: An integer representing the height of the area.
         """
-        self.depth = depth
-        self.width = width
-        self.height = height
+        self.depth = self.__validate("depth", depth)
+        self.width = self.__validate("width", width)
+        self.height = self.__validate("height", height)
+
+    def __validate(self, attribute: str, value: int) -> int:
+        """
+        Verifies that the value is positive.
+
+        :param attribute: a string representing the parameter beint set.
+        :param value: an integer to validate.
+        :returns: the valid integer value.
+        :raises: ValueError if the value is less than zero.
+        """
+        if value < 0:
+            raise ValueError(f"Value: {value} needs to be possitive for {attribute}")
+        return value

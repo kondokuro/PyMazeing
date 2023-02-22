@@ -156,6 +156,12 @@ Defines the location of an area in the maze coordinate system, loosely based on 
 - Y, vertical axis, where north is the positive value and south is the negative
 - Z, height axis, where up is represented as positive values while down by negative
 
+#### SIZE
+Defines the square or cubed space where an entity is located
+- width, horizontal space
+- length, vertical space
+- height, height space
+
 ### Maze rules
 1.- A Maze is composed of one to many Halls
 2.- A Maze must have at least one Portal
@@ -172,22 +178,15 @@ Defines the location of an area in the maze coordinate system, loosely based on 
 13.- Portals can exist in multiple areas from different mazes
 
 ## Testing
-Test for the generator functions are based on the use cases and the defined rules.
+Every class and function is unit tested.
 
 ## Deployment 
 This work is meant to be used as a library, to be used alongside another project. I will be published on Pipy for users to install.
 
 ## Broader Context 
 
-### Limitations of the current design
-The maximum number of “doors” an area can have is based on the square coordinate system; this means that in a 2D maze the max number of “doors” are 4 (North, East, South and West) and in 3D having 6 (up and down), no diagonals are considered because 3D maze construction would be a bit too complicated for now.
-
 ### Possible extensions 
-- Provide a spell to create multiple connected mazes
-- Additional portal like element to teleport the player to another area (non connected link)
-- Consider diagonal direction for “doorways” 
 - Support for alternate coordinate systems, for example hex spaces instead of squares
-- Definition of open and closed halls with keys to find.
+- Definition of open and closed zones.
 - Definition of additional collectables to find, rather than just finding the exit.
-- Adding traps into an area
-- Additional portal like element to teleport the player to another area (non connected link).
+- Adding more objects for the zones
