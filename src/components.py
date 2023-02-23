@@ -47,28 +47,24 @@ class SpatialContainer(PositionableEntity):
         if holder is not None and not isinstance(holder, SpatialContainer):
             raise TypeError("Parameter 'holder' must be of type SpatialContainer.")
         self.holder = holder
-        self._content = systems.TypedList(PositionableEntity)
+        self._content = systems.TypedList(SpatialContainer)
         self._occupied_area = systems.TypedList(systems.Coordinate)
         self._free_area = systems.TypedList(systems.Coordinate)
 
     @property
-    def get_content(self) -> systems.TypedList:
+    def content(self) -> systems.TypedList:
         return self._content
 
-    def add_content(item: PositionableEntity):
-        """
-        Appends an entity into the content of the container, making sure the new item 
-        is valid and modifying the container size and occupied area if necesary.
-        """
-        pass
+    @property
+    def occupied_area(self) -> systems.TypedList:
+        return self._occupied_area
 
     @property
-    def get_occupied_are(self) -> systems.TypedList:
-        return self._occupied_area
-    
-    @property
-    def get_free_area(self) -> systems.TypedList:
+    def free_area(self) -> systems.TypedList:
         return self._free_area
+
+    def add_content(self, content: "SpatialContainer") -> None:
+        pass
 
 
 class Portal(PositionableEntity):
@@ -80,8 +76,8 @@ class Portal(PositionableEntity):
         self,
         name: str,
         position: systems.Coordinate,
-        origin: PositionableEntity,
-        destination: PositionableEntity,
+        origin: SpatialContainer,
+        destination: SpatialContainer,
     ) -> None:
         """
         Initializes a new Portal instance.

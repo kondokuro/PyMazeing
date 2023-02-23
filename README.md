@@ -90,53 +90,10 @@ Adds some space for a hall based on the following parameters
 - Occupied spaces, the coordinates not available for the invocation
 - Portals, names of the mazes the portals of this area will have
 
-#### sections
+#### componenst
 
-#### MAZE
-The labyrinth representation
-- Name, optional short and fun description of the maze
-- Halls, list of all the halls of the maze
+#### factory
 
-##### Categories
-
-###### Dead End
-- All portals are in the same area
-- Has one path
-- All other halls are branches
-
-###### One Path
-- All portals are in the same hall
-- Some portals are in different areas
-- All other halls are branches
-
-###### Dungeon
-- May have all the kinds of halls
-- Has multiple portals
-- Has multiple paths
-- Some portals are in different areas
-
-#### HALL
-Representation of a stretch of space in the maze, divided into paths or branches.
-- Areas, list of spaces the hall is composed of
-
-##### Categories
-
-###### Branch
-Hall with no areas holding a portal.
-
-###### Path
-Hall with at least an area holding a portal, with in turn can be sub-categorized in:
-- Complete, a hall that has more than one portal with at least one on a different area.
-- Incomplete, a hall with just one portal area.
-- Connected, a path that branches from another path
-- Disconnected, a path that branches from a branch
-- Composed, parts of different branches that lead to a path (only on mazes with more than one portal)
-
-#### AREA
-The different spaces a hall is divided into
-- Coordinates, represent the area’s location in the maze space
-- Portals, list of entrances or exits from the maze
-- Passages, list of connections to areas in other halls
 
 ### systems
 The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.

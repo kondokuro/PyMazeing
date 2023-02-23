@@ -77,7 +77,7 @@ class Coordinate:
 
 
 class Size:
-    """Defines the squared or cubed area of an element."""
+    """Defines the squared or cubed area of an element occupies."""
 
     def __init__(self, depth: int, width: int, height: int) -> None:
         """
