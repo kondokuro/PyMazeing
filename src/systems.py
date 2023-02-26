@@ -67,25 +67,31 @@ class Coordinate:
         """
         Initializes a new Coordinate instance.
 
-        :param x: An integer representing the x-coordinate of the location.
-        :param y: An integer representing the y-coordinate of the location.
-        :param z: An integer representing the z-coordinate of the location.
+        :param x: An integer for the x-coordinate.
+        :param y: An integer for the y-coordinate.
+        :param z: An integer for the z-coordinate.
         """
         self.x = x
         self.y = y
         self.z = z
 
+    def __eq__(self, other: object) -> bool:
+        """Verifies ecuality of two coordinates."""
+        if not isinstance(other, Coordinate):
+            return False
+        return self.x == other.x and self.y == other.y and self.z == other.z
+
 
 class Size:
-    """Defines the squared or cubed area of an element occupies."""
+    """Defines the squared or cubed area an entity occupies."""
 
     def __init__(self, depth: int, width: int, height: int) -> None:
         """
         Initializes a new Size instance.
 
-        :param depth: An integer representing the depth of the area.
-        :param width: An integer representing the width of the area.
-        :param height: An integer representing the height of the area.
+        :param depth: An integer representing the depth.
+        :param width: An integer representing the width.
+        :param height: An integer representing the height.
         """
         self.depth = self.__validate("depth", depth)
         self.width = self.__validate("width", width)
@@ -95,11 +101,21 @@ class Size:
         """
         Verifies that the value is positive.
 
-        :param attribute: a string representing the parameter beint set.
+        :param attribute: a string for the parameter to verigy.
         :param value: an integer to validate.
         :returns: the valid integer value.
-        :raises: ValueError if the value is less than zero.
+        :raises: ValueError if the value is negative.
         """
         if value < 0:
             raise ValueError(f"Value: {value} needs to be possitive for {attribute}")
         return value
+
+    def __eq__(self, other: object) -> bool:
+        """Verifies ecuality of two sizes."""
+        if not isinstance(other, Size):
+            return False
+        return (
+            self.depth == other.depth
+            and self.width == other.width
+            and self.height == other.height
+        )

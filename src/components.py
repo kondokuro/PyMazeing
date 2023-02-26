@@ -1,92 +1,109 @@
 """
-Here we define all the pieces to compose mazes.
+Here we define all the pieces that compose mazes.
 """
 import typing
 from src import systems
+from uuid import uuid4
 
 
 class PositionableEntity:
-    """
-    Representation of an entity located in a place in space.
-    """
+    """An entity located in a place in space."""
 
     def __init__(self, name: str, position: systems.Coordinate) -> None:
         """
-        Initializes a new PositionableEntity instance.
+        Initializes a new PositionableEntity instance with an unique ID.
 
-        :param name: A string representing the name of the entity.
-        :param position: A Coordinate object representing the position of the entity.
+        :param name: The entitys' name.
+        :param position: A Coordinate for the location of the entity.
         """
+        self.id = uuid4()
+        if name is not None and not isinstance(name, str):
+            raise TypeError("Parameter 'name' must be of type str.")
         self.name = name
+        if position is not None and not isinstance(position, systems.Coordinate):
+            raise TypeError("Parameter 'position' must be of type Coordinate.")
         self.position = position
 
 
-class SpatialContainer(PositionableEntity):
-    """
-    Class that represents an entity located in a place in space, able to contain other
-    elements of a specific type on its own space.
-    """
+class Portal(PositionableEntity):
+    """Connection between two Maze Areas."""
+
+    def __init__(
+        self,
+        name: str,
+        position: systems.Coordinate,
+        origin: "Area",
+        destination: "Area",
+    ) -> None:
+        """
+        Initializes a new Portal instance.
+
+        :param name: A string to name the portal.
+        :param position: A Coordinate for the position of the portal.
+        :param origin: An Area as the the portal entrance.
+        :param destination: An Area as the portal exit.
+        """
+        super().__init__(name, position)
+        if origin is not None and not isinstance(origin, Area):
+            raise TypeError("Parameter 'origin' must be of type Area.")
+        self.origin = origin
+        if destination is not None and not isinstance(destination, Area):
+            raise TypeError("Parameter 'destination' must be of type Area.")
+        self.destination = destination
+
+
+class Area(PositionableEntity):
+    """A zone in space able to contain other positionalbe entities."""
 
     def __init__(
         self,
         name: str,
         position: systems.Coordinate,
         size: systems.Size,
-        holder: typing.Optional["SpatialContainer"] = None,
+        maze: "Maze",
     ) -> None:
         """
         Initializes a new SpatialContainer instance.
 
-        :param name: A string representing the name of the container.
-        :param position: A Coordinate object representing the position of the container.
-        :param size: A Size object representing the size of the container.
-        :param holder: A SpatialContainer containing the current container.
+        :param name: The Areas' name.
+        :param position: A Coordinate as the Area location.
+        :param size: A Size object.
+        :param maze: The maze holding the area.
         """
         super().__init__(name, position)
+        if size is not None and not isinstance(size, systems.Size):
+            raise TypeError("Parameter 'size' must be of type Size.")
         self.size = size
-        if holder is not None and not isinstance(holder, SpatialContainer):
-            raise TypeError("Parameter 'holder' must be of type SpatialContainer.")
-        self.holder = holder
-        self._content = systems.TypedList(SpatialContainer)
-        self._occupied_area = systems.TypedList(systems.Coordinate)
-        self._free_area = systems.TypedList(systems.Coordinate)
+        if maze is not None and not isinstance(maze, Maze):
+            raise TypeError("Parameter 'maze' must be of type Maze.")
+        self.maze = maze
+        self._entities = systems.TypedList(PositionableEntity)
+        self._occupied_space = systems.TypedList(systems.Coordinate)
+        self._available_space = systems.TypedList(systems.Coordinate)
 
     @property
-    def content(self) -> systems.TypedList:
-        return self._content
+    def entities(self) -> systems.TypedList:
+        return self._entities
 
     @property
-    def occupied_area(self) -> systems.TypedList:
-        return self._occupied_area
+    def occupied_space(self) -> systems.TypedList:
+        """"""
+        return self._occupied_space
 
     @property
-    def free_area(self) -> systems.TypedList:
-        return self._free_area
+    def available_space(self) -> systems.TypedList:
+        """"""
+        return self._available_space
+    
 
-    def add_content(self, content: "SpatialContainer") -> None:
-        pass
+class Maze(PositionableEntity):
+    """Labirinth with areas branching out."""
 
-
-class Portal(PositionableEntity):
-    """
-    Class that represents a connection between two locations in a maze.
-    """
-
-    def __init__(
-        self,
-        name: str,
-        position: systems.Coordinate,
-        origin: SpatialContainer,
-        destination: SpatialContainer,
-    ) -> None:
+    def __init__(self, name: str) -> None:
         """
-        Initializes a new Portal instance.
+        Instantiates a new Maze, set to the spatial origin.
 
-        :param name: A string representing the name of the portal.
-        :param position: A Coordinate object representing the position of the portal.
-        :param origin: A PositionableEntity object representing the origin of the portal.
-        :param destination: A PositionableEntity object representing the destination of the portal.
+        :param name: The name of the Maze.
         """
-        super().__init__(name, position)
-        self.origin = origin
-        self.destination = destination
+        super().__init__(name, systems.Coordinate(0,0,0))
+        self.areas = systems.TypedList(Area)
