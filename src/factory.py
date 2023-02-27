@@ -12,6 +12,17 @@ Portals are located in Zones
 Portals define entrance or exit from a Maze
 Portals can connect different Mazes
 """
-from src import components
+from src import components, systems
 
 
+class AreaFactory:
+
+    def get_area(self, position: systems.Coordinate, size: systems.Size) -> components.Area:
+        """
+        Creates areas surrounded by walls based on the parameters provided.
+        
+        :param position: Coordinates from the center of the area.
+        :param size: Space the area will occupy
+        """
+
+        match size: 

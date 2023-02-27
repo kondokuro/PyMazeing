@@ -3,27 +3,35 @@ from src.systems import TypedList, Size, Coordinate
 
 
 class TestForCoordinate:
-    def test_OnInstantiation_AnyParameterIsPositive_ReturnsACoordinate(self):
+    def test_OnInstantiation_NoParameters_ReturnsOriginCoordinate(self):
+        origin = Coordinate()
+        assert origin.x == 0 and origin.y == 0 and origin.z == 0
+
+    def test_OnInstantiation_AnyParameter_ReturnsACoordinate(self):
         location = Coordinate(1, 2, 3)
         assert isinstance(location, Coordinate)
 
-    def test_OnComparizon_SameCoordinateValues_ReturnsTrue(self):
-        a = Coordinate(1,2,3)
-        b = Coordinate(1,2,3)
+    def test_IsEqual_SameCoordinateValues_ReturnsTrue(self):
+        a = Coordinate(1, 2, 3)
+        b = Coordinate(1, 2, 3)
         assert a == b
 
-    def test_OnComparizon_DifferentCoordinateValues_ReturnsFalse(self):
-        a = Coordinate(1,2,3)
-        b = Coordinate(4,5,6)
+    def test_IsEqual_DifferentCoordinateValues_ReturnsFalse(self):
+        a = Coordinate(1, 2, 3)
+        b = Coordinate(4, 5, 6)
         assert a != b
 
-    def test_OnComparizon_DifferentType_ReturnsFalse(self):
-        a = Coordinate(1,2,3)
-        b = (1,2,3)
+    def test_IsEqual_DifferentType_ReturnsFalse(self):
+        a = Coordinate(1, 2, 3)
+        b = (1, 2, 3)
         assert a != b
 
 
 class TestForSixe:
+    def test_OnInstantiation_NoParameters_RetusnsMinimumSize(self):
+        minimum = Size()
+        assert minimum.length == 1 and minimum.height == 1 and minimum.width == 1
+
     def test_OnInstantiation_AnyParameterIsPositive_ReturnsASize(self):
         location = Size(1, 2, 3)
         assert isinstance(location, Size)
@@ -32,6 +40,63 @@ class TestForSixe:
     def test_OnInstantiation_AnyParameterIsNegative_RaisesValueError(self, parameters):
         with pytest.raises(ValueError):
             Size(*parameters)
+
+    def test_IsEqual_SameSizeValues_ReturnsTrue(self):
+        a = Size(1, 2, 3)
+        b = Size(1, 2, 3)
+        assert a == b
+
+    def test_IsEqual_DifferentSizeValues_ReturnsFalse(self):
+        a = Size(1, 2, 3)
+        b = Size(4, 5, 6)
+        assert a != b
+
+    def test_IsEqual_DifferentType_ReturnsFalse(self):
+        a = Size(1, 2, 3)
+        b = (1, 2, 3)
+        assert a != b
+
+    def test_IsLonger_InstanceIsSmaller_ReturnsFalse(self):
+        this = Size(2, 8, 8)
+        than_this = Size(8, 2, 2)
+        assert not this.is_longer(than_this)
+
+    def test_IsLonger_InstanceIsBigger_ReturnsTrue(self):
+        this = Size(8, 2, 2)
+        than_this = Size(2, 8, 8)
+        assert this.is_longer(than_this)
+
+    def test_IsLonger_TypeMismatch_RaisesTypeError(self):
+        with pytest.raises(TypeError):
+            Size().is_longer(9)
+
+    def test_IsWhider_InstanceIsSmaller_ReturnsFalse(self):
+        this = Size(4, 1, 4)
+        than_this = Size(4, 9, 4)
+        assert not this.is_whider(than_this)
+
+    def test_IsWhider_InstanceIsBigger_ReturnsTrue(self):
+        this = Size(4, 9, 4)
+        than_this = Size(4, 1, 4)
+        assert this.is_whider(than_this)
+
+    def test_IsWhider_TypeMismatch_RaisesTypeError(self):
+        with pytest.raises(TypeError):
+            Size().is_whider(9)
+
+    def test_IsTaller_InstanceIsSmaller_ReturnsFalse(self):
+        this = Size(1, 1, 2)
+        than_this = Size(1, 1, 6)
+        assert not this.is_taller(than_this)
+
+    def test_IsTaller_InstanceIsBigger_ReturnsTrue(self):
+        this = Size(1, 1, 6)
+        than_this = Size(1, 1, 2)
+        assert this.is_taller(than_this)
+
+    def test_IsTaller_TypeMismatch_RaisesTypeError(self):
+        with pytest.raises(TypeError):
+            Size().is_taller(9)
 
 
 class TestForTypedList:

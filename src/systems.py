@@ -63,13 +63,13 @@ class TypedList(collections.UserList):
 class Coordinate:
     """Identifies a location in space."""
 
-    def __init__(self, x: int, y: int, z: int) -> None:
+    def __init__(self, x: int = 0, y: int = 0, z: int = 0) -> None:
         """
-        Initializes a new Coordinate instance.
+        Initializes a new Coordinate instance. Defaults to the origin.
 
-        :param x: An integer for the x-coordinate.
-        :param y: An integer for the y-coordinate.
-        :param z: An integer for the z-coordinate.
+        :param x: An integer for the x-coordinate, defautls to zero.
+        :param y: An integer for the y-coordinate, defautls to zero.
+        :param z: An integer for the z-coordinate, defautls to zero.
         """
         self.x = x
         self.y = y
@@ -85,15 +85,15 @@ class Coordinate:
 class Size:
     """Defines the squared or cubed area an entity occupies."""
 
-    def __init__(self, depth: int, width: int, height: int) -> None:
+    def __init__(self, length: int = 1, width: int = 1, height: int = 1) -> None:
         """
-        Initializes a new Size instance.
+        Initializes a new Size instance, defaults to the minimum size of 1.
 
-        :param depth: An integer representing the depth.
+        :param length: An integer representing the depth.
         :param width: An integer representing the width.
         :param height: An integer representing the height.
         """
-        self.depth = self.__validate("depth", depth)
+        self.length = self.__validate("length", length)
         self.width = self.__validate("width", width)
         self.height = self.__validate("height", height)
 
@@ -109,13 +109,30 @@ class Size:
         if value < 0:
             raise ValueError(f"Value: {value} needs to be possitive for {attribute}")
         return value
+    
+    def __validate_type(self, other: object) ->None:
+        if not isinstance(other, Size):
+            raise TypeError(f"{other} is not of type Size")
+
 
     def __eq__(self, other: object) -> bool:
         """Verifies ecuality of two sizes."""
         if not isinstance(other, Size):
             return False
         return (
-            self.depth == other.depth
+            self.length == other.length
             and self.width == other.width
             and self.height == other.height
         )
+
+    def is_longer(self, other: "Size") -> bool:
+        self.__validate_type(other)
+        return self.length > other.length
+
+    def is_whider(self, other: "Size") -> bool:
+        self.__validate_type(other)
+        return self.width > other.width
+
+    def is_taller(self, other: "Size") -> bool:
+        self.__validate_type(other)
+        return self.height > other.height

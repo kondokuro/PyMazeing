@@ -1,12 +1,11 @@
 """
 Here we define all the pieces that compose mazes.
 """
-import typing
 from src import systems
 from uuid import uuid4
 
 
-class PositionableEntity:
+class Positionable:
     """An entity located in a place in space."""
 
     def __init__(self, name: str, position: systems.Coordinate) -> None:
@@ -25,7 +24,7 @@ class PositionableEntity:
         self.position = position
 
 
-class Portal(PositionableEntity):
+class Portal(Positionable):
     """Connection between two Maze Areas."""
 
     def __init__(
@@ -52,7 +51,7 @@ class Portal(PositionableEntity):
         self.destination = destination
 
 
-class Area(PositionableEntity):
+class Area(Positionable):
     """A zone in space able to contain other positionalbe entities."""
 
     def __init__(
@@ -77,26 +76,22 @@ class Area(PositionableEntity):
         if maze is not None and not isinstance(maze, Maze):
             raise TypeError("Parameter 'maze' must be of type Maze.")
         self.maze = maze
-        self._entities = systems.TypedList(PositionableEntity)
-        self._occupied_space = systems.TypedList(systems.Coordinate)
-        self._available_space = systems.TypedList(systems.Coordinate)
+        self._content = systems.TypedList(Positionable)
 
     @property
-    def entities(self) -> systems.TypedList:
-        return self._entities
-
-    @property
-    def occupied_space(self) -> systems.TypedList:
-        """"""
-        return self._occupied_space
-
-    @property
-    def available_space(self) -> systems.TypedList:
-        """"""
-        return self._available_space
+    def content(self) -> systems.TypedList:
+        return self._content
     
 
-class Maze(PositionableEntity):
+class Wall(Positionable):
+    """Division between adjasent areas."""
+
+    def __init__(self, name: str, position: systems.Coordinate, size: systems.Size) -> None:
+        super().__init__(name, position)
+        self.size = size
+
+
+class Maze(Positionable):
     """Labirinth with areas branching out."""
 
     def __init__(self, name: str) -> None:
@@ -105,5 +100,16 @@ class Maze(PositionableEntity):
 
         :param name: The name of the Maze.
         """
-        super().__init__(name, systems.Coordinate(0,0,0))
+        super().__init__(name, systems.Coordinate())
         self.areas = systems.TypedList(Area)
+        #self.space = systems.TypedList(systems.Coordinate)
+
+    # @property
+    # def occupied_space(self) -> systems.TypedList:
+    #     """Coordinates occupied by areas."""
+    #     return self._occupied_space
+
+    # @property
+    # def available_space(self) -> systems.TypedList:
+    #     """"""
+    #     return self._available_space
