@@ -94,13 +94,13 @@ class Wall(Positionable):
 class Maze(Positionable):
     """Labirinth with areas branching out."""
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, origin: systems.Coordinate = systems.Coordinate()) -> None:
         """
         Instantiates a new Maze, set to the spatial origin.
 
         :param name: The name of the Maze.
         """
-        super().__init__(name, systems.Coordinate())
+        super().__init__(name, origin)
         self.areas = systems.TypedList(Area)
         #self.space = systems.TypedList(systems.Coordinate)
 

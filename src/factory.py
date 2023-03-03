@@ -15,14 +15,24 @@ Portals can connect different Mazes
 from src import components, systems
 
 
-class AreaFactory:
+class Wizzard:
+    """Generates mazes with just a few parametes."""
 
-    def get_area(self, position: systems.Coordinate, size: systems.Size) -> components.Area:
+    def __init__(self, maze_name: str = "") -> None:
+        """Initialize the wizzard with an epty maze?."""
+
+    def cast_area(
+        self, position: systems.Coordinate, size: systems.Size) -> components.Area:
         """
         Creates areas surrounded by walls based on the parameters provided.
-        
+
         :param position: Coordinates from the center of the area.
         :param size: Space the area will occupy
         """
 
-        match size: 
+        # must check if the maze space is free.. so maybe this should be part of the mase class
+        pass
+
+    def branch(self, area: components.Area) -> list[components.Area]:
+        """The idea here is to take an area as the starting point and build a group of areas."""
+        pass

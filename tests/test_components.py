@@ -13,7 +13,7 @@ class TestForPositionable:
             Positionable("bad location", (1, 2, 3))
 
 
-class TestForPortals:
+class TestForPortal:
     test_area = Area("test area", Coordinate(), Size(), Maze("test maze"))
 
     def test_OnInstantiation_WithProperParameters_ReturnsaPortal(self):
@@ -49,3 +49,8 @@ class TestForMaze:
 
     def test_OnInstantiation_MazeIsAtOrigin(self):
         assert self.test_maze.position == Coordinate()
+
+    def test_OnInstantiation_WithInitialLocation_MazePossitionIsSet(self):
+        direction = Coordinate(3, 3, 3)
+        placed_maze = Maze("with location", direction)
+        assert placed_maze.position == direction
