@@ -18,8 +18,9 @@ from src import components, systems
 class Wizzard:
     """Generates mazes with just a few parametes."""
 
-    def __init__(self, maze_name: str = "") -> None:
-        """Initialize the wizzard with an epty maze?."""
+    def cast_maze(self, name: str, origin: systems.Coordinate, *args, **kwargs) -> components.Maze:
+        """Generates an initial maze to build up from."""
+        return components.Maze(name, origin)
 
     def cast_area(
         self, position: systems.Coordinate, size: systems.Size) -> components.Area:
