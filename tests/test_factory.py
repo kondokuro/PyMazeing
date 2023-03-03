@@ -6,6 +6,6 @@ class TestForWizzard:
 
     def test_CastMaze_NameAndOrigin_ReturnsAMazeOnPosition(self):
         origin = systems.Coordinate(1,2,3)
-        Labyrinth = self.mage.cast_maze("Test Labyrinth", origin)
+        Labyrinth = self.mage.cast_maze("Test Labyrinth", origin, 5)
         assert isinstance(Labyrinth, components.Maze)
         assert origin == Labyrinth.position

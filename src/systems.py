@@ -83,7 +83,7 @@ class Coordinate:
 
 
 class Size:
-    """Defines the squared or cubed area an entity occupies."""
+    """Defines the dimentions area an entity occupies."""
 
     def __init__(self, length: int = 1, width: int = 1, height: int = 1) -> None:
         """
@@ -93,11 +93,11 @@ class Size:
         :param width: An integer representing the width.
         :param height: An integer representing the height.
         """
-        self.length = self.__validate("length", length)
-        self.width = self.__validate("width", width)
-        self.height = self.__validate("height", height)
+        self._length = self.__validate_value("length", length)
+        self._width = self.__validate_value("width", width)
+        self._height = self.__validate_value("height", height)
 
-    def __validate(self, attribute: str, value: int) -> int:
+    def __validate_value(self, attribute: str, value: int) -> int:
         """
         Verifies that the value is positive.
 
@@ -109,11 +109,10 @@ class Size:
         if value < 0:
             raise ValueError(f"Value: {value} needs to be possitive for {attribute}")
         return value
-    
-    def __validate_type(self, other: object) ->None:
+
+    def __validate_type(self, other: object) -> None:
         if not isinstance(other, Size):
             raise TypeError(f"{other} is not of type Size")
-
 
     def __eq__(self, other: object) -> bool:
         """Verifies ecuality of two sizes."""
@@ -124,6 +123,36 @@ class Size:
             and self.width == other.width
             and self.height == other.height
         )
+
+    @property
+    def length(self) -> int:
+        """Size value on a horizontal plane (x)."""
+        return self._length
+
+    @length.setter
+    def length(self, value: int) -> None:
+        """Sets the length value raising ValueError if negative."""
+        self._length = self.__validate_value("length", value)
+
+    @property
+    def width(self) -> int:
+        """Size value on a vertical plane (y)."""
+        return self._width
+
+    @width.setter
+    def width(self, value: int) -> None:
+        """Sets the width value raising ValueError if negative."""
+        self._width = self.__validate_value("width", value)
+
+    @property
+    def height(self) -> int:
+        """Size value on an altitude plane (z)."""
+        return self._height
+
+    @height.setter
+    def height(self, value: int) -> None:
+        """Sets the height value raising ValueError if negative."""
+        self._height = self.__validate_value("height", value)
 
     def is_longer(self, other: "Size") -> bool:
         self.__validate_type(other)

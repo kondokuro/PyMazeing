@@ -27,7 +27,7 @@ class TestForCoordinate:
         assert a != b
 
 
-class TestForSixe:
+class TestForSize:
     def test_OnInstantiation_NoParameters_RetusnsMinimumSize(self):
         minimum = Size()
         assert minimum.length == 1 and minimum.height == 1 and minimum.width == 1
@@ -97,6 +97,21 @@ class TestForSixe:
     def test_IsTaller_TypeMismatch_RaisesTypeError(self):
         with pytest.raises(TypeError):
             Size().is_taller(9)
+
+    def test_SetLength_NegativeValue_RaisesValurError(self):
+        size = Size()
+        with pytest.raises(ValueError):
+            size.length = -2
+
+    def test_SetWidth_NegativeValue_RaisesValurError(self):
+        size = Size()
+        with pytest.raises(ValueError):
+            size.width = -2
+
+    def test_SetHeigth_NegativeValue_RaisesValurError(self):
+        size = Size()
+        with pytest.raises(ValueError):
+            size.height = -2
 
 
 class TestForTypedList:

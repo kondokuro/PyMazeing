@@ -38,8 +38,8 @@ class Wizzard:
         """
 
         # must check if the maze space is free.. so maybe this should be part of the mase class
-        pass
+        return components.Area("WIP", position, size)
 
-    def branch(self, area: components.Area) -> list[components.Area]:
+    def branch(self, area: components.Area) -> systems.TypedList[components.Area]:
         """The idea here is to take an area as the starting point and build a group of areas."""
-        pass
+        return systems.TypedList(components.Area)

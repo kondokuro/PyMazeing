@@ -14,7 +14,7 @@ class TestForPositionable:
 
 
 class TestForPortal:
-    test_area = Area("test area", Coordinate(), Size(), Maze("test maze"))
+    test_area = Area("test area", Coordinate(), Size(), Maze("test maze").id)
 
     def test_OnInstantiation_WithProperParameters_ReturnsaPortal(self):
         exit = Portal("the way out", Coordinate(), self.test_area, self.test_area)
@@ -33,12 +33,12 @@ class TestForArea:
     test_maze = Maze("labirinth")
 
     def test_OnInstantiation_WithProperParameters_ReturnsAnArea(self):
-        maze_area = Area("room 2", Coordinate(), Size(), self.test_maze)
+        maze_area = Area("room 2", Coordinate(), Size(), self.test_maze.id)
         assert isinstance(maze_area, Area)
 
-    def test_OnInstantiation_MazeIsNotAMaze_RaisesTypeError(self):
+    def test_OnInstantiation_MazeIdIsNotUuid_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Area("invalid", Coordinate(), Size(), "not a maze")
+            Area("invalid", Coordinate(), Size(), "not a uuid")
 
 
 class TestForMaze:

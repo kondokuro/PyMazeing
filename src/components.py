@@ -2,7 +2,7 @@
 Here we define all the pieces that compose mazes.
 """
 from src import systems
-from uuid import uuid4
+from uuid import uuid4, UUID
 
 
 class Positionable:
@@ -60,30 +60,30 @@ class Wall(Positionable):
         
 
 class Area(Positionable):
-    """A zone in space able to contain other positionalbe entities."""
+    """A place in space able to contain other positionalbe entities."""
 
     def __init__(
         self,
         name: str,
         position: systems.Coordinate,
         size: systems.Size,
-        maze: "Maze",
+        maze_id: UUID,
     ) -> None:
         """
         Initializes a new SpatialContainer instance.
 
         :param name: The Areas' name.
-        :param position: A Coordinate as the Area location.
-        :param size: A Size object.
-        :param maze: The maze holding the area.
+        :param position: A Coordinate as the top left Area location.
+        :param size: The space the area occupies in coordinates.
+        :param maze: The ID of maze holding the area.
         """
         super().__init__(name, position)
         if size is not None and not isinstance(size, systems.Size):
             raise TypeError("Parameter 'size' must be of type Size.")
         self.size = size
-        if maze is not None and not isinstance(maze, Maze):
-            raise TypeError("Parameter 'maze' must be of type Maze.")
-        self.maze = maze
+        if maze_id is not None and not isinstance(maze_id, UUID):
+            raise TypeError("Parameter 'maze_id' must be of type Maze.")
+        self.maze_id = maze_id
         self._content = systems.TypedList(Positionable)
 
     @property
