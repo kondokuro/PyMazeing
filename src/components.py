@@ -49,7 +49,15 @@ class Portal(Positionable):
         if destination is not None and not isinstance(destination, Area):
             raise TypeError("Parameter 'destination' must be of type Area.")
         self.destination = destination
+    
 
+class Wall(Positionable):
+    """Division between adjasent areas."""
+
+    def __init__(self, name: str, position: systems.Coordinate, size: systems.Size) -> None:
+        super().__init__(name, position)
+        self.size = size
+        
 
 class Area(Positionable):
     """A zone in space able to contain other positionalbe entities."""
@@ -81,14 +89,6 @@ class Area(Positionable):
     @property
     def content(self) -> systems.TypedList:
         return self._content
-    
-
-class Wall(Positionable):
-    """Division between adjasent areas."""
-
-    def __init__(self, name: str, position: systems.Coordinate, size: systems.Size) -> None:
-        super().__init__(name, position)
-        self.size = size
 
 
 class Maze(Positionable):

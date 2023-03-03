@@ -18,8 +18,14 @@ from src import components, systems
 class Wizzard:
     """Generates mazes with just a few parametes."""
 
-    def cast_maze(self, name: str, origin: systems.Coordinate, *args, **kwargs) -> components.Maze:
-        """Generates an initial maze to build up from."""
+    def cast_maze(self, name: str, origin: systems.Coordinate, branches: int, *args, **kwargs) -> components.Maze:
+        """
+        Generates an initial maze to build up from.
+        
+        :param name: the label of the maze.
+        :param origin: the initial location of the maze.
+        :param branches: the total number of branches the maze will contain.
+        """
         return components.Maze(name, origin)
 
     def cast_area(
