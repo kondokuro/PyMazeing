@@ -43,6 +43,38 @@ class Wizzard:
         """Instantiates an initial maze for the wizzard"""
         self._maze = components.Maze(name, origin)
 
+    def _add_walls(self, area: components.Area, shape: AreaShape) -> None:
+        """Places walls in the area based on the requested shape."""
+        match shape:
+            case AreaShape.CLOSED: 
+                pass
+            case AreaShape.DEAD_END_W: 
+                pass
+            case AreaShape.DEAD_END_S: 
+                pass
+            case AreaShape.DEAD_END_E: 
+                pass
+            case AreaShape.DEAD_END_N: 
+                pass
+            case AreaShape.WAY_WE: 
+                pass
+            case AreaShape.WAY_NS: 
+                pass
+            case AreaShape.CORNER_WS: 
+                pass
+            case AreaShape.CORNER_SE: 
+                pass
+            case AreaShape.CORNER_EN: 
+                pass
+            case AreaShape.CORNER_NW: 
+                pass
+            case AreaShape.JUNCTION_WSE: 
+                pass
+            case AreaShape.JUNCTION_WNE: 
+                pass
+            case AreaShape.CROSSROAD: 
+                pass
+
     def cast_maze(
         self, name: str, origin: systems.Coordinate, branches: int, *args, **kwargs
     ) -> components.Maze:
@@ -71,7 +103,9 @@ class Wizzard:
         :param location: The top left Coordinate of the area.
         :param size: Space the area will occupy TBD
         """
-        return components.Area("WIP", location, size, maze.id)
+        new_area = components.Area("WIP", location, size, maze.id)
+        self._add_walls(new_area, shape)
+        return new_area
 
     def branch(self, area: components.Area) -> systems.TypedList[components.Area]:
         """The idea here is to take an area as the starting point and build a group of areas."""

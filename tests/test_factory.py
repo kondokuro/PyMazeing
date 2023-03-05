@@ -36,6 +36,7 @@ class TestForWizzard:
 
     def test_CastArea_InitialLocation_AreaSizeIsThree(self):
         initial = systems.Coordinate(5, -4)
-        area = self.mage.cast_area(factory.AreaShape.CLOSED, initial)
+        labyrinth = self.mage.cast_maze("corn", systems.Coordinate(), 5)
+        area = self.mage.cast_area(labyrinth, factory.AreaShape.CLOSED, initial)
         assert area.size.length == 3
         assert area.size.height == 3
