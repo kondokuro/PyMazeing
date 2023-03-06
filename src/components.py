@@ -23,6 +23,9 @@ class Positionable:
             raise TypeError("Parameter 'position' must be of type Coordinate.")
         self.position = position
 
+    def __repr__(self) -> str:
+        return f"{self.name} at {self.position}"
+
 
 class Portal(Positionable):
     """Connection between two Maze Areas."""

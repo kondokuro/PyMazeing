@@ -17,6 +17,12 @@ class TypedList(collections.UserList):
         super().__init__()
         self.cls = cls
 
+    def __repr__(self) -> str:
+        return f"TypedList of {self.cls}"
+    
+    def __str__(self) -> str:
+        return f"TypedList of type {self.cls} items"
+    
     def __validate(self, item):
         """
         Validates that an item can be added to the list.
@@ -80,6 +86,12 @@ class Coordinate:
         if not isinstance(other, Coordinate):
             return False
         return self.x == other.x and self.y == other.y and self.z == other.z
+    
+    def __repr__(self) -> str:
+        return f"(x: {self.x}, y: {self.y}, z: {self.z})"
+    
+    def __str__(self) -> str:
+        return f"coordinates ({self.x}, {self.y}, {self.z})"
 
 
 class Size:
@@ -123,6 +135,12 @@ class Size:
             and self.width == other.width
             and self.height == other.height
         )
+
+    def __repr__(self) -> str:
+        return f"size l: {self.length}, w: {self.width}, h: {self.height}"
+
+    def __str__(self) -> str:
+        return f"size of length {self.length}, width {self.width} and height {self.height}"
 
     @property
     def length(self) -> int:

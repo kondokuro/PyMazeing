@@ -36,44 +36,165 @@ class AreaShape(Enum):
     CROSSROAD = auto()
 
 
+class AreaForge:
+    """Creates areas with proper walls and available spaces."""
+
+    def __init__(self, maze: components.Maze) -> None:
+        self.maze = maze
+
+    def _add_walls(self, area: components.Area, shape: AreaShape) -> None:
+        """Places walls in the area based on the requested shape."""
+        coords = area.position
+        match shape:
+            case AreaShape.CLOSED:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("w_wall", systems.Coordinate(coords.x, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("e_wall", systems.Coordinate(coords.x+2, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.DEAD_END_W:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("e_wall", systems.Coordinate(coords.x+2, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.DEAD_END_S:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("w_wall", systems.Coordinate(coords.x, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("e_wall", systems.Coordinate(coords.x+2, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.DEAD_END_E:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("w_wall", systems.Coordinate(coords.x, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.DEAD_END_N:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("w_wall", systems.Coordinate(coords.x, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("e_wall", systems.Coordinate(coords.x+2, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.WAY_WE:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.WAY_NS:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("w_wall", systems.Coordinate(coords.x, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("e_wall", systems.Coordinate(coords.x+2, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.CORNER_WS:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("e_wall", systems.Coordinate(coords.x+2, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.CORNER_SE:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("w_wall", systems.Coordinate(coords.x, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.CORNER_EN:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("w_wall", systems.Coordinate(coords.x, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.CORNER_NW:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("e_wall", systems.Coordinate(coords.x+2, coords.y+1, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.JUNCTION_WSE:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("n_wall", systems.Coordinate(coords.x+1, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.JUNCTION_WNE:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("s_wall", systems.Coordinate(coords.x+1, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+            case AreaShape.CROSSROAD:
+                walls = [
+                    components.Wall("nw_wall", systems.Coordinate(coords.x, coords.y, coords.z), systems.Size()),
+                    components.Wall("ne_wall", systems.Coordinate(coords.x+2, coords.y, coords.z), systems.Size()),
+                    components.Wall("sw_wall", systems.Coordinate(coords.x, coords.y+2, coords.z), systems.Size()),
+                    components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
+                ]
+        for wall in walls:
+            area.content.append(wall)
+
+    def conjure_area(self, shape: AreaShape) -> components.Area:
+        area = components.Area(
+            "name", self.maze.position, systems.Size(3), self.maze.id
+        )
+        self._add_walls(area, shape)
+        return area
+
+
 class Wizzard:
     """Summon mazes with just a few parametes."""
+
+    def __init__(self) -> None:
+        self._maze = components.Maze("unamed", systems.Coordinate())
+        self.area_forge = AreaForge(self._maze)
 
     def _summon_maze(self, name: str, origin: systems.Coordinate) -> None:
         """Instantiates an initial maze for the wizzard"""
         self._maze = components.Maze(name, origin)
-
-    def _add_walls(self, area: components.Area, shape: AreaShape) -> None:
-        """Places walls in the area based on the requested shape."""
-        match shape:
-            case AreaShape.CLOSED: 
-                pass
-            case AreaShape.DEAD_END_W: 
-                pass
-            case AreaShape.DEAD_END_S: 
-                pass
-            case AreaShape.DEAD_END_E: 
-                pass
-            case AreaShape.DEAD_END_N: 
-                pass
-            case AreaShape.WAY_WE: 
-                pass
-            case AreaShape.WAY_NS: 
-                pass
-            case AreaShape.CORNER_WS: 
-                pass
-            case AreaShape.CORNER_SE: 
-                pass
-            case AreaShape.CORNER_EN: 
-                pass
-            case AreaShape.CORNER_NW: 
-                pass
-            case AreaShape.JUNCTION_WSE: 
-                pass
-            case AreaShape.JUNCTION_WNE: 
-                pass
-            case AreaShape.CROSSROAD: 
-                pass
 
     def cast_maze(
         self, name: str, origin: systems.Coordinate, branches: int, *args, **kwargs
@@ -104,7 +225,6 @@ class Wizzard:
         :param size: Space the area will occupy TBD
         """
         new_area = components.Area("WIP", location, size, maze.id)
-        self._add_walls(new_area, shape)
         return new_area
 
     def branch(self, area: components.Area) -> systems.TypedList[components.Area]:
