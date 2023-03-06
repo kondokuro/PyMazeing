@@ -37,7 +37,7 @@ class AreaShape(Enum):
 
 
 class AreaForge:
-    """Creates areas with proper walls and available spaces."""
+    """Creates fixed size 3 areas with proper walls and available spaces."""
 
     def __init__(self, maze: components.Maze) -> None:
         self.maze = maze
@@ -175,9 +175,15 @@ class AreaForge:
                     components.Wall("se_wall", systems.Coordinate(coords.x+2, coords.y+2, coords.z), systems.Size()),
                 ]
         for wall in walls:
-            area.content.append(wall)
+            area.content.append(wall)  # type: ignore
 
     def conjure_area(self, shape: AreaShape) -> components.Area:
+        """
+        Provides a fully shaped area instance.
+
+        :param shape: The desired wall structure of the area.
+        :returns: A default area containing walls arranged by the shape.
+        """
         area = components.Area(
             "name", self.maze.position, systems.Size(3), self.maze.id
         )
@@ -209,24 +215,23 @@ class Wizzard:
         self._summon_maze(name, origin)
         return self._maze
 
-    def cast_area(
+    def add_area(
         self,
         maze: components.Maze,
         shape: AreaShape,
         location: systems.Coordinate,
         portal: bool = False,
         size: systems.Size = systems.Size(),
-    ) -> components.Area:
+    ) -> None:
         """
-        Creates areas surrounded by walls based on the parameters provided.
+        Adds a new area to the maze being constructed.
 
         :param shape: An AreaShape enum to give the area its open spaces and walls
         :param location: The top left Coordinate of the area.
         :param size: Space the area will occupy TBD
         """
-        new_area = components.Area("WIP", location, size, maze.id)
-        return new_area
+        self._maze.areas.append(components.Area("WIP", location, size, self._maze.id))
 
-    def branch(self, area: components.Area) -> systems.TypedList[components.Area]:
+    def branch(self, area: components.Area) -> systems.TypedList:
         """The idea here is to take an area as the starting point and build a group of areas."""
         return systems.TypedList(components.Area)

@@ -23,7 +23,7 @@ class TypedList(collections.UserList):
     def __str__(self) -> str:
         return f"TypedList of type {self.cls} items"
     
-    def __validate(self, item):
+    def __validate(self, item: typing.Any):
         """
         Validates that an item can be added to the list.
 
@@ -33,7 +33,7 @@ class TypedList(collections.UserList):
         if not isinstance(item, self.cls):
             raise TypeError(f"List items must be of type {self.cls}")
 
-    def append(self, item):
+    def append(self, item: typing.Any):
         """
         Adds an item to the end of the list.
 
@@ -43,7 +43,7 @@ class TypedList(collections.UserList):
         self.__validate(item)
         super().append(item)
 
-    def insert(self, i, item):
+    def insert(self, i: int, item: typing.Any):
         """
         Adds an item to the list at a specific index.
 
@@ -54,7 +54,7 @@ class TypedList(collections.UserList):
         self.__validate(item)
         super().insert(i, item)
 
-    def extend(self, iterable):
+    def extend(self, iterable: typing.Iterable):
         """
         Adds multiple items to the end of the list.
 
@@ -137,7 +137,7 @@ class Size:
         )
 
     def __repr__(self) -> str:
-        return f"size l: {self.length}, w: {self.width}, h: {self.height}"
+        return f"(l: {self.length}, w: {self.width}, h: {self.height})"
 
     def __str__(self) -> str:
         return f"size of length {self.length}, width {self.width} and height {self.height}"

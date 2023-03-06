@@ -24,7 +24,7 @@ class Positionable:
         self.position = position
 
     def __repr__(self) -> str:
-        return f"{self.name} at {self.position}"
+        return f"portal {self.id} at {self.position}"
 
 
 class Portal(Positionable):

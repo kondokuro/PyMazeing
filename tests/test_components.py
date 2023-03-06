@@ -6,11 +6,11 @@ from src.systems import Coordinate, Size
 class TestForPositionable:
     def test_OnInstantiation_NameIsNotString_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Positionable(2, Coordinate())
+            Positionable(2, Coordinate())  # type: ignore
 
     def test_OnInstantiation_PossitionIsNotCoordinate_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Positionable("bad location", (1, 2, 3))
+            Positionable("bad location", (1, 2, 3))  # type: ignore
 
 
 class TestForPortal:
@@ -22,11 +22,11 @@ class TestForPortal:
 
     def test_OnInstantiation_OriginIsNotArea_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Portal("bad orgin", Coordinate(), "not an area", self.test_area)
+            Portal("bad orgin", Coordinate(), "not an area", self.test_area)  # type: ignore
 
     def test_OnInstantiation_DestinationIsNotArea_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Portal("bad destination", Coordinate(), self.test_area, "not an area")
+            Portal("bad destination", Coordinate(), self.test_area, "not an area")  # type: ignore
 
 
 class TestForArea:
@@ -38,7 +38,7 @@ class TestForArea:
 
     def test_OnInstantiation_MazeIdIsNotUuid_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Area("invalid", Coordinate(), Size(), "not a uuid")
+            Area("invalid", Coordinate(), Size(), "not a uuid")  # type: ignore
 
 
 class TestForMaze:

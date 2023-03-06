@@ -68,8 +68,8 @@ class TestForSize:
 
     def test_IsLonger_TypeMismatch_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Size().is_longer(9)
-
+            Size().is_longer(9) # type: ignore
+            
     def test_IsWhider_InstanceIsSmaller_ReturnsFalse(self):
         this = Size(4, 1, 4)
         than_this = Size(4, 9, 4)
@@ -82,8 +82,8 @@ class TestForSize:
 
     def test_IsWhider_TypeMismatch_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Size().is_whider(9)
-
+            Size().is_whider(9)  # type: ignore
+            
     def test_IsTaller_InstanceIsSmaller_ReturnsFalse(self):
         this = Size(1, 1, 2)
         than_this = Size(1, 1, 6)
@@ -96,8 +96,8 @@ class TestForSize:
 
     def test_IsTaller_TypeMismatch_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Size().is_taller(9)
-
+            Size().is_taller(9)  # type: ignore
+            
     def test_SetLength_NegativeValue_RaisesValurError(self):
         size = Size()
         with pytest.raises(ValueError):
