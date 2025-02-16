@@ -2,14 +2,14 @@
 
 ## About 
 
-As a game developer, one of the tasks is to create the playable space, also known as the game world, level, dungeon or even a room. The idea behind the PyMazing project is to provide a way to represent those spaces, using maze definitions, allowing for simple workflows to generate them, automatically or manually.
+As a game developer, one of the tasks is to create the playable space, also known as the game world, level, dungeon or town. The idea behind the PyMazing project is to provide a way to represent those spaces, using maze definitions, allowing for simple workflows to generate them, automatically or manually.
 
-It is intended for dungeon, level or labyrinth design enthusiasts, this means that the result can be used to render or build playable Mazes anywhere.
+It is intended for labyrinth, dungeon or level design enthusiasts, this means that the result can be used to render or build playable Mazes anywhere.
 
 
 ## User Interface 
 
-From the wizard module use the cast_maze function to obtain a maze instance. 
+From factory module the main tool will be the Forge we have access to the means of building up our maze piece by piece. 
 
 ```python
 TBD
