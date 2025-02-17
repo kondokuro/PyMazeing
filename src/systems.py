@@ -1,8 +1,6 @@
 """
 Definitions that supporting maze creation.
 """
-import typing
-import collections
 
 
 class Coordinate:
