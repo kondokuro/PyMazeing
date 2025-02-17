@@ -1,12 +1,15 @@
 """
 Here we define all the pieces that compose mazes.
 """
-from src import systems
+import typing
 from uuid import uuid4, UUID
 from typing import Protocol
-from abc import ABC, abstractmethod
+from abc import ABC
+from src import systems
+
 
 class Positionable(Protocol):
+    """Representation of entities that are located in a place in space."""
     @property
     def position(self) -> "systems.Coordinate":
         """The entity's position."""
@@ -19,11 +22,6 @@ class MazeElement(ABC):
         """The entity's position."""
         return self._position;
 
-    @property
-    def id(self) -> UUID:
-        """The entity's unique identifier."""
-        return self._id;
-
     def __init__(self, position: systems.Coordinate) -> None:
         """
         Initializes a new PositionableEntity instance with an unique ID.
@@ -31,13 +29,12 @@ class MazeElement(ABC):
         :param name: The entitys' name.
         :param position: A Coordinate for the location of the entity.
         """
-        self._id = uuid4()
         if position is not None and not isinstance(position, systems.Coordinate):
-            raise TypeError("Parameter 'position' must be of type Coordinate, but got {}".format(type(position)))
+            raise TypeError(f"Parameter 'position' must be of type Coordinate, but got {type(position)}")
         self._position = position
     
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(id={self.id}, at {self.position})"
+        return f"{self.__class__.__name__} at {self.position}"
 
     def __str__(self) -> str:
         return repr(self);
@@ -81,10 +78,10 @@ class Portal(MazeElement):
         """
         super().__init__(position)
         if origin is not None and not isinstance(origin, Area):
-            raise TypeError("Parameter 'origin' must be of type Area, but got {}".format(type(origin)))
+            raise TypeError(f"Parameter 'origin' must be of type Area, but got {type(origin)}")
         self._origin = origin
         if destination is not None and not isinstance(destination, Area):
-            raise TypeError("Parameter 'destination' must be of type Area, but got {}".format(type(destination)))
+            raise TypeError(f"Parameter 'destination' must be of type Area, but got {type(destination)}")
         self._destination = destination
     
 
@@ -116,12 +113,11 @@ class Area(Positionable):
         if size is not None and not isinstance(size, systems.Size):
             raise TypeError("Parameter 'size' must be of type Size.")
         self.size = size
+        self._content = list()
 
     @property
-    def content(self) -> systems.TypedList:
-        """Entities in the area."""
-        if (self._content is None):
-            self._content = systems.TypedList(MazeElement)
+    def content(self) -> typing.List[MazeElement]:
+        """Entities in the area. Probably will change this to a dict."""
         return self._content
 
 
@@ -134,8 +130,11 @@ class Maze:
 
         :param name: The name of the Maze.
         """
+        self._id = uuid4()
         self._origin = origin
         self._name = name
+        self._areas = list()
+        self._occupied_space = list()
 
     @property
     def origin(self) -> systems.Coordinate:
@@ -152,15 +151,16 @@ class Maze:
         self._name = name
 
     @property
-    def areas(self) -> systems.TypedList:
+    def areas(self) -> typing.List[Area]:
         """Areas in the maze."""
-        if (self._areas is None):
-            self._areas = systems.TypedList(Area)
         return self._areas
 
     @property
-    def occupied_space(self) -> systems.TypedList:
+    def occupied_space(self) -> typing.List[systems.Coordinate]:
         """Coordinates with areas."""
-        if (self._occupied_space is None):
-            self._occupied_space = systems.TypedList(systems.Coordinate)
         return self._occupied_space
+    
+    @property
+    def id(self) -> UUID:
+        """The maze's unique identifier."""
+        return self._id
