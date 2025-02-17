@@ -6,43 +6,52 @@ from src.systems import Coordinate, Size
 class TestForMazeElement:
     def test_OnInstantiation_NameIsNotString_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            MazeElement(2, Coordinate())  # type: ignore
+            MazeElement(Coordinate())  # type: ignore
 
     def test_OnInstantiation_PossitionIsNotCoordinate_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            MazeElement("bad location", (1, 2, 3))  # type: ignore
+            MazeElement((1, 2, 3))  # type: ignore
 
 
 class TestForPortal:
-    test_area = Area("test area", Coordinate(), Size(), Maze("test maze").id)
+    test_area = Area("test area", Coordinate(), Size())
 
-    def test_NewPortal_WithProperParameters_ReturnsaPortal(self):
-        exit = Portal("the way out", Coordinate(), self.test_area, self.test_area)
-        assert isinstance(exit, Portal)
+    def test_new_portal_valid_parameters_returns_portal(self):
+        exit_way = Portal(Coordinate(), self.test_area, self.test_area)
+        assert isinstance(exit_way, Portal)
 
     def test_NewPortal_OriginIsNotArea_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Portal("bad orgin", Coordinate(), "not an area", self.test_area)  # type: ignore
+            Portal(Coordinate(), "not an area", self.test_area)  # type: ignore
 
     def test_NewPortal_DestinationIsNotArea_RaisesTypeError(self):
         with pytest.raises(TypeError):
-            Portal("bad destination", Coordinate(), self.test_area, "not an area")  # type: ignore
+            Portal(Coordinate(), self.test_area, "not an area")  # type: ignore
 
 
 class TestForArea:
+    test_maze = Maze("Labirinth")
 
-    def test_NewArea_WithProperParameters_ReturnsAnArea(self):
-        maze_area = Area("room 2", Coordinate(), Size(), self.test_maze.id)
-        assert isinstance(maze_area, Area)
+    def test_NewArea_NameIsNotString_RaisesTypeError(self):
+        with pytest.raises(TypeError):
+            Area(2, Coordinate(), Size())  # type: ignore
+
+    def test_NewArea_PositionIsNotCoordinate_RaisesTypeError(self):
+        with pytest.raises(TypeError):
+            Area("bad location", (1, 2, 3), Size())  # type: ignore
+
+    def test_NewArea_SizeIsNotSize_RaisesTypeError(self):
+        with pytest.raises(TypeError):
+            Area("bad size", Coordinate(), (1, 2, 3))  # type: ignore
 
 
 class TestForMaze:
     test_maze = Maze("Labirinth")
 
     def test_NewMaze_MazeIsAtOrigin(self):
-        assert self.test_maze.position == Coordinate()
+        assert self.test_maze.origin == Coordinate()
 
     def test_NewMaze_WithInitialLocation_MazePossitionIsSet(self):
         direction = Coordinate(3, 3, 3)
         placed_maze = Maze("with location", direction)
-        assert placed_maze.position == direction
+        assert placed_maze.origin == direction

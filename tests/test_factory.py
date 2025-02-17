@@ -59,4 +59,4 @@ class TestForWizzard:
         origin = systems.Coordinate(1,2,3)
         Labyrinth = self.mage.cast_maze("Test Labyrinth", origin, 5)
         assert isinstance(Labyrinth, components.Maze)
-        assert origin == Labyrinth.position
+        assert origin == Labyrinth.origin
