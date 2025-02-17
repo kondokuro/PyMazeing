@@ -120,19 +120,12 @@ Defines the square or cubed space where an entity is located
 - height, height space
 
 ### Maze rules
-1.- A Maze is composed of one to many Halls
-2.- A Maze must have at least one Portal
-3.- A Hall is divided into one or many Areas
-4.- Paths are Halls with at least an Area with a Portal
-5.- Hall Areas do not cross over their Hall
-6.- Branches are Halls without Portals
-7.- Areas only belong to a single Hall
-8.- Areas can have a maximum of one Portal
-9.- Areas never have the same coordinates
-10.- Portals belong to an Area
-11.- Portals define entrance or exit from a maze
-12.- Portals can connect different mazes
-13.- Portals can exist in multiple areas from different mazes
+1.- A Maze must have at least one Portal
+2.- Portals define entrance or exit from a maze
+3.- A Maze is composed of one to many Areas
+4.- Areas never have the same coordinates
+5.- Portals belong to an Area
+6.- Portals can connect different Areas
 
 ## Testing
 Every class and function is unit tested.
@@ -143,7 +136,4 @@ This work is meant to be used as a library, to be used alongside another project
 ## Broader Context 
 
 ### Possible extensions 
-- Support for alternate coordinate systems, for example hex spaces instead of squares
-- Definition of open and closed zones.
-- Definition of additional collectables to find, rather than just finding the exit.
-- Adding more objects for the zones
+...
