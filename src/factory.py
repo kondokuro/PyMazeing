@@ -13,6 +13,7 @@ Portals are located in Areas
 Portals define entrance or exit from a Maze
 Portals connect two Mazes
 """
+import typing
 from enum import Enum, auto
 from src import components, systems
 
@@ -185,7 +186,7 @@ class AreaForge:
         :returns: A default area containing walls arranged by the shape.
         """
         area = components.Area(
-            "name", self.maze.position, systems.Size(3), self.maze.id
+            "name", self.maze.position, systems.Size(3)
         )
         self._add_walls(area, shape)
         return area
@@ -217,10 +218,7 @@ class Wizzard:
 
     def add_area(
         self,
-        maze: components.Maze,
-        shape: AreaShape,
         location: systems.Coordinate,
-        portal: bool = False,
         size: systems.Size = systems.Size(),
     ) -> None:
         """
@@ -230,8 +228,8 @@ class Wizzard:
         :param location: The top left Coordinate of the area.
         :param size: Space the area will occupy TBD
         """
-        self._maze.areas.append(components.Area("WIP", location, size, self._maze.id))
+        self._maze.areas.append(components.Area("WIP", location, size))
 
-    def branch(self, area: components.Area) -> systems.TypedList:
+    def branch(self, area: components.Area) -> typing.List[components.Area]:
         """The idea here is to take an area as the starting point and build a group of areas."""
-        return systems.TypedList(components.Area)
+        return list(area)
