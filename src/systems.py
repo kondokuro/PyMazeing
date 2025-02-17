@@ -5,67 +5,6 @@ import typing
 import collections
 
 
-class TypedList(collections.UserList):
-    """A list bound to a single type of items."""
-
-    def __init__(self, cls: typing.Type):
-        """
-        Initializes a new TypedList instance.
-
-        :param cls: the class Type object representing the type of the elements that can be stored in the list.
-        """
-        super().__init__()
-        self.cls = cls
-
-    def __repr__(self) -> str:
-        return f"TypedList of {self.cls}"
-    
-    def __str__(self) -> str:
-        return f"TypedList of type {self.cls} items"
-    
-    def __validate(self, item: typing.Any):
-        """
-        Validates that an item can be added to the list.
-
-        :param item: The item to be validated.
-        :raises TypeError: If the item is not of the type that the list is bound to.
-        """
-        if not isinstance(item, self.cls):
-            raise TypeError(f"List items must be of type {self.cls}")
-
-    def append(self, item: typing.Any):
-        """
-        Adds an item to the end of the list.
-
-        :param item: The item to be added.
-        :raises TypeError: If the item is not of the type that the list is bound to.
-        """
-        self.__validate(item)
-        super().append(item)
-
-    def insert(self, i: int, item: typing.Any):
-        """
-        Adds an item to the list at a specific index.
-
-        :param i: The index at which to insert the item.
-        :param item: The item to be inserted.
-        :raises TypeError: If the item is not of the type that the list is bound to.
-        """
-        self.__validate(item)
-        super().insert(i, item)
-
-    def extend(self, iterable: typing.Iterable):
-        """
-        Adds multiple items to the end of the list.
-
-        :param iterable: An iterable of items to be added.
-        :raises TypeError: If any of the items are not of the type that the list is bound to.
-        """
-        for item in iterable:
-            self.__validate(item)
-        super().extend(iterable)
-
-
 class Coordinate:
     """Identifies a location in space."""
 
@@ -73,9 +12,12 @@ class Coordinate:
         """
         Initializes a new Coordinate instance. Defaults to the origin.
 
-        :param x: An integer for the x-coordinate, defautls to zero.
-        :param y: An integer for the y-coordinate, defautls to zero.
-        :param z: An integer for the z-coordinate, defautls to zero.
+        :param x: An integer value for the x-coordinate, representing a level
+        or floor location in the structure, defautls to zero.
+        :param y: An integer value for the y-coordinate, representing east or
+        west side locations of a strucure, defautls to zero.
+        :param z: An integer value for the z-coordinate, represents the
+        front or back sides of a structure, defautls to zero.
         """
         self.x = x
         self.y = y
@@ -90,7 +32,7 @@ class Coordinate:
     def __repr__(self) -> str:
         return f"(x: {self.x}, y: {self.y}, z: {self.z})"
     
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # TODO add test to include building like notation
         return f"coordinates ({self.x}, {self.y}, {self.z})"
 
 
