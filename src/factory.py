@@ -13,6 +13,7 @@ Portals are located in Areas
 Portals define entrance or exit from a Maze
 Portals connect two Mazes
 """
+
 import typing
 from enum import Enum, auto
 from src.components import Wall, Area, Maze
@@ -51,133 +52,337 @@ class AreaForge:
             case AreaShape.CLOSED:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("w_wall", Coordinate(coords.x, coords.y+1, coords.z), Size()),
-                    Wall("e_wall", Coordinate(coords.x+2, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "w_wall", Coordinate(coords.x, coords.y + 1, coords.z), Size()
+                    ),
+                    Wall(
+                        "e_wall",
+                        Coordinate(coords.x + 2, coords.y + 1, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.DEAD_END_W:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("e_wall", Coordinate(coords.x+2, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "e_wall",
+                        Coordinate(coords.x + 2, coords.y + 1, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.DEAD_END_S:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("w_wall", Coordinate(coords.x, coords.y+1, coords.z), Size()),
-                    Wall("e_wall", Coordinate(coords.x+2, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "w_wall", Coordinate(coords.x, coords.y + 1, coords.z), Size()
+                    ),
+                    Wall(
+                        "e_wall",
+                        Coordinate(coords.x + 2, coords.y + 1, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.DEAD_END_E:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("w_wall", Coordinate(coords.x, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "w_wall", Coordinate(coords.x, coords.y + 1, coords.z), Size()
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.DEAD_END_N:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("w_wall", Coordinate(coords.x, coords.y+1, coords.z), Size()),
-                    Wall("e_wall", Coordinate(coords.x+2, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "w_wall", Coordinate(coords.x, coords.y + 1, coords.z), Size()
+                    ),
+                    Wall(
+                        "e_wall",
+                        Coordinate(coords.x + 2, coords.y + 1, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.WAY_WE:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.WAY_NS:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("w_wall", Coordinate(coords.x, coords.y+1, coords.z), Size()),
-                    Wall("e_wall", Coordinate(coords.x+2, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "w_wall", Coordinate(coords.x, coords.y + 1, coords.z), Size()
+                    ),
+                    Wall(
+                        "e_wall",
+                        Coordinate(coords.x + 2, coords.y + 1, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.CORNER_WS:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("e_wall", Coordinate(coords.x+2, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "e_wall",
+                        Coordinate(coords.x + 2, coords.y + 1, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.CORNER_SE:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("w_wall", Coordinate(coords.x, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "w_wall", Coordinate(coords.x, coords.y + 1, coords.z), Size()
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.CORNER_EN:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("w_wall", Coordinate(coords.x, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "w_wall", Coordinate(coords.x, coords.y + 1, coords.z), Size()
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.CORNER_NW:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("e_wall", Coordinate(coords.x+2, coords.y+1, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "e_wall",
+                        Coordinate(coords.x + 2, coords.y + 1, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.JUNCTION_WSE:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("n_wall", Coordinate(coords.x+1, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "n_wall", Coordinate(coords.x + 1, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.JUNCTION_WNE:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("s_wall", Coordinate(coords.x+1, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "s_wall",
+                        Coordinate(coords.x + 1, coords.y + 2, coords.z),
+                        Size(),
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
             case AreaShape.CROSSROAD:
                 walls = [
                     Wall("nw_wall", Coordinate(coords.x, coords.y, coords.z), Size()),
-                    Wall("ne_wall", Coordinate(coords.x+2, coords.y, coords.z), Size()),
-                    Wall("sw_wall", Coordinate(coords.x, coords.y+2, coords.z), Size()),
-                    Wall("se_wall", Coordinate(coords.x+2, coords.y+2, coords.z), Size()),
+                    Wall(
+                        "ne_wall", Coordinate(coords.x + 2, coords.y, coords.z), Size()
+                    ),
+                    Wall(
+                        "sw_wall", Coordinate(coords.x, coords.y + 2, coords.z), Size()
+                    ),
+                    Wall(
+                        "se_wall",
+                        Coordinate(coords.x + 2, coords.y + 2, coords.z),
+                        Size(),
+                    ),
                 ]
         for wall in walls:
-            area.content.append(wall)  # TODO nothing is checking for space available for those elements
+            area.content.append(
+                wall
+            )  # TODO nothing is checking for space available for those elements
 
     def conjure_area(self, shape: AreaShape) -> Area:
         """
@@ -187,7 +392,9 @@ class AreaForge:
         :returns: A default area containing walls arranged by the shape.
         """
         area = Area(
-            "name", self.maze.origin, Size(3, 3, 3)  # TODO there is no way to define where to add the areaS
+            "name",
+            self.maze.origin,
+            Size(3, 3, 3),  # TODO there is no way to define where to add the areaS
         )
         self._add_walls(area, shape)
         return area
@@ -204,9 +411,7 @@ class Wizzard:
         """Instantiates an initial maze for the wizzard"""
         self._maze = Maze(name, origin)
 
-    def cast_maze(
-        self, name: str, origin: Coordinate, *args, **kwargs
-    ) -> Maze:
+    def cast_maze(self, name: str, origin: Coordinate, *args, **kwargs) -> Maze:
         """
         Generates an initial maze to build up from.
 
@@ -233,3 +438,14 @@ class Wizzard:
     def branch(self, area: Area) -> typing.List[Area]:
         """The idea here is to take an area as the starting point and build a group of areas."""
         return list(area)
+
+
+class Builder:
+    """Constructs mazes from scratch."""
+
+    def __init__(self):
+        self.maze = None
+
+    def start_maze(self, name: str, origin: Coordinate) -> None:
+        """Begins the construction process of a maze, creating one with a single area, its entrance."""
+        self.maze = Maze(name, origin)

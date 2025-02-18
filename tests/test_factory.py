@@ -1,10 +1,11 @@
 import pytest
-from src import core, components
+from src.core import Coordinate
+from src.components import Maze
 from src.factory import AreaShape, AreaForge, Wizzard
 
 
 class TestsForAreaForge:
-    forge = AreaForge(components.Maze("test", core.Coordinate()))
+    forge = AreaForge(Maze("test", Coordinate()))
 
     @pytest.mark.parametrize(
         "test_shape, wall_count",
@@ -29,12 +30,18 @@ class TestsForAreaForge:
         area = self.forge.conjure_area(test_shape)
         assert len(area.content) == wall_count
 
-
 class TestForWizzard:
     mage = Wizzard()
 
     def test_CastMaze_NameAndOrigin_ReturnsAMazeOnPosition(self):
-        origin = core.Coordinate(1,2,3)
+        origin = Coordinate(1,2,3)
         Labyrinth = self.mage.cast_maze("Test Labyrinth", origin, 5)
-        assert isinstance(Labyrinth, components.Maze)
+        assert isinstance(Labyrinth, Maze)
         assert origin == Labyrinth.origin
+
+class TestForBuilder:
+
+    def test_start_maze_sets_a_maze_instance(self):
+        builder = Builder()
+        builder.start_maze("Test Labyrinth", Coordinate(1,2,3))
+        assert isinstance(builder.maze, Maze)
