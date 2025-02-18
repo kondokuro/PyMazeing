@@ -4,9 +4,6 @@ from src.core import Coordinate, Size
 
 
 class TestForMazeElement:
-    def test_OnInstantiation_NameIsNotString_RaisesTypeError(self):
-        with pytest.raises(TypeError):
-            MazeElement(Coordinate())  # type: ignore
 
     def test_OnInstantiation_PossitionIsNotCoordinate_RaisesTypeError(self):
         with pytest.raises(TypeError):
@@ -48,10 +45,14 @@ class TestForArea:
 class TestForMaze:
     test_maze = Maze("Labirinth")
 
-    def test_NewMaze_MazeIsAtOrigin(self):
+    def test_creating_new_maze_without_location_parameter_has_origin_at_zero(self):
         assert self.test_maze.origin == Coordinate()
 
-    def test_NewMaze_WithInitialLocation_MazePossitionIsSet(self):
+    def test_creating_new_maze_with_initial_location_has_origin_at_location(self):
         direction = Coordinate(3, 3, 3)
         placed_maze = Maze("with location", direction)
         assert placed_maze.origin == direction
+
+    def test_ocupied_spaces_returns_list_of_coordinates(self):
+        assert isinstance(self.test_maze.occupied_spaces, list)
+        assert all(isinstance(c, Coordinate) for c in self.test_maze.occupied_spaces)

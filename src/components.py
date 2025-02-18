@@ -100,7 +100,7 @@ class Wall(Positionable):
         self.size = size
 
 
-class Area(Positionable):
+class Area(MazeElement, Positionable):
     """A place in space able to contain other positionalbe entities."""
 
     def __init__(
@@ -116,11 +116,14 @@ class Area(Positionable):
         :param position: A Coordinate as the top left Area location.
         :param size: The space the area occupies in the maze.
         """
-        super().__init__(name, position)
+        super().__init__(position)
+        if name is not None and not isinstance(name, str):
+            raise TypeError(f"Parameter 'name' must be of type str, but got {type(name)}")
+        self.name = name
         if size is not None and not isinstance(size, Size):
-            raise TypeError("Parameter 'size' must be of type Size.")
+            raise TypeError(f"Parameter 'size' must be of type Size, but got {type(size)}")
         self.size = size
-        self._content = list()
+        self._content = []
 
     @property
     def content(self) -> typing.List[MazeElement]:
@@ -131,17 +134,16 @@ class Area(Positionable):
 class Maze:
     """Labirinth with areas branching out."""
 
-    def __init__(self, name: str, origin: Coordinate = Coordinate()) -> None:
+    def __init__(self, name: str, origin: Coordinate = None) -> None:
         """
         Instantiates a new Maze, set to the spatial origin.
 
         :param name: The name of the Maze.
         """
         self._id = uuid4()
-        self._origin = origin
+        self._origin = origin if origin is not None else Coordinate()
         self._name = name
-        self._areas = []
-        self._occupied_space = []
+        self._areas = {}
 
     @property
     def origin(self) -> Coordinate:
@@ -158,14 +160,14 @@ class Maze:
         self._name = name
 
     @property
-    def areas(self) -> typing.List[Area]:
-        """Areas in the maze."""
+    def areas(self) -> typing.Dict[Coordinate, Area]:
+        """Areas in the maze organized by its coordinates."""
         return self._areas
 
     @property
-    def occupied_space(self) -> typing.List[Coordinate]:
-        """Coordinates with areas."""
-        return self._occupied_space
+    def occupied_spaces(self) -> typing.List[Coordinate]:
+        """Maze coordinates containing areas."""
+        return list(self.areas.keys())
 
     @property
     def id(self) -> UUID:
