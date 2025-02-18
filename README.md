@@ -40,34 +40,10 @@ As mentioned above in the world of Mazes, they are composed of Halls or branchin
 
 This example figure is a representation of a 2D Maze with 9 halls, one path and 2 portals, the halls are numbered, the path is marked and the portals are located at the edges.
 
-### Module definitions
+### Modules
 
-#### rogue
-The functions in this module are named skills, used for gathering information from the maze structure.
-
-##### Find Paths
-Lists the halls in a maze that can be considered as paths
-
-##### Is Path
-Defines if the current hall is a path
-
-##### Detect Branches
-Lists the halls in the maze that are considered as dead ends
-
-##### Track Portals
-List of all the areas containing portals in the maze
-
-##### Track Hall Portals
-List of all the areas containing portals in the hall
-
-##### Map Maze
-List of all the coordinates of the areas in the maze
-
-##### Map Hall Location
-List of all the coordinates of the areas in the hall
-
-#### wizard
-The functions in this module are named spells, used to create mazes and other structures.
+#### factory
+The functions and classes in this module are used to create mazes and their inner structures.
 
 ##### Conjure Maze
 Creates a single complete maze based on the following parameters
@@ -77,7 +53,7 @@ Creates a single complete maze based on the following parameters
 - Min hall length, used to define the smallest size of the many halls
 - Max hall length, used to define the longest size of the many halls
 
-##### Summon Hall
+##### Summon Hall (halls have been deprecated)
 brings forth the desired hall based on the following parameters
 - Length, how many areas the hall will be divided into
 - Number of portals, how many portals should the hall have
@@ -92,10 +68,7 @@ Adds some space for a hall based on the following parameters
 
 #### componenst
 
-#### factory
-
-
-### systems
+### core
 The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
 
 #### PASSAGE
