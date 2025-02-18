@@ -68,37 +68,47 @@ Adds some space for a hall based on the following parameters
 
 #### componenst
 
+##### Area
+A single unit occupiying a maze coordinate, represents a room or space in the maze.
+- name? should areas be named
+- location: use also as its unique identifier, tells the place it has in the maze space.
+- size: defines how much space it actually has to hold other objects. (WIP)
+
+An idea of the area is that it belongs to a single point of the maze and it also holds space itself, this permits mapping the maze paths without caring about the size or shape of the actual areas.
+Another probably better idea is that Areas should be of unique size so that having a bigger space is a matter of combining areas.
+
 ### core
 The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
 
-#### PASSAGE
+#### PASSAGE (WIP)
 Connection between two halls
 - Origin, the connected area
 - Connection, the external hall
 
-#### PORTAL
+#### PORTAL (WIP)
 Defines entrance or exit from a maze, or the access to another maze
 - Destination, the name of the maze this portal connects to, empty values can be used to determine entrance or exit from the maze
 
 #### COORDINATES
 Defines the location of an area in the maze coordinate system, loosely based on the cartesian system
-- X, horizontal axis, west will be negative values while east will be positive
-- Y, vertical axis, where north is the positive value and south is the negative
-- Z, height axis, where up is represented as positive values while down by negative
+- X, the vertical axis, represents the levels or floors of a structure, where negative values are ment as the basement or underground levels.
+- Y, horizontal axis, where the east side is represented by the positive values and west uses the negative ones.
+- Z, depth axis, representint the front as positive values while back by negative.
 
 #### SIZE
 Defines the square or cubed space where an entity is located
-- width, horizontal space
-- length, vertical space
-- height, height space
+- Width: The measurement across the shortest dimension from side to side.
+- Length: The measurement along the longest dimension usually front to back .
+- Height: The measurement from top to bottom.
 
 ### Maze rules
 1.- A Maze must have at least one Portal
 2.- Portals define entrance or exit from a maze
-3.- A Maze is composed of one to many Areas
-4.- Areas never have the same coordinates
-5.- Portals belong to an Area
-6.- Portals can connect different Areas
+3.- Portals can connect non adjacent areas
+4.- A Maze is composed of one to many Areas
+5.- Areas never have the same coordinates
+6.- Portals belong to an Area
+7.- Portals can connect different Areas
 
 ## Testing
 Every class and function is unit tested.
