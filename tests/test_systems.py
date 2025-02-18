@@ -1,5 +1,5 @@
 import pytest
-from src.systems import Size, Coordinate
+from src.core import Size, Coordinate
 
 
 class TestForCoordinate:

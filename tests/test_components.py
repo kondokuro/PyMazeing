@@ -1,6 +1,6 @@
 import pytest
 from src.components import Area, Portal, Maze, MazeElement
-from src.systems import Coordinate, Size
+from src.core import Coordinate, Size
 
 
 class TestForMazeElement:
