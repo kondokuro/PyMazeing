@@ -1,52 +1,20 @@
 import pytest
-from src.components import Area, Portal, Maze, MazeElement
-from src.core import Coordinate, Size
+from src.components import Area, Maze, Coordinate
 
-
-class TestForMazeElement:
-
-    def test_OnInstantiation_PossitionIsNotCoordinate_RaisesTypeError(self):
-        with pytest.raises(TypeError):
-            MazeElement((1, 2, 3))  # type: ignore
-
-
-class TestForPortal:
-    test_area = Area("test area", Coordinate(), Size())
-
-    def test_new_portal_valid_parameters_returns_portal(self):
-        exit_way = Portal(Coordinate(), self.test_area, self.test_area)
-        assert isinstance(exit_way, Portal)
-
-    def test_NewPortal_OriginIsNotArea_RaisesTypeError(self):
-        with pytest.raises(TypeError):
-            Portal(Coordinate(), "not an area", self.test_area)  # type: ignore
-
-    def test_NewPortal_DestinationIsNotArea_RaisesTypeError(self):
-        with pytest.raises(TypeError):
-            Portal(Coordinate(), self.test_area, "not an area")  # type: ignore
 
 
 class TestForArea:
-    test_maze = Maze("Labirinth")
 
-    def test_NewArea_NameIsNotString_RaisesTypeError(self):
+    def test_new_area_position_is_not_coordinate_raises_type_error(self):
         with pytest.raises(TypeError):
-            Area(2, Coordinate(), Size())  # type: ignore
-
-    def test_NewArea_PositionIsNotCoordinate_RaisesTypeError(self):
-        with pytest.raises(TypeError):
-            Area("bad location", (1, 2, 3), Size())  # type: ignore
-
-    def test_NewArea_SizeIsNotSize_RaisesTypeError(self):
-        with pytest.raises(TypeError):
-            Area("bad size", Coordinate(), (1, 2, 3))  # type: ignore
+            Area((1, 2, 3))
 
 
 class TestForMaze:
     test_maze = Maze("Labirinth")
 
     def test_creating_new_maze_without_location_parameter_has_origin_at_zero(self):
-        assert self.test_maze.origin == Coordinate()
+        assert self.test_maze.origin == Coordinate(0,0,0)
 
     def test_creating_new_maze_with_initial_location_has_origin_at_location(self):
         direction = Coordinate(3, 3, 3)

@@ -77,34 +77,22 @@ A single unit occupiying a maze coordinate, represents a room or space in the ma
 An idea of the area is that it belongs to a single point of the maze and it also holds space itself, this permits mapping the maze paths without caring about the size or shape of the actual areas.
 Another probably better idea is that Areas should be of unique size so that having a bigger space is a matter of combining areas.
 
-### core
-The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
-
-#### PASSAGE (WIP)
-Connection between two halls
-- Origin, the connected area
-- Connection, the external hall
-
 #### PORTAL (WIP)
-Defines entrance or exit from a maze, or the access to another maze
+Defines entrance or exit from a maze, or the access from one area to another.
 - Destination, the name of the maze this portal connects to, empty values can be used to determine entrance or exit from the maze
 
-#### COORDINATES
+#### core
+The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
+
+##### COORDINATES
 Defines the location of an area in the maze coordinate system, loosely based on the cartesian system
 - X, the vertical axis, represents the levels or floors of a structure, where negative values are ment as the basement or underground levels.
 - Y, horizontal axis, where the east side is represented by the positive values and west uses the negative ones.
 - Z, depth axis, representint the front as positive values while back by negative.
 
-#### SIZE
-Defines the square or cubed space where an entity is located
-- Width: The measurement across the shortest dimension from side to side.
-- Length: The measurement along the longest dimension usually front to back .
-- Height: The measurement from top to bottom.
-
 ### Maze rules
 1.- A Maze must have at least one Portal
 2.- Portals define entrance or exit from a maze
-3.- Portals can connect non adjacent areas
 4.- A Maze is composed of one to many Areas
 5.- Areas never have the same coordinates
 6.- Portals belong to an Area
