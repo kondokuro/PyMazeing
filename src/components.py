@@ -4,7 +4,6 @@ Here we define all the pieces that compose mazes.
 
 import typing
 from collections import namedtuple
-from uuid import uuid4, UUID
 
 
 Coordinate = namedtuple("Coordinate", ["x", "y", "z"])
@@ -49,7 +48,6 @@ class Maze:
         :param name: Give the Maze a description.
         :param origin: Desired initil location of the Maze.
         """
-        self._id = uuid4()
         self._origin = origin if origin is not None else Coordinate(0, 0, 0)
         self._name = name
         self._areas = {}
@@ -78,7 +76,3 @@ class Maze:
         """Maze coordinates containing areas."""
         return list(self.areas.keys())
 
-    @property
-    def id(self) -> UUID:
-        """The maze's unique identifier."""
-        return self._id
