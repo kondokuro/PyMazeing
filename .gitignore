@@ -124,3 +124,4 @@ dmypy.json
 # by dario
 .vscode
 .DS_Store
+.pylintrc
