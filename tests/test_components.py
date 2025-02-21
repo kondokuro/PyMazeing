@@ -22,5 +22,6 @@ class TestForMaze:
         assert placed_maze.origin == direction
 
     def test_ocupied_spaces_returns_list_of_coordinates(self):
+        self.test_maze.areas[Coordinate(1, 2, 3)] = Area(Coordinate(1, 2, 3))
         assert isinstance(self.test_maze.occupied_spaces, list)
         assert all(isinstance(c, Coordinate) for c in self.test_maze.occupied_spaces)
