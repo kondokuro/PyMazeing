@@ -20,13 +20,19 @@ class Forge:
     """Constructs mazes from scratch."""
 
     def __init__(self):
-        self.maze = None
+        self._maze = None
+
+    @property
+    def maze(self) -> Maze:
+        """The maze being constructed."""
+        return self._maze
+    
 
     def start_maze(self, name: str, origin: Coordinate) -> None:
         """Begins the construction process of a maze, creating one with a single area, its entrance."""
-        self.maze = Maze(name, origin)
-        self.add_area_at(origin)
+        self._maze = Maze(name, origin)
+        self.extend(origin)
 
-    def add_area_at(self, location: Coordinate) -> None:
+    def extend(self, location: Coordinate) -> None:
         """Adds a new area to the maze being constructed."""
         self.maze.areas[location] = Area(location)
