@@ -26,7 +26,7 @@ As mentioned above in the world of Mazes, they are composed of Halls or branchin
 
 ```
 +  P  +-----+-----+-----+-----+-----+-----+-----+-----+-----+ 
-|  1  .  2  .  2  |  >  .  >  .  v  |  >  .  >  .  >  .  v  |
+|  v  .  2  .  2  |  >  .  >  .  v  |  >  .  >  .  >  .  v  |
 |  .  +-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  |
 |  v  |  2  .  2  |  ^  .  <  |  >  .  ^  |  6  |  v  .  <  |
 +  .  +-----+-----+-----+  .  +-----+  .  +  .  +  .  +-----|
@@ -44,6 +44,10 @@ This example figure is a representation of a 2D Maze with 9 halls, one path and 
 
 #### factory
 The functions and classes in this module are used to create mazes and their inner structures.
+
+##### Forge
+This class is used to manually build a maze from scratch.
+It has simple methods to extend the areas of the maze and it will provide the state of the current maze.
 
 ##### Conjure Maze
 Creates a single complete maze based on the following parameters
@@ -77,14 +81,7 @@ A single unit occupiying a maze coordinate, represents a room or space in the ma
 An idea of the area is that it belongs to a single point of the maze and it also holds space itself, this permits mapping the maze paths without caring about the size or shape of the actual areas.
 Another probably better idea is that Areas should be of unique size so that having a bigger space is a matter of combining areas.
 
-#### PORTAL (WIP)
-Defines entrance or exit from a maze, or the access from one area to another.
-- Destination, the name of the maze this portal connects to, empty values can be used to determine entrance or exit from the maze
-
-#### core
-The classes in this module represent the utilities needed to define how the pieces of the maze connect to each other.
-
-##### COORDINATES
+##### Coordinate
 Defines the location of an area in the maze coordinate system, loosely based on the cartesian system
 - X, the vertical axis, represents the levels or floors of a structure, where negative values are ment as the basement or underground levels.
 - Y, horizontal axis, where the east side is represented by the positive values and west uses the negative ones.
