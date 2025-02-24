@@ -3,14 +3,20 @@ Here we define all the pieces that compose mazes.
 """
 
 import typing
-from collections import namedtuple
+from typing import NamedTuple
 
 
-Coordinate = namedtuple("Coordinate", ["x", "y", "z"])
-Coordinate.__doc__ = "A point in space."
-Coordinate.x.__doc__ = "The vertical position, representing a floor or basement."
-Coordinate.y.__doc__ = "The horizontal position, representing east and west sides."
-Coordinate.z.__doc__ = "The depth position, represent front and back locations."
+class Coordinate(NamedTuple):
+    """
+    A point in space.
+    
+    :param x: The vertical position, representing a floor or basement.
+    :param y: The horizontal position, representing east and west sides.
+    :param z: The depth position, represent front and back locations.
+    """
+    x: int
+    y: int
+    z: int
 
 
 class Area:

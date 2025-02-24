@@ -1,5 +1,7 @@
+import pytest
 from src.components import Maze, Area, Coordinate
-from src.factory import Forge
+from src.factory import Forge, DirectionProvider
+
 
 class TestForForge:
 
@@ -14,3 +16,23 @@ class TestForForge:
         builder.start_maze("Test Labyrinth", Coordinate(1,2,3))
         builder.extend(given_coordinates)
         assert isinstance(builder.maze.areas[given_coordinates], Area)
+
+
+class TestDirectionProvider:
+    
+    def setup_class(self):
+        self.direction_provider = DirectionProvider()
+
+    @pytest.mark.parametrize("origin_coordinate, given_direction, expected_value", [
+        (Coordinate(0, 0, 0), DirectionProvider.Directions.NORTH, Coordinate(0, 0, 1)),
+        (Coordinate(0, 0, 0), DirectionProvider.Directions.SOUTH, Coordinate(0, 0, -1)),
+        (Coordinate(0, 0, 0), DirectionProvider.Directions.EAST, Coordinate(0, 1, 0)),
+        (Coordinate(0, 0, 0), DirectionProvider.Directions.WEST, Coordinate(0, -1, 0)),
+        (Coordinate(0, 0, 0), DirectionProvider.Directions.UP, Coordinate(1, 0, 0)),
+        (Coordinate(0, 0, 0), DirectionProvider.Directions.DOWN, Coordinate(-1, 0, 0)),
+    ])
+    def test_get_adjacent_coordinate_given_direction_returns_the_adjacent_coordinate(
+        self, origin_coordinate, given_direction, expected_value):
+        result = self.direction_provider.get_adjacent_coordinate(
+            origin_coordinate, given_direction)
+        assert result == expected_value

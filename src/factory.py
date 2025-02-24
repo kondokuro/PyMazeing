@@ -13,7 +13,38 @@ Portals are located in Areas
 Portals define entrance or exit from a Maze
 Portals connect two Mazes
 """
+from enum import Enum
 from src.components import Area, Maze, Coordinate
+
+
+class DirectionProvider:
+    """Provides coordinates based on a direction."""
+    
+    class Directions(Enum):
+        """The posible cardinal directions."""
+        NORTH = "north"
+        SOUTH = "south"
+        EAST = "east"
+        WEST = "west"
+        UP = "up"
+        DOWN = "down"
+
+    def get_adjacent_coordinate(self, origin: Coordinate, direction: Directions) -> Coordinate:
+        """Provides the adjacent coordinate based on the direction."""
+        x, y, z = origin.x, origin.y, origin.z
+        if direction == self.Directions.NORTH:
+            z += 1
+        elif direction == self.Directions.SOUTH:
+            z -= 1
+        elif direction == self.Directions.EAST:
+            y += 1
+        elif direction == self.Directions.WEST:
+            y -= 1
+        elif direction == self.Directions.UP:
+            x += 1
+        elif direction == self.Directions.DOWN:
+            x -= 1
+        return Coordinate(x, y, z)
 
 
 class Forge:
