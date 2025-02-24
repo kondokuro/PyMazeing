@@ -1,9 +1,7 @@
 """
 Here we define all the pieces that compose mazes.
 """
-
-import typing
-from typing import NamedTuple
+from typing import NamedTuple, List, Dict
 
 
 class Coordinate(NamedTuple):
@@ -22,16 +20,18 @@ class Coordinate(NamedTuple):
 class Area:
     """A place in the space of a maze."""
 
-    def __init__(self, position: Coordinate) -> None:
+    def __init__(self, position: Coordinate, with_portal: bool = False) -> None:
         """
         Initializes a new Area instance.
 
         :param position: A Coordinate as the top left Area location.
+        :param with_portal: If the area has a portal, to mark it as entrance or exit.
         """
         if not isinstance(position, Coordinate):
             raise TypeError(f"Position must be a Coordinate, not {type(position)}")
         self._position = position
         self._passages = []
+        self.has_portal = with_portal
 
     @property
     def position(self) -> Coordinate:
@@ -39,29 +39,23 @@ class Area:
         return self._position
 
     @property
-    def passages(self) -> typing.List[Coordinate]:
+    def passages(self) -> List[Coordinate]:
         """The coordinates of areas connected to this one."""
         return self._passages
+    
 
 
 class Maze:
     """Labirinth with areas branching out and about."""
 
-    def __init__(self, name: str, origin: Coordinate = None) -> None:
+    def __init__(self, name: str) -> None:
         """
         Instantiates a new Maze, set to the spatial origin.
 
         :param name: Give the Maze a description.
-        :param origin: Desired initil location of the Maze.
         """
-        self._origin = origin if origin is not None else Coordinate(0, 0, 0)
         self._name = name
         self._areas = {}
-
-    @property
-    def origin(self) -> Coordinate:
-        """The maze's center."""
-        return self._origin
 
     @property
     def name(self) -> str:
@@ -73,12 +67,17 @@ class Maze:
         self._name = name
 
     @property
-    def areas(self) -> typing.Dict[Coordinate, Area]:
+    def areas(self) -> Dict[Coordinate, Area]:
         """Areas in the maze organized by its coordinates."""
         return self._areas
 
     @property
-    def occupied_spaces(self) -> typing.List[Coordinate]:
+    def occupied_spaces(self) -> List[Coordinate]:
         """Maze coordinates containing areas."""
         return list(self.areas.keys())
+    
+    @property
+    def portals(self) -> List[Area]:
+        """Coordinates containing areas."""
+        return [area for area in self.areas.values() if area.has_portal]
 

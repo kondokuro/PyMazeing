@@ -13,15 +13,17 @@ class TestForArea:
 class TestForMaze:
     test_maze = Maze("Labirinth")
 
-    def test_creating_new_maze_without_location_parameter_has_origin_at_zero(self):
-        assert self.test_maze.origin == Coordinate(0,0,0)
-
-    def test_creating_new_maze_with_initial_location_has_origin_at_location(self):
-        direction = Coordinate(3, 3, 3)
-        placed_maze = Maze("with location", direction)
-        assert placed_maze.origin == direction
-
-    def test_ocupied_spaces_returns_list_of_coordinates(self):
+    def test_ocupied_spaces_returns_coordinates_of_maze_areas(self):
         self.test_maze.areas[Coordinate(1, 2, 3)] = Area(Coordinate(1, 2, 3))
-        assert isinstance(self.test_maze.occupied_spaces, list)
         assert all(isinstance(c, Coordinate) for c in self.test_maze.occupied_spaces)
+    
+    @pytest.mark.parametrize("expected", [1, 3, 12])
+    def test_portals_returns_areas_maked_as_having_portals(self, expected):
+        for i in range(expected):
+            self.test_maze.areas[Coordinate(i, 2, 3)] = Area(Coordinate(i, 2, 3), with_portal=True)
+            
+        assert all(isinstance(a, Area) for a in self.test_maze.portals)
+        assert len(self.test_maze.portals) == expected
+
+    def test_portals_returns_empty_list_when_no_portals(self):
+        assert self.test_maze.portals == []
