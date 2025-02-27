@@ -2,7 +2,7 @@
 
 ## About 
 
-As a game developer, one of the tasks is to create the playable space, also known as the game world, level, dungeon or town. The idea behind the PyMazing project is to provide a way to represent those spaces, using maze definitions, allowing for simple workflows to generate them, automatically or manually.
+The idea behind the PyMazing project is to provide a way to represent spaces, using maze definitions, allowing for simple workflows to generate them, manually and automatically.
 
 It is intended for labyrinth, dungeon or level design enthusiasts, this means that the result can be used to render or build playable Mazes anywhere.
 
@@ -12,33 +12,34 @@ It is intended for labyrinth, dungeon or level design enthusiasts, this means th
 From factory module the main tool will be the Forge we have access to the means of building up our maze piece by piece. 
 
 ```python
-TBD
+import factory
+
+forge = Forge()
+forge.start_maze("corn field")
+
 ```
 
-A simple function call returns the full maze structure. Alternatively, a maze can be constructed by using the more specific generator functions for the different maze sections, if the desire is to have more control over the shape of the maze.
+A simple function call returns the full maze structure. 
+Alternatively, a maze can be constructed by using the more specific generator functions for the different maze sections, if the desire is to have more control over the shape of the maze.
 
 ## Technical Specification 
 
-Since the world is divided into continents, on PyMazing we took the world as a container of multiple areas, where the world would be a maze, which is composed of one or multiple branches, which then can be divided or contain inner areas, and those areas can be the place for other objects.
-
-As mentioned above in the world of Mazes, they are composed of Halls or branching paths, which can be divided into Zones, which combined represent the Hall’s length. Each of these parts have information to indicate their location in the world via coordinates.
-
+On PyMazing we defined the Maze as a container of multiple areas, and those areas can be the place for other objects. Each of these parts have information to indicate their location in the world via coordinates.
 
 ```
-+  P  +-----+-----+-----+-----+-----+-----+-----+-----+-----+ 
-|  v  .  2  .  2  |  >  .  >  .  v  |  >  .  >  .  >  .  v  |
-|  .  +-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  |
-|  v  |  2  .  2  |  ^  .  <  |  >  .  ^  |  6  |  v  .  <  |
-+  .  +-----+-----+-----+  .  +-----+  .  +  .  +  .  +-----|
-|  >  .  v  |  3  .  3  |  ^  .  5  .  6  .  6  |  v  |  7  |
-+-----+  .  +  .  +-----+  .  +  .  +-----+-----+  .  +  .  |
-|  v  .  <  .  3  |  >  .  ^  |  5  .  5  |  v  .  <  .  7  |
-+  .  +-----+-----+  .  +  .  +-----+-----+  .  +-----+-----|
-|  >  .  >  .  >  .  ^  |  4  .  4  |  8  .  >  .  >  .  1  |
-+-----+-----+-----+-----+-----+-----+-----+-----+-----+  P  +
++-----+           +-----+-----+-----+-----+-----+-----+-----+ 
+|  p  |           |  >     >     v  |  >     >     >     v  |
++     +           +     +-----+     +     +-----+-----+     +
+|  v  |           |  ^     <  |  >     ^  |     |  v     <  |
++     +-----+-----+-----+     +-----+     +     +     +-----+
+|  >     v  |     |     |  ^  |     |           |  v  |
++-----+     +     +-----+     +     +-----+-----+     +
+|  v     <        |  >     ^  |           |  v     <  |
++     +-----+-----+     +     +     +-----+     +-----+-----+
+|  >     >     >     ^  |     |     |        >     >     p  |
++-----+-----+-----+-----+-----+     +-----+-----+-----+-----+
 ```
-
-This example figure is a representation of a 2D Maze with 9 halls, one path and 2 portals, the halls are numbered, the path is marked and the portals are located at the edges.
+This example figure is a representation of a 2D Maze with a single path and 2 portals located at the edges.
 
 ### Modules
 
