@@ -25,8 +25,9 @@ def main():
         """)).split(",")
 
     builder = Forge()
-    builder.start_maze(name, Coordinate(int(x), int(y), int(z)))
-    print(f"Maze '{builder.maze.name}' at {builder.maze.origin} was created!")
+    current_location = Coordinate(int(x), int(y), int(z))
+    builder.start_maze(name, current_location)
+    print(f"Created '{builder.maze.name}'! its entrance at {current_location}")
 
     # TODO start the building loop...
     done = False
@@ -44,10 +45,12 @@ def main():
             6. {Directions.DOWN.value}
             """))
         extension_direction = list(Directions)[int(selection)-1]
-        next_coordinate = get_adjacent_coordinate(builder.maze.origin, extension_direction)
+        next_coordinate = get_adjacent_coordinate(current_location, extension_direction)
         builder.extend(next_coordinate)
-        print(f"Maze extended towars the {extension_direction.value} at {builder.maze.areas[next_coordinate].position}")
+        print(f"Maze extended towars the {extension_direction.value} at {next_coordinate}")
+        current_location = next_coordinate
 
+        done = input("Do you want to continue? (y/n) ") == "n"
 
 if __name__ == "__main__":
     main()
