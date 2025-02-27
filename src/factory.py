@@ -28,8 +28,9 @@ class Forge:
     def start_maze(self, name: str, origin: Coordinate) -> None:
         """Begins the construction process of a maze, creating one with a single area, its entrance."""
         self._maze = Maze(name)
-        self.extend(origin)
+        self.extend(origin, with_portal=True)
 
-    def extend(self, location: Coordinate) -> None:
+    def extend(self, location: Coordinate, with_portal: bool = False) -> None:
         """Adds a new area to the maze being constructed."""
-        self.maze.areas[location] = Area(location)
+        if location not in self.maze.areas:
+            self.maze.areas[location] = Area(location, with_portal)
