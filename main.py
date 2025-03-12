@@ -6,6 +6,7 @@ import textwrap
 from src.factory import Forge
 from src.components import Coordinate
 from src.navigation import get_adjacent_coordinate, Directions
+from src.display import DescriptionMazeRenderer
 
 
 def main():
@@ -25,9 +26,9 @@ def main():
         """)).split(",")
 
     builder = Forge()
-    current_location = Coordinate(int(x), int(y), int(z))
-    builder.start_maze(name, current_location)
-    print(f"Created '{builder.maze.name}'! its entrance at {current_location}")
+    origin = Coordinate(int(x), int(y), int(z))
+    builder.start_maze(name, origin)
+    print(f"Created '{builder.maze.name}'! its entrance at {origin}")
 
     # TODO start the building loop...
     done = False
@@ -45,15 +46,21 @@ def main():
             6. {Directions.DOWN.value}
             """))
         extension_direction = list(Directions)[int(selection)-1]
-        next_coordinate = get_adjacent_coordinate(current_location, extension_direction)
-        builder.extend(next_coordinate)
-        print(f"Maze extended towars the {extension_direction.value} at {next_coordinate}")
+        destination = get_adjacent_coordinate(origin, extension_direction)
+        builder.annex(origin, destination)
+        print(f"Maze extended towars the {extension_direction.value} at {destination}")
         move = input("Do you want to move to this area? (y/n) ") == "y"
         if move:
-            current_location = next_coordinate
-            print(f"Moved to {current_location}, next expassion starts from here...")
+            origin = destination
+            print(f"Moved to {origin}, next expassion starts from here...")
 
-        done = input("Do you want to continue? (y/n) ") == "y"
+        done = input("Is the maze complete? (y/n) ") == "n"
+    
+    # Display the maze
+    print("Here is the maze you created:")
+    scribe = DescriptionMazeRenderer(builder.maze)
+    for place, area in builder.maze.areas.items():
+        print(f"at {place}, {scribe.show_area(area)}")
 
 if __name__ == "__main__":
     main()

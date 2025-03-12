@@ -48,7 +48,9 @@ The functions and classes in this module are used to create mazes and their inne
 
 ##### Forge
 This class is used to manually build a maze from scratch.
-It has simple methods to extend the areas of the maze and it will provide the state of the current maze.
+It has simple methods to extend the areas of the maze.
+- Expanding will add a new area to the maze
+- Annexing will add and link areas in the maze to each other
 
 ##### Conjure Maze
 Creates a single complete maze based on the following parameters
@@ -65,11 +67,11 @@ brings forth the desired hall based on the following parameters
 - Branching from, an area or cordinate that will serve as the hall’s start point
 - Existing halls, used to reference occupied coordinates so that the new hall does not collide with another
 
-##### Invoke Area
-Adds some space for a hall based on the following parameters
+##### Expand
+Adds some space with a new area based on the following parameters
 - Coordinates, target location of the space
-- Occupied spaces, the coordinates not available for the invocation
-- Portals, names of the mazes the portals of this area will have
+- (deprecated)Occupied spaces, the coordinates not available for the invocation
+- Portals, names of the mazes the portals of this area will have, currently just a boolean
 
 #### componenst
 
