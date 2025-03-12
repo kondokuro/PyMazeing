@@ -54,13 +54,13 @@ def main():
             origin = destination
             print(f"Moved to {origin}, next expassion starts from here...")
 
-        done = input("Is the maze complete? (y/n) ") == "n"
+        done = input("Continue building? (y/n) ") == "n"
     
     # Display the maze
     print("Here is the maze you created:")
     scribe = DescriptionMazeRenderer(builder.maze)
-    for place, area in builder.maze.areas.items():
-        print(f"at {place}, {scribe.show_area(area)}")
+    for place in builder.maze.areas.keys():
+        print(f"at {place}, {scribe.show_area(place)}")
 
 if __name__ == "__main__":
     main()
