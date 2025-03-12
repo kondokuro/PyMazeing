@@ -11,11 +11,19 @@ class TestForArea:
 
     def test_repr_no_portal_returns_position(self):
         area = Area(Coordinate(1, 2, 3))
-        assert repr(area) == f"Area at {area.position}"
+        assert repr(area) == f"Area object at {area.position}"
 
     def test_repr_with_portal_includes_portal_details(self):
         area = Area(Coordinate(1, 2, 3), with_portal=True)
-        assert repr(area) == f"Area at {area.position} with portal"
+        assert repr(area) == f"Area object at {area.position} with portal"
+
+    def test_str_no_portal_returns_position(self):
+        area = Area(Coordinate(1, 2, 3))
+        assert str(area) == f"Area at {area.position}"
+
+    def test_str_with_portal_includes_portal_details(self):
+        area = Area(Coordinate(1, 2, 3), with_portal=True)
+        assert str(area) == f"Area at {area.position} with portal"
 
 
 class TestForMaze:

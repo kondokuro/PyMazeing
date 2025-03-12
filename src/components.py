@@ -44,10 +44,10 @@ class Area:
         return self._passages
     
     def __repr__(self) -> str:
-        return f"Area at {self.position}" + (" with portal" if self.has_portal else "")
+        return f"Area object at {self.position}" + (" with portal" if self.has_portal else "")
     
     def __str__(self) -> str:
-        return repr(self)
+        return f"Area at {self.position}" + (" with portal" if self.has_portal else "")
     
 
 
