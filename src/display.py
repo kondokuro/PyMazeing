@@ -1,11 +1,16 @@
-from components import Area, Maze
+
 from typing import Protocol
+from src.components import Area, Maze, Coordinate
 
 
 class Renderer(Protocol):
     """Interface for classes that display a structure."""
-    def render(self) -> None:
+    def show_maze(self) -> str:
         """Displays the structure completely."""
+        ...
+
+    def show_area(self, area: Area) -> str:
+        """Displays a single area."""
         ...
 
 class AssciiMazeRenderer:
@@ -13,10 +18,10 @@ class AssciiMazeRenderer:
     def __init__(self, maze: Maze) -> None:
         self._maze = maze
 
-    def render(self) -> None:
-        print("Rendering maze in ASCII:")
+    def show_maze(self) -> str:
+        return "Rendering maze in ASCII:"
     
-    def get_area_asscii(area: Area) -> str:
+    def show_area(self, location: Coordinate) -> str:
         """
         Each area has 3 lines, top, middle and bottom.
         Empty spaces need to be represented as big as existing area space.
@@ -38,8 +43,36 @@ class DescriptionMazeRenderer:
     def __init__(self, maze: Maze) -> None:
         self._maze = maze
 
-    def render(self) -> None:
-        print("Describing maze:")
+    def show_maze(self) -> str:
+        return "Describing maze:"
         
-    def get_area_description(area: Area) -> str:
-        return ""
+    def show_area(self, location: Coordinate) -> str:
+        area = self._maze.areas.get(location)
+        if not area:
+            return "empty space..."
+        
+        if not area.passages:
+            return "dead end..."
+
+        directions = []
+        for passage in area.passages:
+            if passage.x > area.position.x:
+                directions.append("up")
+            if passage.x < area.position.x:
+                directions.append("down")
+            if passage.y > area.position.y:
+                directions.append("east")
+            if passage.y < area.position.y:
+                directions.append("west")
+            if passage.z > area.position.z:
+                directions.append("north")
+            if passage.z < area.position.z:
+                directions.append("south")
+
+        last_direction = directions.pop()
+        description = "in this area there is a way " + ", ".join(directions)
+        if directions:
+            description += " and " + last_direction
+        else:
+            description += last_direction
+        return description + "."
