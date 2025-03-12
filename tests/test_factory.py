@@ -34,3 +34,50 @@ class TestForForge:
         self.builder.extend(given_coordinates)
         self.builder.extend(given_coordinates, with_portal=True)
         assert self.builder.maze.areas[given_coordinates].has_portal is False
+
+    def test_annex_given_existing_origin_adds_destination_and_sets_passages(self):
+        origin = Coordinate(1, 2, 3)
+        destination = Coordinate(1, 2, 4)
+        self.builder.start_maze("Test Labyrinth", origin)
+
+        self.builder.annex(origin, destination)
+
+        assert destination in self.builder.maze.areas
+        assert destination in self.builder.maze.areas[origin].passages
+        assert origin in self.builder.maze.areas[destination].passages
+
+    def test_annex_given_new_coordinates_adds_new_areas_and_sets_passages(self):
+        origin = Coordinate(1, 2, 3)
+        destination = Coordinate(1, 2, 4)
+        self.builder.start_maze("Test Labyrinth", Coordinate(0, 0, 0))
+
+        self.builder.annex(origin, destination)
+
+        assert origin in self.builder.maze.areas
+        assert destination in self.builder.maze.areas
+        assert destination in self.builder.maze.areas[origin].passages
+        assert origin in self.builder.maze.areas[destination].passages
+
+    def test_annex_given_new_origin_existing_destination_adds_origin_and_sets_passages(self):
+        origin = Coordinate(1, 2, 3)
+        destination = Coordinate(1, 2, 4)
+        self.builder.start_maze("Test Labyrinth", Coordinate(0, 0, 0))
+        self.builder.extend(destination)
+
+        self.builder.annex(origin, destination)
+
+        assert origin in self.builder.maze.areas
+        assert destination in self.builder.maze.areas[origin].passages
+        assert origin in self.builder.maze.areas[destination].passages
+
+    def test_annex_given_existing_coordinates_sets_passages(self):
+        origin = Coordinate(1, 2, 3)
+        destination = Coordinate(1, 2, 4)
+        self.builder.start_maze("Test Labyrinth", Coordinate(0, 0, 0))
+        self.builder.extend(origin)
+        self.builder.extend(destination)
+
+        self.builder.annex(origin, destination)
+
+        assert destination in self.builder.maze.areas[origin].passages
+        assert origin in self.builder.maze.areas[destination].passages

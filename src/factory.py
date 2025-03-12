@@ -34,3 +34,10 @@ class Forge:
         """Adds a new area to the maze being constructed."""
         if location not in self.maze.areas:
             self.maze.areas[location] = Area(location, with_portal)
+
+    def annex(self, origin: Coordinate, destination: Coordinate) -> None:
+        """Adds a new area in the maze that is connected to the origin area."""
+        self.extend(origin)
+        self.extend(destination)
+        self.maze.areas[origin].passages.append(destination)
+        self.maze.areas[destination].passages.append(origin)
