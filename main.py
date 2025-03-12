@@ -20,7 +20,7 @@ def main():
     
     x, y, z = input(textwrap.dedent(
         """
-        Ok, now lets set the initial position of the maze.
+        Ok, now lets set the entrance of the maze.
         Use 3 numbers separated by commas: 
         """)).split(",")
 
@@ -48,9 +48,12 @@ def main():
         next_coordinate = get_adjacent_coordinate(current_location, extension_direction)
         builder.extend(next_coordinate)
         print(f"Maze extended towars the {extension_direction.value} at {next_coordinate}")
-        current_location = next_coordinate
+        move = input("Do you want to move to this area? (y/n) ") == "y"
+        if move:
+            current_location = next_coordinate
+            print(f"Moved to {current_location}, next expassion starts from here...")
 
-        done = input("Do you want to continue? (y/n) ") == "n"
+        done = input("Do you want to continue? (y/n) ") == "y"
 
 if __name__ == "__main__":
     main()
