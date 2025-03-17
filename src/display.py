@@ -5,8 +5,11 @@ from src.components import Area, Maze, Coordinate
 
 class Renderer(Protocol):
     """Interface for classes that display a structure."""
-    def show_maze(self) -> str:
-        """Displays the structure completely."""
+    def show_floor(self, floor: int) -> str:
+        """
+        Displays the structure of the maze by floor.
+        :param floor: the floor to display, x coordinate.
+        """
         ...
 
     def show_area(self, area: Area) -> str:
@@ -18,7 +21,7 @@ class AssciiMazeRenderer:
     def __init__(self, maze: Maze) -> None:
         self._maze = maze
 
-    def show_maze(self) -> str:
+    def show_floor(self, floor: int) -> str:
         return "Rendering maze in ASCII:"
     
     def show_area(self, location: Coordinate) -> str:
@@ -43,7 +46,7 @@ class DescriptionMazeRenderer:
     def __init__(self, maze: Maze) -> None:
         self._maze = maze
 
-    def show_maze(self) -> str:
+    def show_floor(self, floor: int) -> str:
         return "Describing maze:"
         
     def show_area(self, location: Coordinate) -> str:
@@ -70,9 +73,10 @@ class DescriptionMazeRenderer:
                 directions.append("south")
 
         last_direction = directions.pop()
-        description = "in this area there is a way " + ", ".join(directions)
+        portal_details = "a portal" if area.has_portal else ""
+        description = f"in this area there is {portal_details} a way " + ", ".join(directions)
         if directions:
-            description += " and " + last_direction
+            description += " or " + last_direction
         else:
             description += last_direction
         return description + "."

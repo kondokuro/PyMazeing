@@ -74,7 +74,7 @@ class Maze:
 
     @property
     def areas(self) -> Dict[Coordinate, Area]:
-        """Areas in the maze organized by its coordinates."""
+        """Areas in the maze mapped by its coordinates."""
         return self._areas
 
     @property
@@ -86,4 +86,8 @@ class Maze:
     def portals(self) -> List[Area]:
         """Coordinates containing areas."""
         return [area for area in self.areas.values() if area.has_portal]
+    
+    def total_floors(self) -> int:
+        """The number of floors in the maze."""
+        return len(set(area.x for area in self.areas))
 
