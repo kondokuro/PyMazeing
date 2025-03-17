@@ -23,7 +23,7 @@ def main():
         """
         Ok, now lets set the entrance of the maze.
         Use 3 numbers separated by commas: 
-        """)).split(",")
+        """)).split(",", 2)
 
     builder = Forge()
     origin = Coordinate(int(x), int(y), int(z))
